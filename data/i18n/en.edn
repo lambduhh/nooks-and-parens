@@ -156,11 +156,11 @@
  :learn/get-template    "Get the template on GitHub"
  :learn/tutorials       "Tutorials"
  :learn/how-to          "How-to guides"
- ;; How-to groups, in data/learn.edn order. Only "Get started" is Jordan's.
+ ;; How-to groups, in data/learn.edn order. Jordan accepted these as final (2026-11-24).
  :learn.how-to/get-started "Get started"
- :learn.how-to/input       {:draft "Reading input"}
- :learn.how-to/techniques  {:draft "Puzzle techniques"}
- :learn.how-to/tools       {:draft "Bigger tools"}
+ :learn.how-to/input       "Reading input"
+ :learn.how-to/techniques  "Puzzle techniques"
+ :learn.how-to/tools       "Bigger tools"
  :learn/reference       "Reference"
  :learn/explanation     "Why it works"
  :learn/blog            "Blog"
