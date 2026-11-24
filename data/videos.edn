@@ -1,0 +1,3 @@
+;; videos.edn: one map per session recording, added after each session. Shape: docs/content-model.md.
+;; Empty until session 1 (Fri 4 Dec).
+[]

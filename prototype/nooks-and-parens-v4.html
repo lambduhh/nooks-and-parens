@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nooks &amp; Parens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* ---------- prototype controls (not part of the design) ---------- */
+body{margin:0}
+.mock{font:13px/1.5 system-ui,sans-serif;color:#2c2c2a;background:#fff;border-bottom:1px solid #ccc;padding:8px 16px}
+.mock .row{max-width:980px;margin:0 auto;display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center}
+.mock select{font:inherit}
+.mock a{color:#000;border:1px solid #90b4fe;border-radius:999px;padding:0 9px;text-decoration:none;white-space:nowrap}
+.mock .note{max-width:980px;margin:4px auto 0;color:#555}
+
+/* ---------- Nooks & Parens ---------- */
+.np{
+  --green:#63b132; --blue:#5881d8; --sky:#90b4fe; --white:#fff; --black:#000;
+  /* cozy neutrals added for materials: paper, wood */
+  --paper:#fffaf0; --paper-2:#f3e6cc; --tan:#e9d3b0; --wood:#8a5a32; --wood-dark:#6e4424; --muted:#5a5a52;
+  --round: "Nunito", ui-rounded, "SF Pro Rounded", "Varela Round", "Trebuchet MS", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  min-height:100vh; color:var(--black); font:16px/1.55 var(--round);
+  background:
+    radial-gradient(ellipse 120px 38px at 12% 90px, #fff 98%, transparent),
+    radial-gradient(ellipse 80px 30px at 17% 72px, #fff 98%, transparent),
+    radial-gradient(ellipse 140px 40px at 82% 140px, #fff 98%, transparent),
+    radial-gradient(ellipse 90px 32px at 88% 118px, #fff 98%, transparent),
+    linear-gradient(var(--sky), var(--sky));
+  padding-bottom:110px;
+}
+.np *,.np *::before,.np *::after{box-sizing:border-box}
+.np a{color:var(--black);text-decoration-color:var(--blue);text-decoration-thickness:2px;text-underline-offset:3px}
+.np a:hover{text-decoration-color:var(--green)}
+.np :focus-visible{outline:3px solid var(--black);outline-offset:3px;box-shadow:0 0 0 7px var(--white)}
+.np [hidden]{display:none!important}
+.np .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.np .draft{color:var(--muted);font-style:italic}
+.np .draft::before{content:"[draft] ";font-style:normal;font-size:.8em;color:var(--wood-dark)}
+.np .wrap{max-width:980px;margin:0 auto;padding:0 16px}
+.np code,.np kbd{font-family:var(--mono);font-size:.88em;background:var(--paper-2);border-radius:6px;padding:1px 5px}
+
+/* Hanging wooden sign with the name */
+.np .signpost{text-align:center;padding:14px 16px 0}
+.np .ropes{display:flex;justify-content:center;gap:min(42vw,300px);height:18px}
+.np .ropes span{width:4px;background:var(--wood-dark);border-radius:2px}
+.np .sign{display:inline-block;max-width:100%;background:
+   repeating-linear-gradient(0deg,rgba(0,0,0,.06) 0 2px,transparent 2px 9px),var(--wood);
+   color:var(--paper);border:4px solid var(--wood-dark);border-radius:18px;padding:10px 28px 12px;box-shadow:0 6px 0 rgba(0,0,0,.2);text-decoration:none!important}
+.np .sign .name{display:block;font:900 clamp(30px,6vw,48px)/1.05 var(--round);letter-spacing:.01em;color:var(--paper)}
+.np .sign .tagline{display:block;font:700 15px/1.3 var(--round);color:var(--paper);margin-top:4px}
+.np .lang{text-align:center;margin:10px auto 0;font-size:14px;max-width:none}
+.np .lang [aria-current]{font-weight:900;text-decoration:none}
+
+/* Panels */
+.np .panel{background:var(--paper);border:3px solid var(--tan);border-radius:22px;padding:18px 20px;box-shadow:0 6px 0 rgba(0,0,0,.12);margin:18px 0}
+.np h1{font:900 30px/1.15 var(--round);margin:0 0 6px}
+.np h2{font:900 22px/1.2 var(--round);margin:0 0 10px}
+.np h3{font:900 17px/1.3 var(--round);margin:14px 0 6px}
+.np p{margin:6px 0;max-width:68ch}
+.np .crumbs{font-size:14px;margin:0 0 6px;color:var(--muted)}
+
+/* Dialog box */
+.np .dialog{position:relative;background:var(--paper);border-radius:28px;padding:26px 24px 22px;margin:22px 0 18px;box-shadow:0 6px 0 rgba(0,0,0,.12);border:3px solid var(--tan)}
+.np .dialog .who{position:absolute;top:-16px;left:22px;background:var(--blue);color:var(--black);font-weight:900;font-size:14px;padding:4px 14px;border-radius:999px;border:3px solid var(--paper)}
+.np .dialog .line1{font:900 22px/1.3 var(--round);margin:0}
+.np .dialog .more{position:absolute;right:20px;bottom:10px;font-size:14px;color:var(--wood)}
+
+/* Main menu */
+.np .menu{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.np .menu a{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;text-decoration:none;padding:10px 14px;border-radius:16px;background:var(--white);border:3px solid transparent;font-weight:700}
+.np .menu a:hover,.np .menu a:focus-visible{background:var(--sky);border-color:var(--black)}
+.np .menu .key{font:900 14px/1 var(--mono);background:var(--black);color:var(--white);border-radius:8px;padding:5px 8px}
+.np .menu small{font-weight:400;color:var(--muted);font-size:14px}
+.np .menu a:hover small,.np .menu a:focus-visible small{color:var(--black)}
+
+/* Primary action */
+.np .pill{display:inline-block;background:var(--green);color:var(--black)!important;text-decoration:none!important;font:900 17px/1.2 var(--round);padding:13px 24px;border-radius:999px;border:3px solid var(--black);box-shadow:0 5px 0 var(--black);margin:10px 0 8px}
+.np .pill:hover{background:#7cc94e}
+.np .pill:active{transform:translateY(3px);box-shadow:0 2px 0 var(--black)}
+.np .pill-note{display:block;font-size:14px;color:var(--muted)}
+
+/* Two columns */
+.np .cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+@media(max-width:760px){.np .cols{grid-template-columns:minmax(0,1fr)}}
+
+/* Clipboard data readout */
+.np .clip{background:var(--black);color:#f4f4f4;border-radius:16px;padding:12px 14px;font:13px/1.55 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0}
+.np .clip .p{color:var(--sky)} .np .clip .s{color:#b6e39a} .np .clip .c{color:#bdbdb5}
+
+/* Shop list (session schedule) */
+.np .shopsign{display:inline-block;background:var(--blue);border:3px solid var(--black);border-radius:14px;padding:6px 16px;font:900 22px/1.2 var(--round);box-shadow:0 4px 0 var(--black);margin:0 0 12px}
+.np .shop{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.np .shop li{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:12px;align-items:center;background:var(--white);border:2px solid var(--tan);border-radius:16px;padding:8px 12px}
+.np .shop svg{width:40px;height:40px;fill:var(--sky);stroke:var(--black);stroke-width:1.6}
+.np .shop .meta{font-size:14px;color:var(--muted)}
+.np .shop .price{font-weight:900;text-align:right;font-size:14px}
+
+/* Status chips: always words */
+.np .chip{display:inline-block;font:900 12px/1.2 var(--round);padding:4px 10px;border-radius:999px;border:2px solid var(--black);white-space:nowrap}
+.np .chip.open{background:var(--green)}
+.np .chip.locked{background:var(--white)}
+.np .chip.soon{background:var(--paper-2);border-style:dashed}
+.np .chip.live{background:var(--sky)}
+
+/* Tool wall (calendar) */
+.np .wall{background:var(--tan);background-image:radial-gradient(circle,rgba(110,68,36,.35) 2px,transparent 2.6px);background-size:22px 22px;border:12px solid var(--wood);border-radius:20px;padding:14px;box-shadow:inset 0 0 0 3px var(--wood-dark),0 6px 0 rgba(0,0,0,.18)}
+.np .slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:12px}
+.np .slot{display:block;text-decoration:none;text-align:center;background:var(--paper);border:3px solid var(--black);border-radius:18px;padding:8px 6px 10px;font-size:13px;line-height:1.3}
+.np .slot svg{width:58px;height:58px;display:block;margin:0 auto 4px}
+.np .slot b{display:block;font-size:16px}
+.np .slot.open svg{fill:var(--green);stroke:var(--black);stroke-width:1.6}
+.np .slot.locked svg{fill:var(--blue);stroke:var(--black);stroke-width:1.6}
+.np .slot.soon{background:rgba(255,250,240,.5);border-style:dashed}
+.np .slot.soon svg{fill:none;stroke:var(--wood-dark);stroke-width:1.6;stroke-dasharray:3 3}
+.np .slot.today{box-shadow:0 0 0 4px var(--paper),0 0 0 7px var(--black)}
+.np .slot:hover{transform:translateY(-2px)}
+.np .legend{font-size:14px;margin:10px 0 0;display:flex;flex-wrap:wrap;gap:6px 16px}
+
+/* Pinned note (day info) */
+.np .note{position:relative;background:var(--white);border-radius:6px;padding:20px 18px 14px;box-shadow:0 5px 0 rgba(0,0,0,.15);transform:rotate(-.6deg)}
+.np .note::before{content:"";position:absolute;top:-9px;left:50%;width:18px;height:18px;margin-left:-9px;border-radius:50%;background:var(--blue);border:3px solid var(--black)}
+.np .note dl{display:grid;grid-template-columns:max-content 1fr;gap:4px 14px;margin:0}
+.np .note dt{font-weight:900}
+.np .note dd{margin:0}
+
+/* Hanging shop sign: spoiler gate */
+.np .gate{margin:6px 0 16px;text-align:center}
+.np .gate .str{height:16px;display:flex;justify-content:center;gap:160px}
+.np .gate .str span{width:3px;background:var(--wood-dark)}
+.np .gate .board{display:inline-block;max-width:100%;background:var(--wood);color:var(--paper);border:4px solid var(--wood-dark);border-radius:16px;padding:10px 22px 12px;box-shadow:0 5px 0 rgba(0,0,0,.2);text-align:center}
+.np .gate .big{display:block;font:900 26px/1.1 var(--round);letter-spacing:.08em}
+.np .gate.open .board{background:var(--paper);color:var(--black);border-color:var(--black)}
+
+/* DIY recipe cards */
+.np .recipes{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.np .recipe{background:var(--white);border:3px solid var(--black);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+.np .recipe .rh{background:var(--blue);padding:5px 12px;font:900 13px/1.2 var(--round);letter-spacing:.06em;text-transform:uppercase;border-bottom:3px solid var(--black)}
+.np .recipe .rb{padding:10px 12px;flex:1}
+.np .recipe .rb b{display:block;font-size:17px}
+.np .recipe ul{margin:6px 0;padding-left:18px;font-size:14px}
+.np .recipe .rf{padding:8px 12px;border-top:2px dashed var(--tan);font-size:14px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+
+/* Workbench */
+.np .bench{background:var(--paper);border:3px solid var(--tan);border-radius:22px;overflow:hidden;box-shadow:0 6px 0 rgba(0,0,0,.12)}
+.np .bench .top{background:repeating-linear-gradient(90deg,rgba(0,0,0,.07) 0 2px,transparent 2px 60px),var(--wood);color:var(--paper);padding:10px 18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px 14px;align-items:center;font-weight:900}
+.np .bench .top .status{font-weight:700;font-size:14px}
+.np .bench .area{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;padding:16px 18px}
+@media(max-width:800px){.np .bench .area{grid-template-columns:minmax(0,1fr)}}
+.np .bench label{font-weight:900;display:block;margin-bottom:4px}
+.np .bench textarea{width:100%;min-height:210px;font:14px/1.5 var(--mono);border:3px solid var(--black);border-radius:14px;padding:10px 12px;background:var(--white);color:var(--black);resize:vertical}
+.np .bench .row{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-top:10px}
+.np .craft{font:900 16px/1.2 var(--round);background:var(--green);color:var(--black);border:3px solid var(--black);border-radius:999px;padding:10px 20px;box-shadow:0 4px 0 var(--black);cursor:pointer}
+.np .craft:active{transform:translateY(3px);box-shadow:0 1px 0 var(--black)}
+.np .ghost{font:700 14px/1.2 var(--round);background:var(--white);border:2px solid var(--black);border-radius:999px;padding:6px 12px;cursor:pointer;color:var(--black)}
+.np .slotout{border:3px dashed var(--black);border-radius:14px;min-height:210px;background:var(--white);padding:10px 12px}
+.np .slotout .kind{display:inline-block;font:900 12px/1.2 var(--round);background:var(--sky);border:2px solid var(--black);border-radius:999px;padding:2px 10px;margin-bottom:6px}
+.np .slotout pre{margin:0;font:14px/1.5 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere}
+.np .slotout.err{border-style:solid;border-color:var(--wood-dark);background:#fff3f0}
+.np .starters{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}
+
+/* Toolbelt hotbar */
+.np .hotbar{position:fixed;left:0;right:0;bottom:0;padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));background:repeating-linear-gradient(90deg,rgba(0,0,0,.07) 0 2px,transparent 2px 70px),var(--wood);border-top:4px solid var(--wood-dark);z-index:5}
+.np .hotbar ul{list-style:none;margin:0 auto;padding:0;max-width:980px;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px}
+.np .hotbar a{display:block;text-align:center;text-decoration:none;color:var(--black)!important;background:var(--paper);border:3px solid var(--wood-dark);border-radius:14px;padding:4px 2px 5px;font:700 12px/1.15 var(--round);position:relative}
+.np .hotbar a .k{position:absolute;top:2px;left:6px;font:900 11px/1 var(--mono);color:var(--muted)}
+.np .hotbar svg{width:24px;height:24px;display:block;margin:2px auto 2px;fill:var(--sky);stroke:var(--black);stroke-width:1.8}
+.np .hotbar a[aria-current]{background:var(--sky);border-color:var(--black)}
+.np .hotbar .opts{max-width:980px;margin:4px auto 0;display:flex;justify-content:flex-end;gap:10px;font-size:12px;color:var(--paper)}
+.np .hotbar .opts button{font:700 12px var(--round);background:none;border:2px solid var(--paper);color:var(--paper);border-radius:999px;padding:0 10px;cursor:pointer}
+@media(max-width:560px){.np .hotbar ul{grid-template-columns:repeat(4,minmax(0,1fr))}.np{padding-bottom:170px}}
+
+.np .foot{font-size:13px;text-align:center;color:var(--black);margin:28px 0 0}
+@media (prefers-reduced-motion: reduce){.np *{transition:none!important;transform:none!important}}
+</style>
+</head>
+<body>
+<div class="mock" aria-label="Prototype controls">
+  <div class="row">
+    <b>Prototype v4 &middot; Nooks &amp; Parens</b>
+    <label>Pretend today is
+      <select id="simdate">
+        <option value="2026-11-30">Mon 30 Nov (launch)</option>
+        <option value="2026-12-02">Wed 2 Dec</option>
+        <option value="2026-12-07" selected>Mon 7 Dec</option>
+        <option value="2026-12-18">Fri 18 Dec</option>
+        <option value="2027-01-15">Fri 15 Jan (archive)</option>
+      </select>
+    </label>
+    <span>Jump: <a href="#home">Home</a> <a href="#calendar">Calendar</a> <a href="#day-02">Day 02</a> <a href="#day-07">Day 07</a> <a href="#workbench">Workbench</a></span>
+  </div>
+  <div class="note">Pages are built from one list of days and sessions (<code>days.edn</code>). Change the date to see gates and "today" change. <i>[draft]</i> marks copy for Jordan to write. The Workbench runs real Clojure when Scittle can load from jsDelivr; in an offline preview only the starter recipes run.</div>
+</div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="t-hammer" viewBox="0 0 48 48"><path d="M8 6h26l6 5v6H8z"/><rect x="20" y="17" width="7" height="27" rx="3"/></symbol>
+  <symbol id="t-driver" viewBox="0 0 48 48"><rect x="18" y="3" width="12" height="18" rx="5"/><rect x="22" y="21" width="4" height="20"/><path d="M22 41h4l-2 4z"/></symbol>
+  <symbol id="t-wrench" viewBox="0 0 48 48"><path d="M30 4a10 10 0 0 0-9 14L5 34l9 9 16-16A10 10 0 0 0 44 18l-7 2-5-5 2-7a10 10 0 0 0-4-4z"/></symbol>
+  <symbol id="t-saw" viewBox="0 0 48 48"><path d="M16 12h28v14L16 38z"/><path d="M3 10h13v18H3z"/></symbol>
+  <symbol id="t-level" viewBox="0 0 48 48"><rect x="3" y="17" width="42" height="14" rx="4"/><rect x="19" y="20" width="10" height="8" rx="4"/></symbol>
+  <symbol id="t-tape" viewBox="0 0 48 48"><path d="M22 8a16 16 0 1 0 16 16V8z"/><rect x="34" y="34" width="12" height="6"/><circle cx="22" cy="24" r="5"/></symbol>
+  <symbol id="t-map" viewBox="0 0 48 48"><path d="M4 10l13-5 14 5 13-5v33l-13 5-14-5-13 5z"/><path d="M17 5v33M31 10v33" fill="none"/></symbol>
+  <symbol id="t-cal" viewBox="0 0 48 48"><rect x="5" y="9" width="38" height="34" rx="5"/><path d="M5 19h38M15 4v10M33 4v10" fill="none"/></symbol>
+  <symbol id="t-bench" viewBox="0 0 48 48"><rect x="3" y="14" width="42" height="8" rx="2"/><path d="M8 22v20h5V22M35 22v20h5V22"/></symbol>
+  <symbol id="t-film" viewBox="0 0 48 48"><rect x="4" y="10" width="40" height="28" rx="5"/><path d="M20 18l10 6-10 6z"/></symbol>
+  <symbol id="t-book" viewBox="0 0 48 48"><path d="M6 8h15a5 5 0 0 1 5 5v29a4 4 0 0 0-4-4H6zM42 8H31a5 5 0 0 0-5 5v29a4 4 0 0 1 4-4h12z"/></symbol>
+  <symbol id="t-news" viewBox="0 0 48 48"><rect x="5" y="7" width="38" height="34" rx="4"/><path d="M12 16h24M12 24h24M12 32h14" fill="none"/></symbol>
+  <symbol id="t-sun" viewBox="0 0 48 48"><circle cx="24" cy="24" r="10"/><path d="M24 3v7M24 38v7M3 24h7M38 24h7M9 9l5 5M34 34l5 5M39 9l-5 5M14 34l-5 5" fill="none"/></symbol>
+  <symbol id="t-info" viewBox="0 0 48 48"><circle cx="24" cy="24" r="19"/><path d="M24 21v13M24 14v1" fill="none"/></symbol>
+</svg>
+
+<div class="np" id="np">
+  <header class="signpost">
+    <div class="ropes" aria-hidden="true"><span></span><span></span></div>
+    <a class="sign" href="#home"><span class="name">Nooks &amp; Parens</span><span class="tagline">It&rsquo;s dangerous to go alone! Take this.</span></a>
+    <p class="lang"><a aria-current="true">EN</a> &middot; <a href="#" hreflang="pt-BR">PT-BR</a></p>
+  </header>
+  <main class="wrap" id="main" tabindex="-1"></main>
+  <p class="foot wrap"><span class="draft">Fan-made community hub, kept by Jordan Miller and collaborators (role disclosed on About). Not affiliated with Advent of Code or any game studio. Puzzles are linked, never copied.</span></p>
+
+  <nav class="hotbar" aria-label="Toolbelt">
+    <ul id="hotbar">
+      <li><a href="#start" data-r="start"><span class="k">1</span><svg><use href="#t-map"/></svg>Start here</a></li>
+      <li><a href="#today" data-r="today"><span class="k">2</span><svg><use href="#t-sun"/></svg>Today</a></li>
+      <li><a href="#calendar" data-r="calendar"><span class="k">3</span><svg><use href="#t-cal"/></svg>Calendar</a></li>
+      <li><a href="#workbench" data-r="workbench"><span class="k">4</span><svg><use href="#t-bench"/></svg>Workbench</a></li>
+      <li><a href="#videos" data-r="videos"><span class="k">5</span><svg><use href="#t-film"/></svg>Videos</a></li>
+      <li><a href="#learn" data-r="learn"><span class="k">6</span><svg><use href="#t-book"/></svg>Learn</a></li>
+      <li><a href="#roundups" data-r="roundups"><span class="k">7</span><svg><use href="#t-news"/></svg>Roundups</a></li>
+      <li><a href="#about" data-r="about"><span class="k">8</span><svg><use href="#t-info"/></svg>About</a></li>
+    </ul>
+    <div class="opts"><span>Keys 1&ndash;8 switch tools (not while typing)</span><button type="button" id="keys" aria-pressed="true">Shortcuts: on</button></div>
+  </nav>
+</div>
+
+<script async src="https://cdn.jsdelivr.net/npm/scittle@0.8.33/dist/scittle.js" onload="window.npScittle&&window.npScittle()"></script>
+<script>
+(function(){
+var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],DAY=864e5;
+function U(y,m,d,h){return Date.UTC(y,m,d,h||0);}
+function fmt(t){var d=new Date(t);return DOW[d.getUTCDay()]+' '+d.getUTCDate()+' '+MON[d.getUTCMonth()];}
+function pad(n){return n<10?'0'+n:''+n;}
+var TOOLS=['hammer','driver','wrench','saw','level','tape'];
+var SESS=[[4,'live-coding','Live coding'],[7,'pairing-mob','Pairing / mob'],[8,'demo','Demo'],[9,'kata','Code challenge'],[10,'lightning-talks','Lightning talks'],[14,'workshop','Workshop'],[15,'ama','AMA'],[16,'fishbowl','Fishbowl'],[17,'rfc','RFC / design review'],[18,'show-and-tell','Show and tell'],[21,'paper-club','Paper club'],[22,'tech-talk','Tech talk']];
+var DAYS=[];for(var n=1;n<=12;n++){var s=SESS[n-1];DAYS.push({n:n,tool:TOOLS[(n-1)%6],unlock:U(2026,11,n,5),spoil:U(2026,11,n+3,5),sess:{day:U(2026,11,s[0]),fmt:s[1],label:s[2]}});}
+var now,today;function setNow(v){var p=v.split('-');today=U(+p[0],+p[1]-1,+p[2]);now=today+12*36e5;}
+function st(d){var u=now>=d.unlock,o=now>=d.spoil,ss=now<d.sess.day?'upcoming':(now<d.sess.day+DAY?'today':'recorded');return{unlocked:u,open:o,status:!u?'soon':(o?'open':'locked'),sess:ss};}
+function chip(s,long){var w={open:long?'Solutions open':'Open',locked:long?'Solutions locked':'Locked',soon:long?'Not out yet':'Soon',live:'Live today'};return '<span class="chip '+s+'">'+w[s]+'</span>';}
+function curDay(){var c=null;DAYS.forEach(function(d){if(d.unlock<=now)c=d;});return c;}
+
+/* DIY recipes: spoiler-safe how-tos with made-up data; each opens at the Workbench */
+var RECIPES={
+ parse:{title:'Parse lines into maps',mats:['clojure.string/split-lines','split on a space','parse-long'],howto:'How to parse puzzle input into data',
+  code:'(->> "alice 3\\nbob 5\\ncara 2"\n     clojure.string/split-lines\n     (map #(clojure.string/split % #" "))\n     (map (fn [[name n]]\n            {:name name :count (parse-long n)})))',
+  canned:['seq','({:name "alice", :count 3} {:name "bob", :count 5} {:name "cara", :count 2})']},
+ freq:{title:'Count things with frequencies',mats:['frequencies','sort-by','a string or a seq'],howto:'How to count and rank things',
+  code:'(->> (frequencies "mississippi")\n     (sort-by val >))',
+  canned:['seq','(["i" 4] ["s" 4] ["p" 2] ["m" 1])']},
+ grid:{title:'Build a grid you can look up',mats:['map-indexed','for','into a sorted map'],howto:'How to work with grids',
+  code:'(let [rows ["#.." ".#." "..#"]]\n  (into (sorted-map)\n        (for [[y row] (map-indexed vector rows)\n              [x ch]  (map-indexed vector row)]\n          [[x y] (str ch)])))',
+  canned:['map','{[0 0] "#", [0 1] ".", [0 2] ".", [1 0] ".", [1 1] "#", [1 2] ".", [2 0] ".", [2 1] ".", [2 2] "#"}']},
+ sets:{title:'Compare collections with sets',mats:['clojure.set','intersection','difference'],howto:'How to use sets',
+  code:'(require \'[clojure.set :as set])\n(set/intersection #{:hammer :saw :level}\n                  #{:saw :level :drill})',
+  canned:['set','#{:saw :level}']}
+};
+var DAY_RECIPES=function(n){return [['parse','freq'],['parse','grid'],['grid','sets'],['freq','sets']][(n-1)%4];};
+
+function recipeCard(k){var r=RECIPES[k];return '<article class="recipe"><div class="rh">DIY recipe</div><div class="rb"><b>'+r.title+'</b><ul>'+r.mats.map(function(m){return '<li><code>'+m+'</code></li>';}).join('')+'</ul></div><div class="rf"><a href="#learn">'+r.howto+'</a><a href="#workbench/'+k+'">Try it at the Workbench</a></div></article>';}
+
+/* ---------- pages ---------- */
+function home(){var c=curDay(),s=c?st(c):null;
+  var sessToday=DAYS.filter(function(d){return st(d).sess==='today';})[0];
+  var todayLine=!c?'Puzzles start <b>Tue 1 Dec</b> at 00:00 EST. First live session: Fri 4 Dec.':(today>U(2026,11,22)?'All 12 days are out and every session is recorded.':'<a href="#day-'+pad(c.n)+'"><b>Day '+pad(c.n)+'</b></a> is out '+chip(s.status,true)+(sessToday?'<br>Live today: <a href="#day-'+pad(sessToday.n)+'">Session '+sessToday.n+'</a>, '+sessToday.sess.label.toLowerCase()+' (covers Day '+pad(sessToday.n)+')':''));
+  var openN=DAYS.filter(function(d){return now>=d.spoil;}).map(function(d){return d.n;});
+  var ro=!c?'<span class="p">user=&gt;</span> (today)\n{:puzzles-start <span class="s">"Tue 1 Dec"</span>\n :get-ready     <span class="s">"Start here"</span>}':'<span class="p">user=&gt;</span> (today)\n{:day     '+c.n+'\n :session '+(sessToday?'{:covers '+sessToday.n+' :format :'+sessToday.sess.fmt+'}':'nil')+'\n :open    ['+openN.join(' ')+']   <span class="c">; days with solutions</span>}';
+  var next=DAYS.filter(function(d){return d.sess.day>=today;}).slice(0,3);
+  return '<h1 class="sr-only">Nooks &amp; Parens</h1>'+
+   '<div class="dialog"><span class="who">Nooks &amp; Parens</span><p class="line1">Clojure. A power tool for evolving systems.</p><p>Each Advent of Code day is a small evolving system: part 2 usually changes the question part 1 asked.</p><p class="draft">One line inviting people in for December.</p><span class="more" aria-hidden="true">&#9660;</span></div>'+
+   '<div class="cols"><section class="panel" aria-labelledby="mm"><h2 id="mm">Main menu</h2><ul class="menu">'+
+     '<li><a href="#start"><span class="key">1</span>Start here<small>zero to a running REPL</small></a></li>'+
+     '<li><a href="#today"><span class="key">2</span>Today<small>'+(c?'Day '+pad(c.n):'from Tue 1 Dec')+'</small></a></li>'+
+     '<li><a href="#calendar"><span class="key">3</span>Calendar<small>What&rsquo;re ya REPLin&rsquo;?</small></a></li>'+
+     '<li><a href="#workbench"><span class="key">4</span>Workbench<small>try Clojure, no install</small></a></li></ul>'+
+     '<a class="pill" href="https://clojurians.net">Join #adventofcode on Clojurians Slack</a><span class="pill-note">Free sign-up. One thread per puzzle, every day.</span></section>'+
+   '<section class="panel" aria-labelledby="td"><h2 id="td">Today &middot; '+fmt(now)+'</h2><p>'+todayLine+'</p><div class="clip" aria-label="Today as data">'+ro+'</div></section></div>'+
+   '<section class="panel" aria-labelledby="sched"><h2 id="sched" class="shopsign">What&rsquo;re ya REPLin&rsquo;?</h2>'+(next.length?shopList(next):'<p>All 12 sessions are recorded. <a href="#videos">Watch the replays</a>.</p>')+'<p><a href="#calendar">See all 12 days</a></p></section>';}
+
+function shopList(list){return '<ul class="shop">'+list.map(function(d){var s=st(d);var price=s.sess==='recorded'?'<a href="#videos">Replay ready</a>':(s.sess==='today'?chip('live'):fmt(d.sess.day));
+  return '<li><svg aria-hidden="true"><use href="#t-'+d.tool+'"/></svg><div><b>Session '+pad(d.n)+' &middot; '+d.sess.label+'</b><div class="meta">Covers <a href="#day-'+pad(d.n)+'">Day '+pad(d.n)+'</a> &middot; Clojure Camp Discord &middot; [time TBA] &middot; guest to be announced</div></div><div class="price">'+price+'</div></li>';}).join('')+'</ul>';}
+
+function calendar(){var slots=DAYS.map(function(d){var s=st(d),isT=d.unlock<=now&&now<d.unlock+DAY;
+  var line=s.status==='open'?'Solutions open':(s.status==='locked'?'Locked until '+fmt(d.spoil).replace(' Dec',''):'Hangs here '+fmt(d.unlock).replace(' Dec',''));
+  return '<a class="slot '+s.status+(isT?' today':'')+'" href="#day-'+pad(d.n)+'"><svg aria-hidden="true"><use href="#t-'+d.tool+'"/></svg><b>Day '+pad(d.n)+(isT?' (today)':'')+'</b>'+line+'</a>';}).join('');
+  return '<p class="crumbs"><a href="#home">Home</a> &rsaquo; Calendar</p>'+
+   '<section class="panel"><h1 class="shopsign">What&rsquo;re ya REPLin&rsquo;?</h1><p>Twelve puzzles, twelve live sessions. A day&rsquo;s tool goes up on the wall when its puzzle unlocks; solutions open three days later.</p>'+
+   '<a class="pill" href="https://clojurians.net">Join #adventofcode on Clojurians Slack</a></section>'+
+   '<div class="wall" role="region" aria-label="December tool wall"><div class="slots">'+slots+'</div></div>'+
+   '<p class="legend"><span>'+chip('open')+' green tool: solutions open</span><span>'+chip('locked')+' blue tool: puzzle out, solutions locked</span><span>'+chip('soon')+' dashed outline: not out yet</span></p>'+
+   '<section class="panel"><h2>Session schedule</h2>'+shopList(DAYS)+'<p style="font-size:14px">No session Fri 11 Dec. Formats are drafts. <a href="#formats">About the formats</a>.</p></section>';}
+
+function day(n){var d=DAYS[n-1],s=st(d);
+  var gate=s.status==='soon'?'<div class="gate"><div class="str" aria-hidden="true"><span></span><span></span></div><div class="board" role="note"><span class="big">Not open yet</span>The puzzle unlocks '+fmt(d.unlock)+' at 00:00 EST (05:00 UTC).</div></div>':
+    (s.status==='locked'?'<div class="gate"><div class="str" aria-hidden="true"><span></span><span></span></div><div class="board" role="note"><span class="big">Closed</span>Solutions, the replay and the tutorial open <b>'+fmt(d.spoil)+', 05:00 UTC</b>.<br>Nothing on this page gives the answer away.</div></div>':
+    '<div class="gate open"><div class="str" aria-hidden="true"><span></span><span></span></div><div class="board" role="note"><span class="big">Open</span>Solutions opened '+fmt(d.spoil)+'. Spoilers below.</div></div>');
+  var cta=!s.open?'<a class="pill" href="https://discord.clojure.camp">Join session '+n+' on Discord</a><span class="pill-note">Clojure Camp Discord &middot; '+fmt(d.sess.day)+' &middot; [time TBA]</span>':'<a class="pill" href="https://clojurians.net">Discuss Day '+pad(n)+' in #adventofcode</a>';
+  var h='<p class="crumbs"><a href="#home">Home</a> &rsaquo; <a href="#calendar">Calendar</a> &rsaquo; Day '+pad(n)+'</p>'+
+   '<div class="cols"><section class="panel"><h1>Day '+pad(n)+'</h1><p>'+chip(s.status,true)+'</p>'+cta+'</section>'+
+   '<div class="note" style="margin:18px 0"><dl><dt>Unlocks</dt><dd>'+fmt(d.unlock)+', 00:00 EST</dd><dt>Puzzle</dt><dd>'+(s.unlocked?'<a href="https://adventofcode.com/2026/day/'+n+'">Day '+n+' on adventofcode.com</a>':'Link appears at unlock')+'</dd><dt>Session</dt><dd>'+n+' &middot; '+fmt(d.sess.day)+' &middot; '+d.sess.label+'</dd><dt>Guest</dt><dd>To be announced</dd><dt>Solutions</dt><dd>open '+fmt(d.spoil)+'</dd></dl></div></div>'+gate+
+   '<section class="panel" aria-labelledby="diy"><h2 id="diy">DIY recipes</h2><p>The recipe is given; the building is yours. These are general skills for this kind of puzzle, with made-up data and no hints about the answer.</p><div class="recipes">'+DAY_RECIPES(n).map(recipeCard).join('')+'</div></section>';
+  if(!s.open) h+='<section class="panel"><h2>Live session</h2><p>Session '+n+' &middot; '+fmt(d.sess.day)+' &middot; '+d.sess.label+'. Guest to be announced.</p><p>Talk about the puzzle in today&rsquo;s thread in <code>#adventofcode</code>.</p></section>';
+  else h+='<section class="panel"><h2>Replay</h2>'+(s.sess==='recorded'?'<button class="ghost" data-target="v'+n+'" aria-expanded="false">Watch session '+n+' (loads YouTube)</button><div id="v'+n+'" hidden style="aspect-ratio:16/9;background:#000;color:#fff;border-radius:14px;margin-top:8px;display:flex;align-items:center;justify-content:center">Privacy-enhanced YouTube embed</div><h3>Chapters</h3><ul class="shop"><li><span></span><div><a href="#">04:12</a> Turning the input into maps</div><span></span></li><li><span></span><div><a href="#">23:05</a> Part 2: one change, and what it touched</div><span></span></li></ul>':'<p>Session '+n+' is '+(s.sess==='today'?'<b>today</b>':'on '+fmt(d.sess.day))+'. The replay appears here afterwards.</p>')+'</section>'+
+    '<section class="panel"><h2>Built by the community</h2><ul><li><a href="#">[@handle-a]</a>: <span class="draft">one line on the approach</span></li><li><a href="#">[@handle-b]</a>: <span class="draft">one line on the approach</span></li></ul><p style="font-size:14px">Linked with credit; the code stays on each author&rsquo;s site.</p></section>';
+  return h;}
+
+function workbench(preset){var k=RECIPES[preset]?preset:'parse';
+  return '<p class="crumbs"><a href="#home">Home</a> &rsaquo; Workbench</p>'+
+   '<section class="bench" aria-labelledby="wb"><div class="top"><h1 id="wb" style="margin:0;font-size:22px;color:inherit">Workbench</h1><span class="status" id="wbstatus">Checking the evaluator&hellip;</span></div>'+
+   '<div class="area"><div><label for="code">Your code</label><textarea id="code" spellcheck="false" aria-describedby="codehelp">'+RECIPES[k].code.replace(/</g,'&lt;')+'</textarea>'+
+   '<p id="codehelp" style="font-size:13px;margin:4px 0">Tab moves to the next control. <kbd>Ctrl</kbd>+<kbd>Enter</kbd> (or <kbd>Cmd</kbd>+<kbd>Enter</kbd>) crafts.</p>'+
+   '<div class="row"><button class="craft" id="craft" type="button">Craft it</button><button class="ghost" id="clear" type="button">Clear</button></div>'+
+   '<p style="margin:12px 0 0;font-weight:900">Starter recipes</p><div class="starters">'+Object.keys(RECIPES).map(function(r){return '<button class="ghost" type="button" data-recipe="'+r+'">'+RECIPES[r].title+'</button>';}).join('')+'</div></div>'+
+   '<div><span style="font-weight:900;display:block;margin-bottom:4px">Result</span><div class="slotout" id="out" aria-live="polite"><span class="kind">waiting</span><pre>Press "Craft it" to evaluate.</pre></div></div></div></section>'+
+   '<section class="panel"><h2>Good to know</h2><ul><li>Results print as Clojure data: maps, vectors, sets.</li><li>Nothing you type leaves your browser, and nothing is saved. Don&rsquo;t paste your puzzle input or your Advent of Code session cookie anywhere; the Workbench never asks for them.</li><li>No AI here. You build it.</li><li>This is a place to try things. For the puzzles, set up a local REPL: <a href="#start">Start here</a>.</li><li>Runs on <a href="#">Scittle</a> by borkdude.</li></ul></section>';}
+
+var STUB={start:['Start here','The one route: new to programming? &rarr; Codespaces or install per OS (with the Zero to REPL videos) &rarr; three checks &rarr; Calva &rarr; the template &rarr; Day 01. Next iteration.'],
+ videos:['Videos','Replays, one line each with format, day and length. Next iteration.'],
+ learn:['Learn','Tutorials, how-to guides, reference and &ldquo;why it works&rdquo;. DIY recipes link here. Next iteration.'],
+ roundups:['Roundups','Mondays 7, 14 and 21 Dec, and the January wrap-up. Next iteration.'],
+ about:['About','Who keeps Nooks &amp; Parens, their role, credits. Next iteration.'],
+ formats:['Formats','The 12 session formats, one card each. Next iteration.']};
+function stub(k){return '<p class="crumbs"><a href="#home">Home</a> &rsaquo; '+STUB[k][0]+'</p><section class="panel"><h1>'+STUB[k][0]+'</h1><p>'+STUB[k][1]+'</p><a class="pill" href="https://clojurians.net">Join #adventofcode on Clojurians Slack</a></section>';}
+
+/* ---------- Workbench eval ---------- */
+function hasScittle(){return !!(window.scittle&&scittle.core&&scittle.core.eval_string);}
+function kindOf(txt){var t=txt.trim();return t[0]==='{'?'map':t.slice(0,2)==='#{'?'set':t[0]==='['?'vector':t[0]==='('?'seq':t[0]==='"'?'string':/^-?\d/.test(t)?'number':t[0]===':'?'keyword':'value';}
+function show(kind,text,err){var o=document.getElementById('out');o.className='slotout'+(err?' err':'');
+  o.innerHTML='<span class="kind">'+kind+'</span><pre></pre>'+(err?'<p style="font-size:14px;margin:8px 0 0">How to read this: <a href="#learn">Reading an error</a></p>':'');o.querySelector('pre').textContent=text;}
+function craft(){var code=document.getElementById('code').value;
+  if(!code.trim()){show('empty','Type some Clojure first, or pick a starter recipe.',true);return;}
+  if(hasScittle()){try{var r=scittle.core.eval_string('(pr-str (do '+code+'\n))');show(kindOf(r),r);}catch(e){show('error',String(e&&e.message||e),true);}return;}
+  var hit=null;Object.keys(RECIPES).forEach(function(k){if(RECIPES[k].code.replace(/\s+/g,' ').trim()===code.replace(/\s+/g,' ').trim())hit=RECIPES[k];});
+  if(hit)show(hit.canned[0],hit.canned[1]);else show('offline preview','The evaluator could not load here, so only the starter recipes run. On the real site, Scittle evaluates anything you type.',true);}
+function benchStatus(){var st=document.getElementById('wbstatus');if(st)st.textContent=hasScittle()?'Evaluator: Scittle, running in your browser':'Offline preview: starter recipes only';}
+window.npScittle=benchStatus;
+function wireBench(){var st=document.getElementById('wbstatus');if(!st)return;benchStatus();
+  document.getElementById('craft').onclick=craft;
+  document.getElementById('clear').onclick=function(){var c=document.getElementById('code');c.value='';c.focus();};
+  document.getElementById('code').addEventListener('keydown',function(e){if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();craft();}});
+  document.querySelectorAll('[data-recipe]').forEach(function(b){b.onclick=function(){document.getElementById('code').value=RECIPES[b.dataset.recipe].code;show('waiting','Press "Craft it" to evaluate.');};});}
+
+/* ---------- router ---------- */
+var main=document.getElementById('main');
+function render(){var h=(location.hash||'#home').slice(1),parts=h.split('/'),r=parts[0],tab=r,html,m;
+  if(r==='today'){var c=curDay();if(c){r='day-'+pad(c.n);}else{r='home';}tab='today';}
+  if(r==='home'||r==='')html=home();
+  else if(r==='calendar')html=calendar();
+  else if((m=/^day-(\d\d)$/.exec(r))&&+m[1]>=1&&+m[1]<=12){html=day(+m[1]);if(tab!=='today')tab='calendar';}
+  else if(r==='workbench')html=workbench(parts[1]);
+  else if(STUB[r])html=stub(r);
+  else{html=home();tab='home';}
+  main.innerHTML=html;
+  document.querySelectorAll('#hotbar a').forEach(function(a){if(a.dataset.r===tab)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+  main.querySelectorAll('[data-target]').forEach(function(b){b.onclick=function(){var t=document.getElementById(b.dataset.target),o=t.hidden;t.hidden=!o;b.setAttribute('aria-expanded',String(o));};});
+  wireBench();}
+var keysOn=true,kb=document.getElementById('keys');
+kb.onclick=function(){keysOn=!keysOn;kb.setAttribute('aria-pressed',String(keysOn));kb.textContent='Shortcuts: '+(keysOn?'on':'off');};
+var ROUTES=['start','today','calendar','workbench','videos','learn','roundups','about'];
+document.addEventListener('keydown',function(e){if(!keysOn||e.ctrlKey||e.metaKey||e.altKey)return;var t=e.target,tag=t&&t.tagName;
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT'||(t&&t.isContentEditable))return;
+  var i='12345678'.indexOf(e.key);if(i>=0){location.hash=ROUTES[i];}});
+window.addEventListener('hashchange',function(){render();main.focus({preventScroll:true});window.scrollTo(0,0);});
+var sel=document.getElementById('simdate');setNow(sel.value);sel.onchange=function(){setNow(sel.value);render();};
+render();
+window.addEventListener('load',benchStatus);
+})();
+</script>
+</body>
+</html>
