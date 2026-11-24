@@ -27,7 +27,7 @@ Draft-Header: false
   Body:
   - Sections are Markdown headings, numbered by hand ("## 2. Schedule").
     Each heading gets GitHub's id for its text: "## 2. Schedule" -> #2-schedule,
-    "## 7. Author's Address" -> #7-authors-address.
+    "## 9. Author's Address" -> #7-authors-address.
     If you rename or renumber one, update its Table of Contents link;
     bb check fails on a TOC link with no matching heading.
   - Wrap unwritten sentences in <span class="draft">…</span> or <p class="draft">…</p>.
@@ -54,12 +54,14 @@ Draft-Header: false
 - [Abstract](#abstract)
 - [Table of Contents](#table-of-contents)
 - [1. Introduction](#1-introduction)
-- [2. Schedule](#2-schedule)
-- [3. Audience](#3-audience)
-- [4. Joining](#4-joining)
-- [5. Security Considerations](#5-security-considerations)
-- [6. References](#6-references)
-- [7. Author's Address](#7-authors-address)
+- [2. Background](#2-background)
+- [3. How I Got Here](#3-how-i-got-here)
+- [4. The Plan](#4-the-plan)
+- [5. Audience](#5-audience)
+- [6. Joining](#6-joining)
+- [7. Security Considerations](#7-security-considerations)
+- [8. References](#8-references)
+- [9. Author's Address](#9-authors-address)
 
 ## 1. Introduction
 
@@ -82,24 +84,48 @@ My teacher says learning is all about consistency over time. Five to fifteen min
 Advent of Code is exactly that kind of daily practice, a small puzzle every day, and it's better with people. That's what Nooks &amp; Parens is for.
 
 
-## 2. Schedule
+## 2. Background
 
-<p class="body">December: twelve puzzles, twelve sessions, calendar is here: /nooks-and-parens/days/.</p>
+This started with a simple ask: "do something for Advent of Code."
 
-## 3. Audience
+Of course I had to be super extra about it. I care about pedagogy, and about doing things right. So "something" turned into a research project, a template, a plan for December, and this hub.
+
+## 3. How I Got Here
+
+Before building anything, I wanted to know what people actually do when they solve Advent of Code in Clojure. So I went and found every Advent of Code repo I could: 10,960 of them across four languages, about 3,500 in Clojure ([DATASETS]).
+
+Then I stuck it all in Datomic. For good luck. (If you want a how-to-Datomic reference, the analysis repo doubles as one: [RESEARCH].)
+
+With the data in one place, I looked at three things: which dependencies people reach for, what kinds of problems they're solving, and how they solve them.
+
+That analysis is where some of the how-to guides came from. The libraries that kept showing up (math.combinatorics, data.priority-map, instaparse, core.async, loom) each got a guide in the template: combinatorics, shortest paths, parsing, channels and graphs ([TEMPLATE]). They're all on the hub: <a href="/nooks-and-parens/learn/">Learn</a>.
+
+## 4. The Plan
+
+<p class="body">December: twelve puzzles, twelve sessions, calendar is here: <a href="/nooks-and-parens/days/">/nooks-and-parens/days/</a>.</p>
+
+Every weekday there's a session (except Friday 11 December). It's staggered: each session works through a puzzle that unlocked a few days earlier, and that day's solution goes up here once its spoiler gate opens.
+
+On most days there's also a piece of content about the solution: how it was solved, and why.
+
+Videos are hosted on ClojureTV ([CLJTV]) and embedded here, on the day's page. (They only load when you press play.)
+
+And every day links the resources it uses: the how-to guides, the references, the docs.
+
+## 5. Audience
 
 <p class="body">Who it's for: people new to Clojure (1-3 years experience)First time using Clojure? 
 Link Start here: /nooks-and-parens/start/.</p>
 
-## 4. Joining
+## 6. Joining
 
 <p class="body">How to join: check out the #adventofcode channel on Clojurians Slack, as well as the live mob and pairng sessions on the Clojure Camp Discord.</p>
 
-## 5. Security Considerations
+## 7. Security Considerations
 
 <p class="body">The spoiler policy: solutions, replays and tutorials appear 4 days after each puzzle unlocks.</p>
 
-## 6. References
+## 8. References
 
 <dl class="rfc-refs">
 <dt>[AOC]</dt>
@@ -110,10 +136,16 @@ Link Start here: /nooks-and-parens/start/.</p>
 <dd>"Clojure Camp Discord", <a href="https://discord.clojure.camp">https://discord.clojure.camp</a>.</dd>
 <dt>[TEMPLATE]</dt>
 <dd>"clojure-template-aoc", <a href="https://github.com/lambduhh/clojure-template-aoc">https://github.com/lambduhh/clojure-template-aoc</a>. Its guides on the hub: <a href="/nooks-and-parens/start/">Start here</a> and <a href="/nooks-and-parens/learn/">Learn</a>.</dd>
+<dt>[RESEARCH]</dt>
+<dd>"clojure-aoc-research": the analysis, with Datomic Local and Datalog, <a href="https://github.com/lambduhh/clojure-aoc-research">https://github.com/lambduhh/clojure-aoc-research</a>.</dd>
+<dt>[DATASETS]</dt>
+<dd>Carvalho, T., "programming-language-vitality": the repo lists the analysis starts from, <a href="https://github.com/thiagooak/programming-language-vitality">https://github.com/thiagooak/programming-language-vitality</a>.</dd>
+<dt>[CLJTV]</dt>
+<dd>"ClojureTV", <a href="https://www.youtube.com/@ClojureTV">https://www.youtube.com/@ClojureTV</a>.</dd>
 <dt>[HUB]</dt>
 <dd>"Nooks &amp; Parens", <a href="/nooks-and-parens/">https://lambduhh.github.io/nooks-and-parens/</a>.</dd>
 </dl>
 
-## 7. Author's Address
+## 9. Author's Address
 
 L. Jordan Miller, an engineer on the Clojure team at Nubank. @lambduhhh
