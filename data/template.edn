@@ -8,11 +8,12 @@
 ;; :template/pages: which Markdown files become hub pages, and where.
 ;;   :kind is the Learn drawer: :tutorial :how-to :reference :explanation, or :ai
 ;;   for the optional "Using an AI agent?" shelf (never part of the main route).
+;;   :diagram-first? moves the page's Mermaid diagram to just under its title.
 ;; Every src/howto/*.clj file also becomes a how-to page at /learn/howto/<name>/.
 ;; Any other file a guide links to opens on GitHub at the pinned commit.
 {:template/sha "5e0f08fb811a5d645fcb4654564094ec26bc0ae3"
  :template/pages
- [{:path "docs/setup-flowchart.md"         :hub "/start/"                   :kind :how-to}
+ [{:path "docs/setup-flowchart.md"         :hub "/start/"                   :kind :how-to :diagram-first? true}
   {:path "docs/tutorial.md"                :hub "/learn/tutorial/"          :kind :tutorial}
   {:path "README.md"                       :hub "/learn/template/"          :kind :reference}
   {:path "ai/README.md"                    :hub "/learn/ai/"                :kind :ai}

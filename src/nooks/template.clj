@@ -92,6 +92,46 @@
           (hub-for target)       (str (hub-href (hub-for target)) frag)
           :else                  (str (github-url site sha dir target) frag))))))
 
+;; ---- Mermaid diagrams ------------------------------------------------------
+;;
+;; GitHub draws Mermaid in the browser with JavaScript (~3 MB, and it injects
+;; inline styles our CSP blocks). We render each diagram once to a static SVG
+;; with `bb diagrams` (Kroki, https://kroki.io, sent only the diagram text,
+;; which is public in the template repo) and commit it under
+;; assets/diagrams/<key>.svg. Builds and visitors never call Kroki. A diagram
+;; with no SVG yet falls back to its source in a collapsed <details>.
+
+(def diagram-init
+  "Mermaid config prepended before rendering: site colours (docs/design-system.md),
+  black text on paper, and plain SVG text labels so the file works as an <img>."
+  (str "%%{init: {\"theme\":\"base\",\"flowchart\":{\"htmlLabels\":false},"
+       "\"themeVariables\":{\"primaryColor\":\"#fffaf0\",\"primaryBorderColor\":\"#000000\","
+       "\"primaryTextColor\":\"#000000\",\"lineColor\":\"#6e4424\",\"secondaryColor\":\"#f3e6cc\","
+       "\"tertiaryColor\":\"#ffffff\",\"fontFamily\":\"Trebuchet MS, Helvetica, sans-serif\"}}}%%\n"))
+
+(defn diagram-key
+  "Content address of a diagram: changes when its source or the config does."
+  [source]
+  (let [md (java.security.MessageDigest/getInstance "SHA-256")
+        bs (.digest md (.getBytes (str diagram-init source) "UTF-8"))]
+    (subs (apply str (map #(format "%02x" %) bs)) 0 16)))
+
+(defn round-coords
+  "Round every decimal with 3+ fraction digits to 2 places. Mermaid's minified
+  path data runs numbers together (1.234.567 is 1.234 then .567), which a
+  pre-commit PII scanner reads as CPF/CNPJ numbers. Two places is far below a
+  pixel at this size; integers and hex colours are untouched, and the path
+  data still parses."
+  [s]
+  (str/replace s #"(\d*)\.(\d{3,})"
+               (fn [[_ i f]]
+                 (let [r (-> (format "%.2f" (Double/parseDouble (str (if (str/blank? i) "0" i) "." f)))
+                             (str/replace #"\.?0+$" ""))
+                       r (if (str/blank? i) (str/replace r #"^0" "") r)]
+                   (if (str/blank? r) "0" r)))))
+
+(defn diagram-file [k] (fs/path "assets" "diagrams" (str k ".svg")))
+
 ;; ---- Markdown tree ---------------------------------------------------------
 
 (defn github-slug
@@ -138,7 +178,13 @@
          node))
      ast)))
 
-(defn- renderers [lang]
+(defn- diagram-figure [lang href]
+  [:figure.diagram
+   [:a {:href href} [:img {:src href :alt (t-str lang :template/diagram-alt)}]]
+   [:figcaption [:a {:href "#after-diagram"} (t lang :template/diagram-skip)]
+    " · " [:a {:href href} (t lang :template/diagram-full)]]])
+
+(defn- renderers [lang {:keys [diagram-href]}]
   (let [html (fn [_ctx node]
                (let [s (md/node->text node)]
                  (cond (comment? s)       nil
@@ -149,18 +195,36 @@
            :html-block  html
            :code (fn [ctx node]
                    (if (= "mermaid" (:language node))
-                     [:details.diagram
-                      [:summary (t lang :template/diagram)]
-                      [:pre [:code (md/node->text node)]]]
+                     (let [src (md/node->text node)
+                           k   (diagram-key src)]
+                       (if (and diagram-href (fs/exists? (diagram-file k)))
+                         (list (diagram-figure lang (diagram-href k)) [:span {:id "after-diagram"}])
+                         (do (binding [*out* *err*]
+                               (println "note: no SVG for a Mermaid diagram yet; run bb diagrams"))
+                             [:details.diagram
+                              [:summary (t lang :template/diagram)]
+                              [:pre [:code src]]])))
                      ((:code mdt/default-hiccup-renderers) ctx node))))))
+
+(defn- hoist-diagram
+  "Move the first Mermaid block to just after the h1."
+  [ast]
+  (let [c    (:content ast)
+        mer? #(and (= :code (:type %)) (= "mermaid" (:language %)))
+        d    (first (filter mer? c))
+        h1i  (first (keep-indexed (fn [i n] (when (and (= :heading (:type n)) (= 1 (:heading-level n))) i)) c))]
+    (if (and d h1i)
+      (let [rest-c (vec (remove #(identical? % d) c))]
+        (assoc ast :content (vec (concat (subvec rest-c 0 (inc h1i)) [d] (subvec rest-c (inc h1i))))))
+      ast)))
 
 (defn render-markdown
   "{:hiccup … :title … :draft? …} for Markdown text from repo path `from`."
-  [lang text rewrite]
+  [lang text rewrite & [{:keys [diagram-first?] :as opts}]]
   (let [text (strip-front-matter text)
-        ast  (transform (md/parse text) rewrite)
+        ast  (cond-> (transform (md/parse text) rewrite) diagram-first? hoist-diagram)
         h1   (first (filter #(and (= :heading (:type %)) (= 1 (:heading-level %))) (:content ast)))]
-    {:hiccup (mdt/->hiccup (renderers lang) ast)
+    {:hiccup (mdt/->hiccup (renderers lang opts) ast)
      :title  (some-> h1 md/node->text)
      :draft? (draft-marker? text)}))
 
@@ -201,7 +265,7 @@
         hows    (howtos dir)
         hub-for (into hub-for (map (fn [x] [(:path x) (str "/learn/howto/" (:name x) "/")]) hows))
         doc-page
-        (fn [{:keys [path hub kind]}]
+        (fn [{:keys [path hub kind diagram-first?]}]
           {:path hub :route (hub-route hub) :kind kind
            :title (-> (slurp (str (fs/path dir path))) strip-front-matter
                       (->> (re-find #"(?m)^# (.+)$")) second)
@@ -211,7 +275,9 @@
                    rewrite (link-rewriter {:site site :sha sha :dir dir :hub-for hub-for
                                            :hub-href #(layout/href ctx (str (layout/lang-prefix lang) %))}
                                           path)
-                   {:keys [hiccup title]} (render-markdown lang (slurp (str (fs/path dir path))) rewrite)
+                   {:keys [hiccup title]} (render-markdown lang (slurp (str (fs/path dir path))) rewrite
+                                                           {:diagram-first? diagram-first?
+                                                            :diagram-href #(layout/href ctx (str "/assets/diagrams/" % ".svg"))})
                    route (hub-route hub)]
                {:route route
                 :title (or title path)
@@ -276,6 +342,33 @@
                 [:h2 (t lang :learn/ai)]
                 [:p (t lang :learn/ai-note)]
                 [:ul (map link (sort-by :title (by :ai)))]])})))
+
+;; ---- bb diagrams -----------------------------------------------------------
+
+(defn render-diagrams!
+  "Render every Mermaid block in the template pages to assets/diagrams/ via
+  Kroki, skipping ones already rendered. Commit the new SVGs."
+  [& _]
+  (let [site (edn/read-string (slurp "data/site.edn"))
+        {:template/keys [sha pages]} (config)
+        dir  (ensure-checkout! (:template/url site) sha)
+        srcs (for [{:keys [path]} pages
+                   node (:content (md/parse (strip-front-matter (slurp (str (fs/path dir path))))))
+                   :when (and (= :code (:type node)) (= "mermaid" (:language node)))]
+               [path (md/node->text node)])]
+    (fs/create-dirs (fs/path "assets" "diagrams"))
+    (doseq [[path src] srcs
+            :let [k (diagram-key src) f (diagram-file k)]]
+      (if (fs/exists? f)
+        (println "up to date:" (str f) "(" path ")")
+        (let [resp ((requiring-resolve 'babashka.http-client/post) "https://kroki.io/mermaid/svg"
+                    {:headers {"Content-Type" "text/plain"} :body (str diagram-init src) :throw false :timeout 60000})
+              svg  (:body resp)]
+          (when-not (and (= 200 (:status resp)) (str/starts-with? (str/triml svg) "<svg")
+                         (not (re-find #"(?i)<script|\s(?:href|src)=\"https?:" svg)))
+            (throw (ex-info (str "Kroki didn't return a clean SVG for " path) {:status (:status resp)})))
+          (spit (str f) (round-coords svg))
+          (println "wrote:" (str f) "(" path ")"))))))
 
 ;; ---- bb template:bump ------------------------------------------------------
 
