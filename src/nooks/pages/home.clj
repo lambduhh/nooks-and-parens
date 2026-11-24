@@ -63,7 +63,6 @@
        [:span.who (:site/name site)]
        [:p.line1 (:site/positioning site)]
        [:p framing]
-       [:p (t lang :home/invite)]
        [:span.more {:aria-hidden "true"} "▼"]]
 
       [:div.cols

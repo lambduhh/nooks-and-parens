@@ -6,7 +6,7 @@ The hub for a December 2026 Clojure [Advent of Code](https://adventofcode.com) c
 
 **Live site:** <https://lambduhh.github.io/nooks-and-parens/>
 
-**Status:** the site shell is up; most copy is still a placeholder (shown as `[draft]` on the page). Day pages, the Workbench and video pages arrive through December. See [the build plan](docs/plan.md).
+**Status:** alpha (`v0.1.0-alpha`), shared with friends for a first review. Day pages, the Workbench and video pages arrive through December. See [the build plan](docs/plan.md).
 
 Not affiliated with Advent of Code. Puzzles are linked, never copied.
 
@@ -24,7 +24,7 @@ To see the site as it will look on another date (spoiler gates, "today", the sch
 
 ```sh
 bb dev --as-of 2026-12-07          # a bare date means 12:00 UTC
-bb build --as-of 2026-12-04T05:00Z # an exact instant
+bb build --as-of 2026-12-05T05:00Z # an exact instant
 ```
 
 ## Commands
@@ -36,6 +36,7 @@ bb build --as-of 2026-12-04T05:00Z # an exact instant
 | `bb check` | Build for each date in the check set and fail on any broken rule (below) |
 | `bb test` | Unit tests: data shape, date and spoiler-gate logic, UI strings, the check rules |
 | `bb blog:new "Title"` | New blog post, created as a preview. Flag: `--slug` |
+| `bb template:bump` | Move the pinned template commit to its latest `main` (then `bb check` and a PR) |
 | `bb validate`, `bb links`, `bb maturity --check` | Checks for the planning docs in `docs/` ([temper](https://github.com/lambduhh/temper)) |
 
 ## How it's built
@@ -44,13 +45,14 @@ A static site; no server, no database, no JavaScript framework.
 
 - **Pages** are rendered by babashka with [hiccup](https://github.com/weavejester/hiccup) from the EDN files in [`data/`](data/). A daily update is a data edit, never a template edit.
 - **Page state** (is a puzzle out, are its solutions open, is a session today) is computed by pure functions in [`src/nooks/state.clj`](src/nooks/state.clj) from an `as-of` instant. Nothing else reads the clock, which is what makes `--as-of` and `bb check` possible.
+- **Guides** under `/start/` and `/learn/` are the [template repo](https://github.com/lambduhh/clojure-template-aoc)'s own Markdown and how-to namespaces, rendered at build time from a commit pinned in [`data/template.edn`](data/template.edn). Links between guides stay on the hub; anything else opens on GitHub at that commit. See [`src/nooks/template.clj`](src/nooks/template.clj).
 - **The blog** at `/blog/` is rendered by [quickblog](https://github.com/borkdude/quickblog) inside the same page layout. Its `base.html` is generated from [`src/nooks/layout.clj`](src/nooks/layout.clj) on every build.
 - **UI strings** live in [`data/i18n/`](data/i18n/). A `{:draft "…"}` value is a placeholder and always renders with a visible draft marker.
 - **Portuguese (pt-BR):** every page has a `/pt-br/` twin; untranslated twins say so ("Tradução em breve").
 - **Deploys** run from GitHub Actions to GitHub Pages on every push to `main` and daily at 05:05 UTC, just after puzzles unlock and spoiler gates open. See [hosting](docs/hosting.md).
 
 ```
-data/        site, days, videos, recipes, webring, UI strings (EDN)
+data/        site, days, videos, recipes, webring, template pin, UI strings (EDN)
 src/nooks/   build, state, layout, pages, blog, check, dev
 blog/posts/  blog posts (Markdown)
 templates/   quickblog templates
@@ -71,7 +73,7 @@ Open <http://localhost:1888/nooks-and-parens/blog/my-post.html> and edit `blog/p
 
 - A new post starts with `Preview: true`: reachable at its URL, but not on the blog index, tags or feeds. Delete the line to publish. (Don't write `Preview: false`; quickblog treats any value as a preview in its feeds.)
 - `Style: rfc` lays a post out like an old-school RFC; see [the announcement](blog/posts/announcement.md) for the header fields.
-- Raw HTML is allowed in posts. Wrap unwritten text in `<span class="draft">…</span>`.
+- Raw HTML is allowed in posts. Wrap unwritten text in `<span class="draft">…</span>`; it shows as `[draft]` until you replace it.
 
 ## Checks
 
@@ -100,8 +102,6 @@ Each rule has a test that feeds it a violation.
 ## Contributing
 
 Work on a branch and open a pull request; don't push to `main`. Run `bb test` and `bb check` first, and paste the `bb check` summary in the PR. If you change `docs/`, also run `bb validate`, `bb links` and `bb maturity --check`. CI runs all of them.
-
-*[draft] How people can help, and where to ask first.*
 
 ## Credits
 

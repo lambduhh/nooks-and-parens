@@ -10,7 +10,8 @@
             [nooks.i18n :as i18n :refer [t t-str]]
             [nooks.layout :as layout]
             [nooks.pages.stubs :as stubs]
-            [nooks.state :as state])
+            [nooks.state :as state]
+            [nooks.template :as template])
   (:import [java.time Instant]))
 
 (def languages [:en :pt-BR])
@@ -33,12 +34,20 @@ setInterval(function(){fetch(u,{cache:'no-store'}).then(function(r){return r.tex
          ;; Nothing is translated yet: pt-BR pages carry English content.
          :content-lang :en))
 
-(defn- render-route! [out-dir ctx route]
-  (let [page-fn (stubs/pages route)
-        ctx     (assoc ctx :route route)
-        pg      (page-fn ctx)]
-    (write! (page-file out-dir (:lang ctx) (layout/routes route))
-            (layout/page ctx pg))))
+(defn- all-pages
+  "Every non-blog page: [{:route :path :page}]. Start here and the Learn
+  guides come from the template repo (nooks.template)."
+  [site]
+  (let [tpl (template/pages site)]
+    (concat
+     (for [[route f] stubs/pages] {:route route :path (layout/routes route) :page f})
+     [{:route :learn :path (layout/routes :learn) :page (template/learn-page site (concat tpl (blog/post-list)))}]
+     tpl)))
+
+(defn- render-page! [out-dir ctx {:keys [route path page]}]
+  (let [ctx (assoc ctx :route route :path path)]
+    (write! (page-file out-dir (:lang ctx) path)
+            (layout/page ctx (page ctx)))))
 
 (defn- blog-pt-notice! [out-dir ctx]
   (let [ctx (assoc ctx :lang :pt-BR :content-lang :en :route :blog-pt)
@@ -62,9 +71,9 @@ setInterval(function(){fetch(u,{cache:'no-store'}).then(function(r){return r.tex
       (fs/create-dirs out-dir)
       (fs/copy-tree "assets" (fs/path out-dir "assets"))
       (when dev? (write! (fs/path out-dir "assets" "js" "dev-reload.js") dev-reload-js))
-      (doseq [lang languages
-              route (keys stubs/pages)]
-        (render-route! out-dir (ctx-for base lang) route))
+      (let [pages (all-pages (:site d))]
+        (doseq [lang languages, pg pages]
+          (render-page! out-dir (ctx-for base lang) pg)))
       (write! (fs/path out-dir "404.html")
               (layout/page (assoc base :lang :en :route nil) (stubs/not-found (assoc base :lang :en))))
       (blog-pt-notice! out-dir base)

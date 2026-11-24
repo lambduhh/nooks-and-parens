@@ -36,6 +36,7 @@ Site tasks (add them to `bb.edn` as part of plan task 1; it already holds the do
 | `bb check` | Build for a set of dates and run every invariant in `docs/plan.md` § Checks |
 | `bb test` | Unit tests for date and state logic |
 | `bb blog:new "Title"` | New quickblog post |
+| `bb template:bump` | Point `data/template.edn` at the template repo's latest `main`; then `bb check` and a PR |
 | `bb blog:new "Title" --slug x` | Same, with a chosen file name |
 | (deploy) | No bb task: `.github/workflows/deploy.yml` deploys `public/` to GitHub Pages (see `docs/hosting.md`) |
 
@@ -43,7 +44,7 @@ Planned layout:
 
 ```
 bb.edn
-data/        site.edn days.edn videos.edn recipes.edn ring.edn i18n/{en,pt-BR}.edn
+data/        site.edn days.edn videos.edn recipes.edn ring.edn template.edn i18n/{en,pt-BR}.edn
 src/nooks/   build.clj state.clj pages/*.clj layout.clj check.clj
 blog/        quickblog posts (Markdown)
 templates/   quickblog templates matching the site layout
@@ -67,8 +68,8 @@ notes/       private (git-ignored)
 - The Workbench is a scratchpad, not a solver: no fetching puzzle inputs, no saved sessions, no squint (not even a link).
 
 ### Spoilers
-- A day's solutions, replay, tutorial and webring links appear only from **unlock + 3 days** (unlock is 00:00 EST = 05:00 UTC).
-- The gate is a visible state with the date in words ("Solutions open Fri 4 Dec, 05:00 UTC"). Never blurred or hidden content revealed by a click.
+- A day's solutions, replay, tutorial and webring links appear only from **unlock + 4 days** (unlock is 00:00 EST = 05:00 UTC).
+- The gate is a visible state with the date in words ("Solutions open Sat 5 Dec, 05:00 UTC"). Never blurred or hidden content revealed by a click.
 - DIY recipes are not solutions: they stay visible before the gate and never hint at an answer.
 
 ### Gated data
@@ -78,7 +79,7 @@ notes/       private (git-ignored)
 ### Public repo
 - No links to or data from internal company systems (internal chat, wikis, issue trackers, channel IDs).
 - Don't quote or cite internal positioning documents. The messaging rules below are the whole of what you need.
-- Jordan's employer role is disclosed on `/about`. Don't use the employer as proof anywhere else.
+- Jordan's employer role is disclosed on `/about` (left out of the alpha; it returns before launch), and as an author affiliation (Jordan, 2026-11-24: "an engineer on the Clojure team at Nubank"), e.g. in a post's author line. Never use the employer as proof.
 
 ### Messaging
 - One primary button per page. Default: join `#adventofcode` on Clojurians Slack (`https://clojurians.net`). Day pages: "Join session N on Discord" (`https://discord.clojure.camp`) before the spoiler date, "Discuss Day NN in #adventofcode" after it.

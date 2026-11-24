@@ -20,15 +20,14 @@
    :workbench "/workbench/"
    :videos    "/videos/"
    :learn     "/learn/"
-   :slot-7    "/slot-7/"     ; toolbelt slot 7 placeholder (Roundups cut 2026-11-24)
-   :about     "/about/"
    :formats   "/formats/"
    :blog      "/blog/"})
 
 (def toolbelt
-  "Slots 1–8, in key order, with their icon."
+  "Toolbelt slots, in key order, with their icon. Slot 7 (placeholder) and About
+  are out for the alpha (Jordan, 2026-11-24)."
   [[:start "map"] [:today "sun"] [:calendar "cal"] [:workbench "bench"]
-   [:videos "film"] [:learn "book"] [:slot-7 "shelf"] [:about "info"]])
+   [:videos "film"] [:learn "book"]])
 
 (def lang-prefix {:en "" :pt-BR "/pt-br"})
 
@@ -83,6 +82,18 @@
 (defn icon [id]
   [:svg {:aria-hidden "true" :focusable "false"} [:use {:href (str "#t-" id)}]])
 
+(def tool-emoji
+  "Power-tool emoji for headings, by route or Learn drawer. Decoration only:
+  aria-hidden, so headings read as their words (Jordan, 2026-11-24)."
+  {:start "🔌" :workbench "🪚" :learn "🧰" :formats "🔧" :videos "🪜"
+   :today "🔦" :not-found "🔩"
+   :tutorial "🔨" :how-to "🪛" :reference "📏" :explanation "⚙️" :blog "🪧"})
+
+(defn emoji
+  "The emoji for k as a decorative prefix, or nil."
+  [k]
+  (when-let [e (tool-emoji k)] (list [:span.emoji {:aria-hidden "true"} e] " ")))
+
 (defn tool-icon
   "Icon for a day's :day/tool keyword."
   [tool]
@@ -108,9 +119,12 @@
         site     (get-in ctx [:data :site])
         other    (if (= lang :en) :pt-BR :en)
         ;; The blog has one pt-BR page: a "coming soon" notice.
-        twin     (if (#{:blog :blog-pt} route)
+        twin     (cond
+                   (#{:blog :blog-pt} route)
                    (if (= lang :en) (href ctx "/pt-br/blog/") (route-href ctx :en :blog))
-                   (route-href ctx other (or route :home)))
+                   ;; Pages at their own path (template guides): same path, other language.
+                   (:path ctx) (href ctx (str (lang-prefix other) (:path ctx)))
+                   :else (route-href ctx other (or route :home)))
         lang-link (fn [l]
                     (if (= l lang)
                       [:a {:aria-current "true" :lang (name l)} (t lang (keyword "lang" (name l)))]
@@ -146,8 +160,7 @@
   (let [lang (:lang ctx)]
     [:footer.foot.wrap
      [:p (t lang :footer/line)]
-     [:p [:a {:href (route-href ctx :blog)} (t lang :footer/blog)]
-      " · " [:a {:href (route-href ctx :about)} (t lang :route/about)]]]))
+     [:p [:a {:href (route-href ctx :blog)} (t lang :footer/blog)]]]))
 
 ;; ---- Page ------------------------------------------------------------------
 
@@ -180,6 +193,7 @@
         [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
         [:title title]
         (when description [:meta {:name "description" :content description}])
+        [:link {:rel "icon" :type "image/svg+xml" :href (href ctx "/assets/favicon.svg")}]
         [:link {:rel "stylesheet" :href (href ctx "/assets/css/site.css")}]
         [:link {:rel "preload" :href (href ctx "/assets/fonts/nunito.woff2") :as "font" :type "font/woff2" :crossorigin "anonymous"}]
         head
