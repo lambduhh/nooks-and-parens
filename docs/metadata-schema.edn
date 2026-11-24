@@ -103,7 +103,10 @@
   ;; a WARNING rather than an error, and reported the same way whether or not
   ;; the file happens to exist on the machine running the check. Without that,
   ;; a link into an ignored directory passes locally and fails in CI.
-  :untracked-dirs  #{"notes/"}}
+  :untracked-dirs  #{"notes/"}
+
+  ;; Glossary swept by `bb links --glossary` for entries no doc links to.
+  :glossary        "docs/glossary.md"}
 
  ;; OKF-reserved filenames (skipped from concept validation).
  :reserved-files  #{"index.md" "log.md"}
