@@ -8,6 +8,7 @@ Rfc-Group: Nooks & Parens Working Group
 Rfc-Number: 0001
 Rfc-Category: Informational
 Rfc-Author: J. Miller
+Rfc-Org: Nubank
 Rfc-Date: November 2026
 Draft-Header: true
 
@@ -24,7 +25,8 @@ Draft-Header: true
     publish; don't write "Preview: false".
   - Draft-Title / Draft-Header: true show the title / the RFC header block as
     drafts. Delete each line when that part is final.
-  - Rfc-*: the header block (group, number, category, author, date). The footer
+  - Rfc-*: the header block (group, number, category, author, organisation,
+    date). The footer
     reuses Rfc-Author and Rfc-Category.
 
   Body:
@@ -38,7 +40,8 @@ Draft-Header: true
   - The end-of-preview marker below the Abstract is where the blog index
     excerpt stops.
   - Link hub pages with site paths: /nooks-and-parens/start/, /nooks-and-parens/days/.
-  - Don't link the template repo until it's public; say "coming soon".
+  - The template's guides are on the hub: setup at /nooks-and-parens/start/,
+    the tutorial and how-tos under /nooks-and-parens/learn/.
   - The page adds one next step (the Slack button) after the post.
 
   Before publishing:
@@ -89,7 +92,7 @@ Draft-Header: true
 
 ### 2.1. The Plan
 
-<p class="draft">The session dates, and the daily threads. Each session's format is picked from a pool, by puzzle and guest availability; no day-by-day plan, and guests named only once they've agreed. Also the template (coming soon), how-to guides and references. Link the calendar: /nooks-and-parens/days/.</p>
+<p class="draft">The session dates, and the daily threads. Each session's format is picked from a pool, by puzzle and guest availability; no day-by-day plan, and guests named only once they've agreed. Also the template ([TEMPLATE]), with its tutorial, how-to guides and reference, all on the hub: /nooks-and-parens/learn/. Link the calendar: /nooks-and-parens/days/.</p>
 
 ### 2.2. Session Formats
 
@@ -105,7 +108,7 @@ Draft-Header: true
 
 ## 3. How to Take Part
 
-<p class="draft">The one route. First: join Clojurians Slack and follow #adventofcode ([SLACK]). Start at the hub, Nooks &amp; Parens: guides, links and the Workbench, to try Clojure in the browser without installing. Then the template for the full setup (coming soon). Live sessions are on the Clojure Camp Discord ([DISCORD]); new programmers start with the Clojure Camp handbook ([HANDBOOK]).</p>
+<p class="draft">The one route. First: join Clojurians Slack and follow #adventofcode ([SLACK]). Start at the hub, Nooks &amp; Parens: guides, links and the Workbench, to try Clojure in the browser without installing. Then the template for the full setup ([TEMPLATE]): new to Clojure, follow the setup route at /nooks-and-parens/start/; agent users can try its optional setup skill. Live sessions are on the Clojure Camp Discord ([DISCORD]); new programmers start with the Clojure Camp handbook ([HANDBOOK]).</p>
 
 ## 4. Open Questions
 
@@ -139,6 +142,8 @@ Draft-Header: true
 <dd>"ClojureTV", <a href="https://www.youtube.com/@ClojureTV">https://www.youtube.com/@ClojureTV</a>.</dd>
 <dt>[TEACHING]</dt>
 <dd>"Teaching Clojure Together", Clojure/Conj 2024, <a href="https://www.youtube.com/watch?v=xOPoYHxZjdc">https://www.youtube.com/watch?v=xOPoYHxZjdc</a>.</dd>
+<dt>[TEMPLATE]</dt>
+<dd>"clojure-template-aoc", <a href="https://github.com/lambduhh/clojure-template-aoc">https://github.com/lambduhh/clojure-template-aoc</a>. Guides on the hub: <a href="/nooks-and-parens/learn/">Learn</a>.</dd>
 <dt>[RESEARCH]</dt>
 <dd>"clojure-aoc-research", <a href="https://github.com/lambduhh/clojure-aoc-research">https://github.com/lambduhh/clojure-aoc-research</a>.</dd>
 <dt>[DOCS]</dt>
@@ -157,4 +162,6 @@ Draft-Header: true
 
 ## 8. Author's Address
 
-<p class="draft">Name, and where to reach you (a link, not an email address, unless you want one public).</p>
+Jordan Miller, an engineer on the Clojure team at Nubank.
+
+<p class="draft">Where to reach you (a link, not an email address, unless you want one public).</p>

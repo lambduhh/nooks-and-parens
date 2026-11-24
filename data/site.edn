@@ -11,7 +11,7 @@
  :cta/slack          {:label "Join #adventofcode on Clojurians Slack" :url "https://clojurians.net"}
  :cta/slack-channel  nil        ; Jordan pastes the verified #adventofcode channel link here
  :cta/discord        {:url "https://discord.clojure.camp"}
- :template/public?   false      ; flip only when the template repo is public with "Use this template" on
+ :template/public?   true       ; public with "Use this template" on (checked 2026-11-24, gh repo view: isTemplate true)
  :template/url       "https://github.com/lambduhh/clojure-template-aoc"
  :aoc/year           2026
  :aoc/days           12}

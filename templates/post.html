@@ -6,7 +6,7 @@
      Draft-Title: true    show the title as a draft
      Style: rfc           lay the post out like an old-school RFC, with a header
                           block from Rfc-Group, Rfc-Number, Rfc-Category,
-                          Rfc-Author and Rfc-Date
+                          Rfc-Author, Rfc-Org (optional) and Rfc-Date
      Draft-Header: true   show those header values as drafts #}
 <article class="panel post{% if style %} {{style}}{% endif %}">
   {% if preview %}<p class="notice" role="note">[[t :blog/preview-banner]]</p>{% endif %}
@@ -20,6 +20,7 @@
     </ul>
     <ul>
       <li>{% if draft-header %}<span class="draft">{{rfc-author}}</span>{% else %}{{rfc-author}}{% endif %}</li>
+      {% if rfc-org %}<li>{% if draft-header %}<span class="draft">{{rfc-org}}</span>{% else %}{{rfc-org}}{% endif %}</li>{% endif %}
       <li><time datetime="{{date}}">{% if draft-header %}<span class="draft">{{rfc-date}}</span>{% else %}{{rfc-date}}{% endif %}</time></li>
     </ul>
   </div>
