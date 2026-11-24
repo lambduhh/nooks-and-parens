@@ -1,0 +1,47 @@
+{
+  "@context": {
+    "dcterms": "http://purl.org/dc/terms/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "temper": "https://w3id.org/temper#",
+    "schema": "http://schema.org/",
+
+    "type": "dcterms:type",
+    "title": "dcterms:title",
+    "description": "dcterms:description",
+    "tags": { "@id": "dcterms:subject", "@container": "@set" },
+    "created": { "@id": "dcterms:created", "@type": "xsd:date" },
+    "modified": { "@id": "dcterms:modified", "@type": "xsd:date" },
+    "source": { "@id": "dcterms:source", "@type": "@id" },
+    "creator": "dcterms:creator",
+    "contributors": { "@id": "dcterms:contributor", "@container": "@set" },
+
+    "ai_assisted": "temper:aiAssisted",
+    "session": "temper:session",
+    "tools": { "@id": "temper:tool", "@container": "@set" },
+    "agents_skills": { "@id": "temper:agentSkill", "@container": "@set" },
+
+    "review_maturity": "temper:reviewMaturity",
+    "review_note": "dcterms:provenance",
+    "reviewed_at": { "@id": "dcterms:dateAccepted", "@type": "xsd:dateTime" },
+
+    "generated": { "@id": "prov:wasGeneratedBy", "@context": {
+      "by": "temper:actor",
+      "at": { "@id": "prov:endedAtTime", "@type": "xsd:dateTime" } } },
+    "verified": { "@id": "temper:verification", "@container": "@set", "@context": {
+      "by": "temper:actor",
+      "at": { "@id": "dcterms:date", "@type": "xsd:dateTime" } } },
+    "sources": { "@id": "dcterms:source", "@container": "@set", "@context": {
+      "resource": "@id",
+      "id": "temper:sourceKey",
+      "title": "dcterms:title",
+      "author": "temper:actor",
+      "usage_count": { "@id": "temper:usageCount", "@type": "xsd:integer" },
+      "last_modified": { "@id": "dcterms:modified", "@type": "xsd:dateTime" } } },
+    "usage_window": { "@id": "temper:usageWindow", "@context": {
+      "from": { "@id": "temper:windowStart", "@type": "xsd:dateTime" },
+      "to": { "@id": "temper:windowEnd", "@type": "xsd:dateTime" } } },
+    "status": "schema:creativeWorkStatus",
+    "stale_after": { "@id": "temper:staleAfter", "@type": "xsd:dateTime" }
+  }
+}

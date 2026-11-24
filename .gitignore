@@ -1,8 +1,17 @@
+# Build output
 public/
-notes/
 .wrangler/
+node_modules/
+
+# Tooling caches
 .cpcache/
+.nrepl-port
+.calva/
 .clj-kondo/.cache/
 .lsp/
-node_modules/
+.portal/
+target/
 .DS_Store
+
+# Working notes (plans, handoffs): local history, never committed.
+notes/
