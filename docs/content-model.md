@@ -24,8 +24,6 @@ Every page is built from the EDN files in `data/`. A daily update is a data edit
  :site/tagline       "It's dangerous to go alone! Take this."
  :site/tagline-emoji "📝🧚"     ; decorative, after the tagline, aria-hidden; nil for none
  :site/positioning   "Clojure. A power tool for evolving systems."
- :site/framing       "Each Advent of Code day is a small evolving system: part 2 usually changes the question part 1 asked."
- :site/framing-final? false   ; true once Jordan confirms :site/framing; until then it renders as a draft
  :site/url           "https://lambduhh.github.io/power-tools-and-parens"   ; GitHub Pages project site, no trailing slash
  :site/base-path     "/power-tools-and-parens"                               ; prefixes every generated link
  :site/author        "Jordan Miller"                                   ; the blog feed author
