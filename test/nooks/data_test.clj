@@ -10,7 +10,7 @@
 
 (deftest site
   (let [s (:site d)]
-    (doseq [k [:site/name :site/tagline :site/positioning :site/framing :site/url
+    (doseq [k [:site/name :site/tagline :site/positioning :site/url
                :site/base-path :cta/slack :cta/discord :template/url]]
       (is (contains? s k) (str k)))
     (is (= "Power Tools & Parens" (:site/name s)))

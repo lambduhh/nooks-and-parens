@@ -50,10 +50,7 @@
   (let [{:keys [lang as-of]} ctx
         {:keys [site days]} (:data ctx)
         today (state/today-day as-of days)
-        upcoming (state/next-sessions as-of days 3)
-        framing (if (:site/framing-final? site)
-                  (:site/framing site)
-                  [:span.draft (:site/framing site)])]
+        upcoming (state/next-sessions as-of days 3)]
     {:route :home
      :title (t-str lang :route/home)
      :main
@@ -62,7 +59,6 @@
       [:div.dialog
        [:span.who (:site/name site)]
        [:p.line1 (:site/positioning site)]
-       [:p framing]
        [:span.more {:aria-hidden "true"} "▼"]]
 
       [:div.cols
