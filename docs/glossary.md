@@ -10,15 +10,13 @@ session: f97674e1-0e49-4d17-94aa-7708e57af519
 tools: [Read, Bash]
 agents_skills: []
 generated: { by: "claude-code/opus-5-5", at: 2026-11-24T12:57:43Z }
-review_maturity: L2 (Human-reviewed)
-review_note: "Viewed by lambduhh in PR #3 on 2026-11-24."
-reviewed_at: 2026-11-24T14:13:52Z
-verified: { by: "human:lambduhh", at: 2026-11-24T14:13:52Z }
+review_maturity: L1 (Human-directed)
+review_note: "Viewed by lambduhh in PR #3 on 2026-11-24 (L2). Lowered to L1 the same day: Claude Code changed the spoiler-date and spoiler-gate entries for the 4-day gate after that review."
 ---
 
 # Glossary
 
-> **AI-generated, human-reviewed (L2).** Claude Code drafted every definition below from the other files in `docs/` and from `CLAUDE.md`. Jordan read it in PR #3, but no claim has been individually verified, and AI drafts often contain false statements. Each entry links to its source. Where they disagree, the source wins.
+> **AI-generated, back at L1.** Claude Code drafted every definition below from the other files in `docs/` and from `CLAUDE.md`. Jordan read it in PR #3 (L2); Claude Code has since changed the spoiler-date and spoiler-gate entries for the 4-day gate, so it's L1 until she reviews again. No claim has been individually verified, and AI drafts often contain false statements. Each entry links to its source. Where they disagree, the source wins.
 
 Terms that have a specific meaning in this project. Each entry says what the term means here, where it comes from, and which nearby terms are different things. Link an entry as `glossary.md#term`. `bb links --glossary` lists entries that no doc links to yet.
 
@@ -77,11 +75,11 @@ The onboarding page at `/start/`: one curated path from official material, with 
 When a day's puzzle opens: 00:00 EST, which is 05:00 UTC (`:day/unlock`). A day is `unlocked?` once the [as-of](#as-of) instant reaches it. Source: [content model](content-model.md#derived-state).
 
 ### Spoiler date
-Unlock + 3 days (`:day/spoiler-until`). From this instant the day is `open?`, and its solutions, replay, tutorial and ring links can appear. Source: [content model](content-model.md#derived-state), [CLAUDE.md](../CLAUDE.md#spoilers).
+Unlock + 4 days (`:day/spoiler-until`). From this instant the day is `open?`, and its solutions, replay, tutorial and ring links can appear. Source: [content model](content-model.md#derived-state), [CLAUDE.md](../CLAUDE.md#spoilers).
 **Not the same as** the [spoiler gate](#spoiler-gate): the date is data, and the gate is what the page shows.
 
 ### Spoiler gate
-What a day page shows until the spoiler date: a sign that gives the date in words (for example "Solutions open Fri 4 Dec, 05:00 UTC"). Gated content is left out of the page. It's never there but blurred or hidden behind a click. Source: [CLAUDE.md](../CLAUDE.md#spoilers), [design system](design-system.md#components).
+What a day page shows until the spoiler date: a sign that gives the date in words (for example "Solutions open Sat 5 Dec, 05:00 UTC"). Gated content is left out of the page. It's never there but blurred or hidden behind a click. Source: [CLAUDE.md](../CLAUDE.md#spoilers), [design system](design-system.md#components).
 
 ### Status
 A day's spoiler state: `:soon` (not unlocked), `:locked` (unlocked, before the spoiler date) or `:open`. It decides what the day page shows. Source: [content model](content-model.md#derived-state).

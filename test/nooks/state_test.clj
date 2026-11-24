@@ -30,17 +30,17 @@
     (is (= 1 (:day/n (s/today-day (at "2026-12-01T05:00Z") days))))))
 
 (deftest gate-edge
-  (testing "solutions open at unlock + 3 days, 05:00 UTC"
-    (is (= :locked (s/status (at "2026-12-04T04:59Z") (day 1))))
-    (is (not (s/open? (at "2026-12-04T04:59Z") (day 1))))
-    (is (= :discord-session (s/primary-cta (at "2026-12-04T04:59Z") (day 1))))
-    (is (= :open (s/status (at "2026-12-04T05:00Z") (day 1))))
-    (is (= :slack-day (s/primary-cta (at "2026-12-04T05:00Z") (day 1))))
-    (is (= [1] (s/open-days (at "2026-12-04T05:00Z") days)))))
+  (testing "solutions open at unlock + 4 days, 05:00 UTC"
+    (is (= :locked (s/status (at "2026-12-05T04:59Z") (day 1))))
+    (is (not (s/open? (at "2026-12-05T04:59Z") (day 1))))
+    (is (= :discord-session (s/primary-cta (at "2026-12-05T04:59Z") (day 1))))
+    (is (= :open (s/status (at "2026-12-05T05:00Z") (day 1))))
+    (is (= :slack-day (s/primary-cta (at "2026-12-05T05:00Z") (day 1))))
+    (is (= [1] (s/open-days (at "2026-12-05T05:00Z") days)))))
 
-(deftest spoiler-dates-are-unlock-plus-three-days
+(deftest spoiler-dates-are-unlock-plus-four-days
   (doseq [d days]
-    (is (= (.plus (s/->instant (:day/unlock d)) (java.time.Duration/ofDays 3))
+    (is (= (.plus (s/->instant (:day/unlock d)) (java.time.Duration/ofDays 4))
            (s/->instant (:day/spoiler-until d)))
         (str "day " (:day/n d)))))
 

@@ -24,7 +24,7 @@ To see the site as it will look on another date (spoiler gates, "today", the sch
 
 ```sh
 bb dev --as-of 2026-12-07          # a bare date means 12:00 UTC
-bb build --as-of 2026-12-04T05:00Z # an exact instant
+bb build --as-of 2026-12-05T05:00Z # an exact instant
 ```
 
 ## Commands
