@@ -1,0 +1,56 @@
+name: docs-metadata
+
+# Checks the docs/ bundle on every PR and on pushes to main. These are the
+# same checks you run locally:
+#
+#   bb validate          frontmatter: type, review level and label, dates,
+#                        provenance
+#   bb maturity --check  the generated table in CLAUDE.md matches the schema
+#   bb links             links and anchors in docs/
+#
+# They're bb.edn tasks backed by lambduhh/temper, pinned by :git/sha. bb.edn
+# is in the path filters so a SHA bump is itself checked. All three tools exit
+# 2 on unreadable configuration, so a green run can't mean "checked nothing".
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**'
+      - 'bb.edn'
+      - 'CLAUDE.md'
+      - '.github/workflows/docs-metadata.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'bb.edn'
+      - 'CLAUDE.md'
+      - '.github/workflows/docs-metadata.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install babashka
+        uses: DeLaGuardo/setup-clojure@12.5
+        with:
+          bb: latest
+
+      # Each step runs even if an earlier one fails, so a PR gets every
+      # finding in one pass.
+      - name: Validate doc metadata
+        if: '!cancelled()'
+        run: bb validate
+
+      - name: Check generated tables are current
+        if: '!cancelled()'
+        run: bb maturity --check
+
+      - name: Check links and anchors
+        if: '!cancelled()'
+        run: bb links

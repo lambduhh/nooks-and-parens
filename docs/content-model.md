@@ -1,3 +1,18 @@
+---
+type: Data Model
+title: "Content model"
+description: "The EDN files every Nooks & Parens page is built from, and how page state is derived from them."
+tags: [nooks-and-parens, data]
+created: 2026-11-24
+modified: 2026-11-24
+ai_assisted: "Claude via Claude Desktop (Claude Design)"
+session: unrecorded
+tools: unrecorded
+agents_skills: []
+review_maturity: L1 (Human-directed)
+review_note: "Drafted in Claude Design at Jordan Miller's direction, 2026-11-24. The session and tools weren't recorded. Not yet reviewed."
+---
+
 # Content model
 
 Every page is built from the EDN files in `data/`. A daily update is a data edit, never a template edit. All times are UTC.
