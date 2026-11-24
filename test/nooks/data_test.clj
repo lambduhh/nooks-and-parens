@@ -2,7 +2,8 @@
   "Every data/*.edn file loads and has the shape docs/content-model.md gives."
   (:require [clojure.string :as str]
             [clojure.test :refer [deftest is testing]]
-            [nooks.data :as data]))
+            [nooks.data :as data]
+            [nooks.denylist]))
 
 (def d (data/load-all))
 
@@ -91,7 +92,7 @@
     (testing "copy rules: no star glyphs (no AoC motifs), no employer name, generic words only"
       (let [all-text (slurp "data/formats.edn")]
         (is (not (re-find #"[⭐★☆✨]" all-text)))
-        (is (not (re-find #"(?i)acme" all-text)))
+        (is (zero? (nooks.denylist/names-found all-text)))
         (is (not (re-find #"(?i)guild" all-text)) "use generic words: session, group")))))
 
 (deftest resources

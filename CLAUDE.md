@@ -78,9 +78,9 @@ notes/       private (git-ignored)
 - Don't show a guest's name unless their entry has `:confirmed? true`. Otherwise "To be announced".
 
 ### Public repo
-- No links to or data from internal company systems (internal chat, wikis, issue trackers, channel IDs).
+- No links to or data from internal company systems (internal chat, wikis, issue trackers, channel IDs). `bb check` fails links to the workplace-tool hosts in `src/nooks/denylist.clj`.
 - Don't quote or cite internal positioning documents. The messaging rules below are the whole of what you need.
-- Never name Jordan's employer anywhere on the site, nor in commit messages or PRs. Jordan's role reads **"Software Engineer, Clojure Team"** (Jordan, 2026-11-24), e.g. in a post's author line or on `/about`. `bb check` fails any page that names the employer.
+- Never name Jordan's employer anywhere on the site, nor in commit messages or PRs. Jordan's role reads **"Software Engineer, Clojure Team"** (Jordan, 2026-11-24), e.g. in a post's author line or on `/about`. `bb check` fails any page, tracked file or commit message that names the employer; the name lives only as a hash in `src/nooks/denylist.clj`. Never write it in plain text, even in a test.
 
 ### Messaging
 - One primary button per page. Default: join `#adventofcode` on Clojurians Slack (`https://clojurians.net`). Day pages: "Join session N on Discord" (`https://discord.clojure.camp`) before the spoiler date, "Discuss Day NN in #adventofcode" after it.

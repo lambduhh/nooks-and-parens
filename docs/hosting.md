@@ -27,7 +27,7 @@ Facts below were checked on 2026-11-24. Free tiers change; re-check the linked p
 - Deploys from CI, because the build needs babashka.
 - **A scheduled daily rebuild just after 05:00 UTC**, so spoiler gates and "today" change on time with no commit.
 - HTTPS, a custom 404 page, a Content-Security-Policy, no cookies.
-- Not a company property (the hub discloses Jordan's employer role but isn't run by the employer).
+- Not a company property: the hub isn't run by Jordan's employer and never names it (`docs/decisions.md`).
 
 ## How GitHub Pages fits
 
@@ -68,6 +68,7 @@ Notes:
 ## Security
 
 - **No third-party requests on load.** Fonts are self-hosted, scripts are same-origin, and the CSP allows only `'self'` for scripts, styles, fonts, images and fetches. `bb check` fails a page that loads an off-site URL, or has an inline script or style.
+- **No employer name, no internal links.** `bb check` fails a page, a tracked file or a commit message that names the employer or links a workplace tool (wiki, chat workspace, shared doc). The name is stored only as a SHA-256 hash ([`denylist.clj`](../src/nooks/denylist.clj)), so the guard doesn't spell it.
 - **Frames** only from `https://www.youtube-nocookie.com`, for click-to-load videos.
 - **No cookies.** The one stored value is the toolbelt-shortcut switch, in `localStorage` on the visitor's device; it's never sent anywhere.
 - **Content is trusted.** Pages and posts are written by maintainers, merged by Jordan. Data values are escaped by hiccup; Markdown posts may contain raw HTML (that's how `draft` placeholders work), so treat a post PR like a code PR.
