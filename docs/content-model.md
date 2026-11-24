@@ -1,7 +1,7 @@
 ---
 type: Data Model
 title: "Content model"
-description: "The EDN files every Nooks & Parens page is built from, and how page state is derived from them."
+description: "The EDN files every Power Tools & Parens page is built from, and how page state is derived from them."
 tags: [nooks-and-parens, data]
 created: 2026-11-24
 modified: 2026-11-24
@@ -20,13 +20,14 @@ Every page is built from the EDN files in `data/`. A daily update is a data edit
 ## `data/site.edn`
 
 ```clojure
-{:site/name          "Nooks & Parens"
+{:site/name          "Power Tools & Parens"
  :site/tagline       "It's dangerous to go alone! Take this."
+ :site/tagline-emoji "📝🧚"     ; decorative, after the tagline, aria-hidden; nil for none
  :site/positioning   "Clojure. A power tool for evolving systems."
  :site/framing       "Each Advent of Code day is a small evolving system: part 2 usually changes the question part 1 asked."
  :site/framing-final? false   ; true once Jordan confirms :site/framing; until then it renders as a draft
- :site/url           "https://lambduhh.github.io/nooks-and-parens"   ; GitHub Pages project site, no trailing slash
- :site/base-path     "/nooks-and-parens"                               ; prefixes every generated link
+ :site/url           "https://lambduhh.github.io/power-tools-and-parens"   ; GitHub Pages project site, no trailing slash
+ :site/base-path     "/power-tools-and-parens"                               ; prefixes every generated link
  :site/author        "Jordan Miller"                                   ; the blog feed author
  :site/languages     [:en :pt-BR]
  :cta/slack          {:label "Join #adventofcode on Clojurians Slack" :url "https://clojurians.net"}
@@ -154,4 +155,4 @@ What a day page shows:
 
 ## Strings and languages
 
-UI strings (labels, chips, gate text, button text) live in `data/i18n/en.edn` and `data/i18n/pt-BR.edn`, keyed by keyword. The decided labels "Nooks & Parens" and "Workbench" stay untranslated. The pt-BR reviewer decides how to render "What're ya REPLin'?", "DIY recipes" and the tagline in Portuguese; until then the pt-BR file holds the English string marked as untranslated.
+UI strings (labels, chips, gate text, button text) live in `data/i18n/en.edn` and `data/i18n/pt-BR.edn`, keyed by keyword. The decided labels "Power Tools & Parens" and "Workbench" stay untranslated. The pt-BR reviewer decides how to render "What're ya REPLin'?", "DIY recipes" and the tagline in Portuguese; until then the pt-BR file holds the English string marked as untranslated.

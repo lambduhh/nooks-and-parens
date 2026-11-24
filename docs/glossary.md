@@ -1,7 +1,7 @@
 ---
 type: Reference
 title: Glossary
-description: "Project vocabulary for Nooks & Parens: what each recurring term means in these docs, and which similar-looking terms are different things."
+description: "Project vocabulary for Power Tools & Parens: what each recurring term means in these docs, and which similar-looking terms are different things."
 tags: [nooks-and-parens, glossary]
 created: 2026-11-24
 modified: 2026-11-24
@@ -10,10 +10,8 @@ session: f97674e1-0e49-4d17-94aa-7708e57af519
 tools: [Read, Bash]
 agents_skills: []
 generated: { by: "claude-code/opus-5-5", at: 2026-11-24T12:57:43Z }
-review_maturity: L2 (Human-reviewed)
-review_note: "Viewed by lambduhh in PR #3 on 2026-11-24. Lowered to L1 the same day when Claude Code changed the spoiler-date and spoiler-gate entries for the 4-day gate; Jordan raised it back to L2 after those edits."
-reviewed_at: 2026-11-24T16:05:05Z
-verified: { by: "human:lambduhh", at: 2026-11-24T16:05:05Z }
+review_maturity: L1 (Human-directed)
+review_note: "Viewed by lambduhh in PR #3 on 2026-11-24; lowered to L1 and raised back to L2 the same day around the 4-day gate edits (L2 at 2026-11-24T16:05:05Z). Lowered to L1 again the same day: Claude Code changed the description for the rename to Power Tools & Parens after that review."
 ---
 
 # Glossary

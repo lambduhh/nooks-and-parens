@@ -1,13 +1,15 @@
 (ns nooks.dev
   "bb dev: build, serve, rebuild on change, reload the browser.
 
-  The site's links all start with /nooks-and-parens/ (GitHub Pages project
-  site). To serve that locally, .work/dev-root/nooks-and-parens is a symlink to
-  public/, and .work/dev-root is what's served. The server listens on
-  127.0.0.1 only."
+  The site's links all start with :site/base-path (e.g. /power-tools-and-parens/,
+  a GitHub Pages project site). To serve that locally, .work/dev-root/<base> is
+  a symlink to public/, and .work/dev-root is what's served. With an empty
+  base path, public/ is served directly. The server listens on 127.0.0.1 only."
   (:require [babashka.fs :as fs]
             [babashka.http-server :as server]
-            [nooks.build :as build])
+            [clojure.string :as str]
+            [nooks.build :as build]
+            [nooks.data :as data])
   (:import [java.time Instant]))
 
 (def watched ["data" "src" "assets" "blog" "templates"])
@@ -38,17 +40,22 @@
   (let [port-arg (second (drop-while #(not= "--port" %) args))
         port     (if port-arg (parse-long port-arg) 1888)
         opts     (build/parse-args (remove #{"--port" port-arg} args))
-        root     (fs/path ".work" "dev-root")
-        link     (fs/path root "nooks-and-parens")]
+        base     (get-in (data/load-all) [:site :site/base-path])   ; "" or "/segment"
+        seg      (str/replace base #"^/" "")
+        root     (if (str/blank? seg) (fs/path "public") (fs/path ".work" "dev-root"))
+        home     (str base "/")]
     (rebuild! opts)
-    (fs/create-dirs root)
-    (when-not (fs/exists? link {:nofollow-links true})
-      (fs/create-sym-link link (fs/absolutize "public")))
-    (spit (str (fs/path root "index.html"))
-          "<!doctype html><meta http-equiv=\"refresh\" content=\"0; url=/nooks-and-parens/\"><a href=\"/nooks-and-parens/\">/nooks-and-parens/</a>")
+    (when-not (str/blank? seg)
+      (fs/create-dirs root)
+      ;; A link left from an earlier base path (the site was renamed) is harmless.
+      (let [link (fs/path root seg)]
+        (when-not (fs/exists? link {:nofollow-links true})
+          (fs/create-sym-link link (fs/absolutize "public"))))
+      (spit (str (fs/path root "index.html"))
+            (str "<!doctype html><meta http-equiv=\"refresh\" content=\"0; url=" home "\"><a href=\"" home "\">" home "</a>")))
     (server/serve {:port port :dir (str root) :ip "127.0.0.1"})
-    (println (str "\nServing http://localhost:" port "/nooks-and-parens/"
-                  "\nBlog draft: http://localhost:" port "/nooks-and-parens/blog/announcement.html"
+    (println (str "\nServing http://localhost:" port home
+                  "\nBlog draft: http://localhost:" port home "blog/announcement.html"
                   "\nWatching " (pr-str watched) ". Ctrl-C to stop."))
     (loop [s (stamp), ss (src-stamp)]
       (Thread/sleep 500)

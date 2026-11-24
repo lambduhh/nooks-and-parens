@@ -40,7 +40,7 @@
     (str/replace v "&amp;" "&")))
 
 (defn- page-url
-  "The URL path a file is served at, e.g. /nooks-and-parens/start/."
+  "The URL path a file is served at, e.g. /power-tools-and-parens/start/."
   [base out-dir f]
   (let [rel (str/replace (str (fs/relativize out-dir f)) java.io.File/separator "/")]
     (str base "/" (str/replace rel #"(^|/)index\.html$" "$1"))))

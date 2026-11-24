@@ -1,7 +1,7 @@
 ---
 type: Guide
 title: "Build plan"
-description: "Ordered build tasks for Nooks & Parens, each with an owner and acceptance checks."
+description: "Ordered build tasks for Power Tools & Parens, each with an owner and acceptance checks."
 tags: [nooks-and-parens, plan]
 created: 2026-11-24
 modified: 2026-11-24
@@ -15,7 +15,7 @@ review_note: "Drafted in Claude Design at Jordan Miller's direction, 2026-11-24.
 
 # Build plan
 
-Ordered tasks for building Nooks & Parens. Each task has an owner (**Claude Code** or **Jordan**) and acceptance checks. Do them in order unless a task says otherwise. Read `CLAUDE.md` first.
+Ordered tasks for building Power Tools & Parens. Each task has an owner (**Claude Code** or **Jordan**) and acceptance checks. Do them in order unless a task says otherwise. Read `CLAUDE.md` first.
 
 ## Dates that drive the plan
 
