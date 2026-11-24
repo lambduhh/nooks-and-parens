@@ -4,7 +4,7 @@
 
 The hub for a December 2026 Clojure [Advent of Code](https://adventofcode.com) campaign: the live-session schedule, how to join, session replays, beginner material, an in-browser Workbench, and links to community solutions. It's for people new to Clojure first, then returning Clojurians and people following along.
 
-**Live site:** <https://lambduhh.github.io/power-tools-and-parens/>
+**Live site:** <https://lambduhh.github.io/powertools-and-parens/>
 
 **Status:** alpha (`v0.1.0-alpha`), shared with friends for a first review. Day pages, the Workbench and video pages arrive through December. See [the build plan](docs/plan.md).
 
@@ -18,7 +18,7 @@ You need [babashka](https://babashka.org) (`bb`) 1.12.201 or later.
 bb dev
 ```
 
-That builds the site, serves it at <http://localhost:1888/power-tools-and-parens/>, and rebuilds and reloads the page when you change anything in `data/`, `src/`, `assets/`, `blog/` or `templates/`.
+That builds the site, serves it at <http://localhost:1888/powertools-and-parens/>, and rebuilds and reloads the page when you change anything in `data/`, `src/`, `assets/`, `blog/` or `templates/`.
 
 To see the site as it will look on another date (spoiler gates, "today", the schedule):
 
@@ -69,7 +69,7 @@ bb blog:new "My post"
 bb dev
 ```
 
-Open <http://localhost:1888/power-tools-and-parens/blog/my-post.html> and edit `blog/posts/my-post.md`; the page reloads as you save.
+Open <http://localhost:1888/powertools-and-parens/blog/my-post.html> and edit `blog/posts/my-post.md`; the page reloads as you save.
 
 - A new post starts with `Preview: true`: reachable at its URL, but not on the blog index, tags or feeds. Delete the line to publish. (Don't write `Preview: false`; quickblog treats any value as a preview in its feeds.)
 - `Style: rfc` lays a post out like an old-school RFC; see [the announcement](blog/posts/announcement.md) for the header fields.

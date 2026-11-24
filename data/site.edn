@@ -3,8 +3,8 @@
  :site/tagline       "It's dangerous to go alone! Take this."
  :site/tagline-emoji "📝🧚"     ; decorative, after the tagline, hidden from screen readers (Jordan, 2026-11-24)
  :site/positioning   "Clojure. A power tool for evolving systems."
- :site/url           "https://lambduhh.github.io/power-tools-and-parens"   ; GitHub Pages project site (decided 2026-11-24)
- :site/base-path     "/power-tools-and-parens"                               ; every generated link starts with this
+ :site/url           "https://lambduhh.github.io/powertools-and-parens"    ; GitHub Pages project site (decided 2026-11-24)
+ :site/base-path     "/powertools-and-parens"                                ; every generated link starts with this
  :site/languages     [:en :pt-BR]
  :site/author        "Jordan Miller"
  :cta/slack          {:label "Join #adventofcode on Clojurians Slack" :url "https://clojurians.net"}

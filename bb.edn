@@ -6,7 +6,7 @@
         io.github.borkdude/quickblog {:git/sha "c1d82ce37ae05347fbeae13d330455db275327d5"}}
  :tasks
  {;; ---- Site tasks -------------------------------------------------------
-  dev      {:doc "Build, serve public/ at http://localhost:1888/power-tools-and-parens/, rebuild on changes. Flags: --as-of DATE --port N"
+  dev      {:doc "Build, serve public/ at http://localhost:1888/powertools-and-parens/, rebuild on changes. Flags: --as-of DATE --port N"
             :requires ([nooks.dev])
             :task (apply nooks.dev/-main *command-line-args*)}
   build    {:doc "Build the site into public/. Flags: --as-of 2026-12-07 or 2026-12-01T05:00Z (UTC; a bare date means 12:00 UTC)"
