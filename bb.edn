@@ -1,0 +1,19 @@
+{:deps {io.github.lambduhh/temper {:git/sha "92ff73c8d3710432f5373bf776775f8164667d1b"}}
+ :tasks
+ {;; Docs checks for the docs/ OKF bundle (temper.okf.*). The site tasks
+  ;; (dev, build, check, test, blog:new, deploy) are added by plan task 1.
+  validate {:doc "Validate docs/ frontmatter (temper.okf.validate)"
+            :requires ([temper.okf.validate])
+            :task (apply temper.okf.validate/-main *command-line-args*)}
+  links    {:doc "Check docs/ links and anchors (temper.okf.links). Flags: --quiet"
+            :requires ([temper.okf.links])
+            :task (apply temper.okf.links/-main *command-line-args*)}
+  maturity {:doc "Regenerate the review-maturity table in CLAUDE.md (temper.okf.maturity). Flags: --check"
+            :requires ([temper.okf.maturity])
+            :task (apply temper.okf.maturity/-main *command-line-args*)}
+  new-doc  {:doc "Scaffold a doc with valid frontmatter (temper.okf.new-doc)"
+            :requires ([temper.okf.new-doc])
+            :task (apply temper.okf.new-doc/-main *command-line-args*)}
+  review   {:doc "Raise docs marked Viewed in a PR to L2 (temper.okf.review). Args: <pr> [--dry-run] [--commit [--push]]"
+            :requires ([temper.okf.review])
+            :task (apply temper.okf.review/-main *command-line-args*)}}}

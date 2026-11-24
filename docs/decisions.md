@@ -1,3 +1,18 @@
+---
+type: Decision Log
+title: "Decisions"
+description: "What's decided and what's open for Nooks & Parens, and who decides."
+tags: [nooks-and-parens, decisions]
+created: 2026-11-24
+modified: 2026-11-24
+ai_assisted: "Claude via Claude Desktop (Claude Design)"
+session: unrecorded
+tools: unrecorded
+agents_skills: []
+review_maturity: L1 (Human-directed)
+review_note: "Drafted in Claude Design at Jordan Miller's direction, 2026-11-24. The session and tools weren't recorded. Not yet reviewed."
+---
+
 # Decisions
 
 What's decided, what's open, and who decides. Decided items aren't reopened without Jordan. Newest first within each table.

@@ -1,3 +1,18 @@
+---
+type: Reference
+title: "Design system"
+description: "Colour tokens, type, components and the power-tool backlog for Nooks & Parens, from the approved v4 prototype."
+tags: [nooks-and-parens, design]
+created: 2026-11-24
+modified: 2026-11-24
+ai_assisted: "Claude via Claude Desktop (Claude Design)"
+session: unrecorded
+tools: unrecorded
+agents_skills: []
+review_maturity: L1 (Human-directed)
+review_note: "Drafted in Claude Design at Jordan Miller's direction, 2026-11-24. The session and tools weren't recorded. Not yet reviewed."
+---
+
 # Design system
 
 The approved look is `prototype/nooks-and-parens-v4.html` (Jordan, 2026-11-24: "I really like the general look and feel"). It reads as a cozy life-sim game's menus and screens, with a workshop and power-tool theme. **It needs a few more power-tool allusions**; see the backlog at the end.

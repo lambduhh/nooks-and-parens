@@ -25,7 +25,7 @@ A static site. No server, no database.
 - **Scittle** (vendored into `public/vendor/`, pinned) runs the Workbench in the browser.
 - A few lines of plain JS for click-to-load video and the toolbelt shortcuts.
 
-Tasks (create them in `bb.edn` as part of plan task 1):
+Site tasks (add them to `bb.edn` as part of plan task 1; it already holds the docs tasks in [Docs metadata](#docs-metadata-temper)):
 
 | Command | Does |
 |---|---|
@@ -104,12 +104,49 @@ notes/       private (git-ignored)
 - YouTube loads only on click, from `youtube-nocookie.com`.
 - The Workbench sends nothing anywhere and never asks for an Advent of Code session cookie.
 
+## Docs metadata (temper)
+
+Every Markdown file in `docs/` except `index.md` starts with OKF frontmatter. [temper](https://github.com/lambduhh/temper) checks it; temper is pinned by `:git/sha` in `bb.edn`, and the schema is `docs/metadata-schema.edn`.
+
+| Command | Does |
+|---|---|
+| `bb validate` | Frontmatter: `type`, review level and its label, dates, provenance |
+| `bb links` | Links and anchors in `docs/`. Links into `notes/` are warnings |
+| `bb maturity --check` | The generated table below matches the schema (`bb maturity` regenerates it) |
+| `bb new-doc --type Guide --title "…" --path docs/x.md` | A new doc with valid frontmatter |
+| `bb review <pr>` | Raise docs Jordan marked Viewed in a PR to L2 |
+
+Review levels, generated from the schema by `bb maturity` (don't edit between the markers):
+
+<!-- review-maturity:table:begin -->
+| Level | Label | Meaning |
+|---|---|---|
+| **L0** | AI-generated | No human review. Raw AI output. |
+| **L1** | Human-directed | Human specified what to produce. Output not yet verified. |
+| **L2** | Human-reviewed | Human read the output, corrected obvious errors. Claims not individually checked. |
+| **L3** | Human-verified | Human verified specific claims against primary sources (running system, database, upstream docs). |
+| **L4** | Human-endorsed | Human takes ownership. Content is treated as human-authored with AI assistance. |
+<!-- review-maturity:table:end -->
+
+- **Write `review_maturity` as the code plus its label,** e.g. `L2 (Human-reviewed)`.
+- **At L2 and above, `reviewed_at` is required.** If a doc changes after its review, re-review it, or lower the level.
+- **AI-drafted docs set `ai_assisted`, `session` and `tools`.** Use `unrecorded` only when the provenance genuinely wasn't captured.
+- **No frontmatter needed** on data files (`*.edn`) or `prototype/`.
+- **CI runs all three checks:** on PRs and on pushes to `main` (`.github/workflows/docs-metadata.yml`).
+
 ## Workflow
 
 - Work on a branch and open a PR. Don't push to `main`.
 - No AI attribution in commits or PRs.
-- Plans and handoffs go in `notes/plans/<YYYY-MM-DD>-<slug>.md` and `notes/handoffs/<YYYY-MM-DD>-<slug>.md`.
-- Run `bb check` before every PR. Paste its summary in the PR description.
+- **Notes locations:**
+  - plans: `notes/plans/<YYYY-MM-DD>-<slug>-plan.md`;
+  - review-run output: `notes/plans/updates/`;
+  - handoffs: `notes/handoffs/<YYYY-MM-DD>-<slug>.md`.
+
+  `notes/` is git-ignored, and is never part of a PR.
+- **Skills:** use the `handoff` skill (`.claude/skills/handoff/`) at phase boundaries, and `grill-me` (`.claude/skills/grill-me/`) before building something unclear.
+- **Commit identity:** commits use the repo-local identity: `user.name` "Jordan Miller", and `user.email` set to the lambduhh GitHub noreply address, never a work address. Check `git config user.email` before the first commit in a new clone.
+- Run `bb check` before every PR, and paste its summary in the PR description. When `docs/` changes, also run `bb validate`, `bb links` and `bb maturity --check`.
 - When unsure whether something breaks a rule above, stop and ask Jordan.
 
 ## Definition of done, per page
