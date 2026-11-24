@@ -111,5 +111,10 @@
  :blog/tagged           "Tagged"
  :blog/preview-banner   {:draft "Preview: this post isn't listed on the blog yet."}
 
+ ;; Blog posts with Style: rfc (old-school RFC layout). Labels from the RFC format.
+ :rfc/number            "Request for Comments"
+ :rfc/category          "Category"
+ :rfc/page              "[Page 1]"
+
  ;; pt-BR twins
  :i18n/coming-soon      "Translation coming soon"}
