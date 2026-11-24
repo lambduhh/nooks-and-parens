@@ -371,15 +371,16 @@
                ;; explanation) and work (how-to over reference), practical on
                ;; top. Each column stacks on its own, so a short tile keeps
                ;; its height instead of stretching to match the long How-to.
-               ;; Blog isn't a quadrant, so it gets a full row below.
+               ;; Blog isn't a quadrant, but it holds the announcement, the
+               ;; first thing to read, so it tops the study column.
                [:div.drawers.diataxis
                 [:div.diataxis-col
+                 (drawer :blog :learn/blog)
                  (drawer :tutorial :learn/tutorials)
                  (drawer :explanation :learn/explanation)]
                 [:div.diataxis-col
                  (drawer :how-to :learn/how-to)
-                 (drawer :reference :learn/reference)]
-                (drawer :blog :learn/blog)]
+                 (drawer :reference :learn/reference)]]
                [:section.panel
                 [:h2 (t lang :learn/ai)]
                 [:p (t lang :learn/ai-note)]
