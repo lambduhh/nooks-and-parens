@@ -25,16 +25,18 @@ Draft-Header: false
     reuses Rfc-Author and Rfc-Category.
 
   Body:
-  - Sections are Markdown headings, numbered by hand ("## 2. Schedule").
-    Each heading gets GitHub's id for its text: "## 2. Schedule" -> #2-schedule,
-    "## 9. Author's Address" -> #7-authors-address.
+  - Sections are Markdown headings, numbered by hand ("## 4. The Plan").
+    Each heading gets GitHub's id for its text: "## 4. The Plan" -> #4-the-plan,
+    "## 9. Author's Address" -> #9-authors-address.
     If you rename or renumber one, update its Table of Contents link;
     bb check fails on a TOC link with no matching heading.
   - Wrap unwritten sentences in <span class="draft">…</span> or <p class="draft">…</p>.
     Plain Markdown paragraphs work too, once a paragraph is yours.
   - The end-of-preview marker below the Abstract is where the blog index
     excerpt stops.
-  - Link hub pages with site paths: /nooks-and-parens/start/, /nooks-and-parens/days/.
+  - Link hub pages by site path. Inside <p class=…> blocks use HTML,
+    <a href="/nooks-and-parens/start/">Start here</a>; in plain paragraphs Markdown
+    works too. Cite a reference with <a href="#ref-aoc">[AOC]</a>.
   - The page adds one next step (the Slack button) after the post.
 -->
 
@@ -44,7 +46,7 @@ Draft-Header: false
 
 ## Abstract
 
-<p class="body"> What a girl wants: I want developers new to Clojure to have one clear place to start, with guides, references and examples. I want to reduce the friction of our onboarding experience. I want to give experimenters a reason to stay: other people to learn with, formats that are fun, and finally - I want to give Clojure developers a way to bring others with them.</p>
+<p class="body"> What a girl wants: I want developers new to Clojure to have one clear <a href="/nooks-and-parens/start/">place to start</a>, with <a href="/nooks-and-parens/learn/">guides, references and examples</a>. I want to reduce the friction of our onboarding experience. I want to give experimenters a reason to stay: other people to learn with, formats that are fun, and finally - I want to give Clojure developers a way to bring others with them.</p>
 
 <!-- end-of-preview -->
 
@@ -69,7 +71,7 @@ A few weeks ago I started taking music lessons. It's funny how much they look li
 
 Until now I've been mostly self-taught. So every lesson is part review, part learning how to do the thing the *actual* right way.
 
-And just like programming, I keep getting better. The more code katas I did, the more bugs I hunted down, the more Advent of Code puzzles I solved every week, the better I got. Same with the keys. My fingers find their place on their own now. Practising with a metronome means I can actually *hear* whether I'm on the beat or not.
+And just like programming, I keep getting better. The more code katas I did, the more bugs I hunted down, the more Advent of Code puzzles (<a href="#ref-aoc">[AOC]</a>) I solved every week, the better I got. Same with the keys. My fingers find their place on their own now. Practising with a metronome means I can actually *hear* whether I'm on the beat or not.
 
 One of the best things about working with a teacher is the scaffolding. It's intentional: each lesson builds on the last. And watching my teacher's workflow on the MPC is what's helping me actually *finish* a beat.
 
@@ -88,38 +90,38 @@ Advent of Code is exactly that kind of daily practice, a small puzzle every day,
 
 This started with a simple ask: "do something for Advent of Code."
 
-Of course I had to be super extra about it. I care about pedagogy, and about doing things right. So "something" turned into a research project, a template, a plan for December, and this hub.
+Of course I had to be super extra about it. I care about pedagogy, and about doing things right. So "something" turned into a research project (<a href="#ref-research">[RESEARCH]</a>), a template (<a href="#ref-template">[TEMPLATE]</a>), a plan for December, and this hub.
 
 ## 3. How I Got Here
 
-Before building anything, I wanted to know what people actually do when they solve Advent of Code in Clojure. So I went and found every Advent of Code repo I could: 10,960 of them across four languages, about 3,500 in Clojure ([DATASETS]).
+Before building anything, I wanted to know what people actually do when they solve Advent of Code in Clojure. So I went and found every Advent of Code repo I could, starting from Thiago Carvalho's datasets (<a href="#ref-datasets">[DATASETS]</a>): 10,960 repos across four languages, 3,512 of them in Clojure.
 
-Then I stuck it all in Datomic. For good luck. (If you want a how-to-Datomic reference, the analysis repo doubles as one: [RESEARCH].)
+Then I stuck it all in [Datomic](https://www.datomic.com/). For good luck. (If you want a how-to-Datomic reference, the analysis repo doubles as one (<a href="#ref-research">[RESEARCH]</a>), and the template has a short <a href="/nooks-and-parens/learn/howto/datomic/">Datomic how-to</a> too.)
 
 With the data in one place, I looked at three things: which dependencies people reach for, what kinds of problems they're solving, and how they solve them.
 
-That analysis is where some of the how-to guides came from. The libraries that kept showing up (math.combinatorics, data.priority-map, instaparse, core.async, loom) each got a guide in the template: combinatorics, shortest paths, parsing, channels and graphs ([TEMPLATE]). They're all on the hub: <a href="/nooks-and-parens/learn/">Learn</a>.
+That analysis is where some of the how-to guides came from. The libraries that kept showing up ([math.combinatorics](https://github.com/clojure/math.combinatorics), [data.priority-map](https://github.com/clojure/data.priority-map), [instaparse](https://github.com/Engelberg/instaparse), [core.async](https://github.com/clojure/core.async), [loom](https://github.com/clj-commons/loom)) each got a guide in the template: <a href="/nooks-and-parens/learn/howto/combinatorics/">combinatorics</a>, <a href="/nooks-and-parens/learn/howto/shortest_path/">shortest paths</a>, <a href="/nooks-and-parens/learn/howto/parsing/">parsing</a>, <a href="/nooks-and-parens/learn/howto/channels/">channels</a> and <a href="/nooks-and-parens/learn/howto/graphs/">graphs</a> (<a href="#ref-template">[TEMPLATE]</a>). They're all on the hub: <a href="/nooks-and-parens/learn/">Learn</a>.
 
 ## 4. The Plan
 
-<p class="body">December: twelve puzzles, twelve sessions, calendar is here: <a href="/nooks-and-parens/days/">/nooks-and-parens/days/</a>.</p>
+<p class="body">December: twelve puzzles, twelve sessions, calendar is <a href="/nooks-and-parens/days/">here</a>.</p>
 
-Every weekday there's a session (except Friday 11 December). It's staggered: each session works through a puzzle that unlocked a few days earlier, and that day's solution goes up here once its spoiler gate opens.
+There's a session every weekday from Friday 4 to Tuesday 22 December (except Friday 11 December). It's staggered: each session works through a puzzle that unlocked 3 to 10 days earlier, and that day's solution goes up here once its <a href="#7-security-considerations">spoiler gate</a> opens.
 
 On most days there's also a piece of content about the solution: how it was solved, and why.
 
-Videos are hosted on ClojureTV ([CLJTV]) and embedded here, on the day's page. (They only load when you press play.)
+Videos are hosted on [ClojureTV](https://www.youtube.com/@ClojureTV) (<a href="#ref-cljtv">[CLJTV]</a>) and embedded here, on the day's page. (They only load when you press play.)
 
 And every day links the resources it uses: the how-to guides, the references, the docs.
 
 ## 5. Audience
 
-<p class="body">Who it's for: people new to Clojure (1-3 years experience)First time using Clojure? 
-Link Start here: /nooks-and-parens/start/.</p>
+<p class="body">Who it's for: people new to Clojure (1-3 years experience). First time using Clojure? 
+<a href="/nooks-and-parens/start/">Start here</a>.</p>
 
 ## 6. Joining
 
-<p class="body">How to join: check out the #adventofcode channel on Clojurians Slack, as well as the live mob and pairng sessions on the Clojure Camp Discord.</p>
+<p class="body">How to join: check out the #adventofcode channel on <a href="https://clojurians.net">Clojurians Slack</a> (<a href="#ref-slack">[SLACK]</a>), as well as the live mob and pairing sessions on the <a href="https://discord.clojure.camp">Clojure Camp Discord</a> (<a href="#ref-discord">[DISCORD]</a>).</p>
 
 ## 7. Security Considerations
 
@@ -128,24 +130,24 @@ Link Start here: /nooks-and-parens/start/.</p>
 ## 8. References
 
 <dl class="rfc-refs">
-<dt>[AOC]</dt>
+<dt id="ref-aoc">[AOC]</dt>
 <dd>"Advent of Code 2026", <a href="https://adventofcode.com/2026">https://adventofcode.com/2026</a>.</dd>
-<dt>[SLACK]</dt>
+<dt id="ref-slack">[SLACK]</dt>
 <dd>"Clojurians Slack", <a href="https://clojurians.net">https://clojurians.net</a>.</dd>
-<dt>[DISCORD]</dt>
+<dt id="ref-discord">[DISCORD]</dt>
 <dd>"Clojure Camp Discord", <a href="https://discord.clojure.camp">https://discord.clojure.camp</a>.</dd>
-<dt>[TEMPLATE]</dt>
+<dt id="ref-template">[TEMPLATE]</dt>
 <dd>"clojure-template-aoc", <a href="https://github.com/lambduhh/clojure-template-aoc">https://github.com/lambduhh/clojure-template-aoc</a>. Its guides on the hub: <a href="/nooks-and-parens/start/">Start here</a> and <a href="/nooks-and-parens/learn/">Learn</a>.</dd>
-<dt>[RESEARCH]</dt>
+<dt id="ref-research">[RESEARCH]</dt>
 <dd>"clojure-aoc-research": the analysis, with Datomic Local and Datalog, <a href="https://github.com/lambduhh/clojure-aoc-research">https://github.com/lambduhh/clojure-aoc-research</a>.</dd>
-<dt>[DATASETS]</dt>
-<dd>Carvalho, T., "programming-language-vitality": the repo lists the analysis starts from, <a href="https://github.com/thiagooak/programming-language-vitality">https://github.com/thiagooak/programming-language-vitality</a>.</dd>
-<dt>[CLJTV]</dt>
+<dt id="ref-datasets">[DATASETS]</dt>
+<dd>Carvalho, T., "programming-language-vitality": the repo lists the analysis starts from, <a href="https://github.com/thiagooak/programming-language-vitality/tree/916e0f55bd44afe55382c9925f05cf3e243abfc8">https://github.com/thiagooak/programming-language-vitality</a> (commit 916e0f5).</dd>
+<dt id="ref-cljtv">[CLJTV]</dt>
 <dd>"ClojureTV", <a href="https://www.youtube.com/@ClojureTV">https://www.youtube.com/@ClojureTV</a>.</dd>
-<dt>[HUB]</dt>
+<dt id="ref-hub">[HUB]</dt>
 <dd>"Nooks &amp; Parens", <a href="/nooks-and-parens/">https://lambduhh.github.io/nooks-and-parens/</a>.</dd>
 </dl>
 
 ## 9. Author's Address
 
-L. Jordan Miller, an engineer on the Clojure team at Nubank. @lambduhhh
+L. Jordan Miller, an engineer on the Clojure team at Nubank. [@lambduhhh](https://linktr.ee/lambduhhh)
