@@ -245,4 +245,6 @@ figure.diagram figcaption{font-size:14px;margin-top:6px}
 .drawer li{margin:0 0 10px}
 .drawer li:last-child{margin-bottom:0}
 .drawer h3{font-size:15px;margin:12px 0 2px}
-.drawer-grouped{grid-column:1/-1}
+.drawers.diataxis{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"tutorial how-to" "explanation reference" "blog blog"}
+.drawer-tutorial{grid-area:tutorial}.drawer-how-to{grid-area:how-to}.drawer-explanation{grid-area:explanation}.drawer-reference{grid-area:reference}.drawer-blog{grid-area:blog}
+@media(max-width:760px){.drawers.diataxis{grid-template-columns:minmax(0,1fr);grid-template-areas:"tutorial" "how-to" "explanation" "reference" "blog"}}
