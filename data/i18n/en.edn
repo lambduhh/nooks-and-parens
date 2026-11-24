@@ -88,8 +88,15 @@
  :format/side-by-side    "Side by side"
  :format/datomic         "Solving with Datomic"
 
- ;; Formats page (data/formats.edn). Prose is draft until Jordan writes it.
- :formats/intro          {:draft "Each day's session is picked from this pool, by puzzle and by who can join."}
+ ;; Formats page (data/formats.edn). The guide's copy lives in formats.edn;
+ ;; these are the page's own labels. Prose is draft until Jordan writes it.
+ :formats/intro          {:draft "Each day's December session is picked from the favorites and this campaign's additions, by puzzle and by who can join."}
+ ;; The guide marks favorites with a star; the site says it in words (no star motifs).
+ :formats/favorite       "Favorite"
+ :formats/col-format     "Format"
+ :formats/col-good-for   "Good for"
+ :formats/extras-heading {:draft "This December's additions"}
+ :calendar/formats-link  {:draft "About the session formats"}
  :formats/length         "Length"
  :formats/people         "People"
  :formats/prepare        "What to prepare"
