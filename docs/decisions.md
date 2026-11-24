@@ -21,6 +21,7 @@ What's decided, what's open, and who decides. Decided items aren't reopened with
 
 | Date | Decision | Notes |
 |---|---|---|
+| 2026-11-24 | **Spoiler gate: unlock + 4 days** (was 3). Solutions, replays, tutorials and ring links open at 05:00 UTC four days after the puzzle unlocks | Jordan's choice, so the announcement and the gate agree. Still meets the 2026-11-06 rule of at least 3 days |
 | 2026-11-24 | **The template's guides are rendered into the hub.** `docs/setup-flowchart.md` is `/start/`; the tutorial, README, how-to namespaces and AI files are under `/learn/`. Rendered at build time from a commit pinned in `data/template.edn`, moved by `bb template:bump` in a PR | Pinned so `bb check` reviews template changes and a template edit can't break the daily gate-opening build. Mermaid diagrams show as source; the guides' numbered steps carry the same route |
 | 2026-11-24 | **Template is public, with "Use this template" on.** `:template/public?` is `true` | Unlocks the template links and the Codespaces route |
 | 2026-11-24 | **Employer disclosure:** Jordan may be named as "an engineer on the Clojure team at Nubank" as an author affiliation (post author lines), as well as on `/about` | Still never as proof |
