@@ -53,7 +53,7 @@ What's decided, what's open, and who decides. Decided items aren't reopened with
 | Question | Options | Who decides | Needed by |
 |---|---|---|---|
 | Tagline and positioning line both on the landing page: too crowded? | Keep both / Jordan picks which leads | Jordan | P0 review |
-| Workbench primary button | "Craft it" counts as the page's primary action / also add the Slack button | Jordan | P2 |
+| Workbench primary button | "Craft it" counts as the page's primary action / also add the Slack button | Jordan | P2. Built 2026-11-24 with the Slack button as primary and "Craft it" as a normal button (Claude Code's default when Jordan said "build it"; not yet Jordan's decision) |
 | Analytics | None / cookieless (Cloudflare Web Analytics) with outbound clicks to Slack and the template as the events | Jordan | Before launch if wanted |
 | Webring: who keeps the member list, and the opt-in step | `data/ring.edn` edited by Jordan from Slack requests / a PR from each member | Jordan | P2 |
 | Which power-tool allusions to add | Backlog in `docs/design-system.md` | Jordan with Claude Code | P2 |

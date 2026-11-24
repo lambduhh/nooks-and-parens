@@ -35,6 +35,7 @@ Site tasks (add them to `bb.edn` as part of plan task 1; it already holds the do
 | `bb build --as-of 2026-12-07` | Build as if it were that date (UTC). Use it to check spoiler states |
 | `bb check` | Build for a set of dates and run every invariant in `docs/plan.md` § Checks |
 | `bb test` | Unit tests for date and state logic |
+| `bb test:browser` | The Workbench in headless Chrome: every starter recipe, errors, keys, the infinite-loop failsafe, offline preview. Run after touching the Workbench or `assets/vendor/scittle.js` |
 | `bb blog:new "Title"` | New quickblog post |
 | `bb template:bump` | Point `data/template.edn` at the template repo's latest `main`; then `bb check` and a PR |
 | `bb blog:new "Title" --slug x` | Same, with a chosen file name |
