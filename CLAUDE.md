@@ -13,6 +13,7 @@ Jordan Miller owns this project. **All site copy is Jordan's to write.** You bui
 | `docs/design-system.md` | Colours, type, components, and the power-tool backlog. |
 | `docs/content-model.md` | The EDN files every page is built from, and how page state is derived. |
 | `docs/hosting.md` | Where the site is hosted and how it deploys. |
+| `docs/glossary.md` | Project vocabulary, and which similar-looking terms mean different things. |
 | `prototype/nooks-and-parens-v4.html` | The approved look and feel. A visual reference: port its CSS and structure, don't ship the file. |
 | `notes/` | Git-ignored. Jordan's private design brief and handoffs. **Never copy text from `notes/` into tracked files** without checking the public-repo rules below. |
 
