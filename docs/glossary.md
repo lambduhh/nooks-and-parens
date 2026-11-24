@@ -10,13 +10,15 @@ session: f97674e1-0e49-4d17-94aa-7708e57af519
 tools: [Read, Bash]
 agents_skills: []
 generated: { by: "claude-code/opus-5-5", at: 2026-11-24T12:57:43Z }
-review_maturity: L1 (Human-directed)
-review_note: "Viewed by lambduhh in PR #3 on 2026-11-24 (L2). Lowered to L1 the same day: Claude Code changed the spoiler-date and spoiler-gate entries for the 4-day gate after that review."
+review_maturity: L2 (Human-reviewed)
+review_note: "Viewed by lambduhh in PR #3 on 2026-11-24. Lowered to L1 the same day when Claude Code changed the spoiler-date and spoiler-gate entries for the 4-day gate; Jordan raised it back to L2 after those edits."
+reviewed_at: 2026-11-24T16:05:05Z
+verified: { by: "human:lambduhh", at: 2026-11-24T16:05:05Z }
 ---
 
 # Glossary
 
-> **AI-generated, back at L1.** Claude Code drafted every definition below from the other files in `docs/` and from `CLAUDE.md`. Jordan read it in PR #3 (L2); Claude Code has since changed the spoiler-date and spoiler-gate entries for the 4-day gate, so it's L1 until she reviews again. No claim has been individually verified, and AI drafts often contain false statements. Each entry links to its source. Where they disagree, the source wins.
+> **AI-generated, human-reviewed (L2).** Claude Code drafted every definition below from the other files in `docs/` and from `CLAUDE.md`. Jordan read it in PR #3, and again after the 4-day gate edits, but no claim has been individually verified, and AI drafts often contain false statements. Each entry links to its source. Where they disagree, the source wins.
 
 Terms that have a specific meaning in this project. Each entry says what the term means here, where it comes from, and which nearby terms are different things. Link an entry as `glossary.md#term`. `bb links --glossary` lists entries that no doc links to yet.
 
