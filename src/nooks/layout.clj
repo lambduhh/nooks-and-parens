@@ -3,7 +3,7 @@
   switch, toolbelt, footer, and the security <meta> tags.
 
   Every link goes through `href`, which prefixes :site/base-path, so the site
-  works under /power-tools-and-parens/ on GitHub Pages and at / on any other host."
+  works under /powertools-and-parens/ on GitHub Pages and at / on any other host."
   (:require [clojure.string :as str]
             [hiccup2.core :as h]
             [nooks.i18n :as i18n :refer [t t-str]]))

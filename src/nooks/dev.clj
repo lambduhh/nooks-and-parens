@@ -1,7 +1,7 @@
 (ns nooks.dev
   "bb dev: build, serve, rebuild on change, reload the browser.
 
-  The site's links all start with :site/base-path (e.g. /power-tools-and-parens/,
+  The site's links all start with :site/base-path (e.g. /powertools-and-parens/,
   a GitHub Pages project site). To serve that locally, .work/dev-root/<base> is
   a symlink to public/, and .work/dev-root is what's served. With an empty
   base path, public/ is served directly. The server listens on 127.0.0.1 only."

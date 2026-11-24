@@ -135,4 +135,4 @@
                :file file :title title :preview true :tags [] :default-metadata {:tags []}
                :template-file new-post-template})
       (println "Created" (str (fs/path posts-dir file)))
-      (println (str "See it at http://localhost:1888/power-tools-and-parens/blog/" slug ".html (run bb dev)")))))
+      (println (str "See it at http://localhost:1888/powertools-and-parens/blog/" slug ".html (run bb dev)")))))

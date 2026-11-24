@@ -1,7 +1,7 @@
 name: deploy
 
 # Builds the site and deploys it to GitHub Pages
-# (https://lambduhh.github.io/power-tools-and-parens/). See docs/hosting.md.
+# (https://lambduhh.github.io/powertools-and-parens/). See docs/hosting.md.
 #
 #   push to main      test, check, build, deploy
 #   05:05 UTC daily   same; spoiler gates and "today" open at 05:00 UTC and

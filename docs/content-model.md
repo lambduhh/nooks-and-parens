@@ -24,8 +24,8 @@ Every page is built from the EDN files in `data/`. A daily update is a data edit
  :site/tagline       "It's dangerous to go alone! Take this."
  :site/tagline-emoji "📝🧚"     ; decorative, after the tagline, aria-hidden; nil for none
  :site/positioning   "Clojure. A power tool for evolving systems."
- :site/url           "https://lambduhh.github.io/power-tools-and-parens"   ; GitHub Pages project site, no trailing slash
- :site/base-path     "/power-tools-and-parens"                               ; prefixes every generated link
+ :site/url           "https://lambduhh.github.io/powertools-and-parens"   ; GitHub Pages project site, no trailing slash
+ :site/base-path     "/powertools-and-parens"                               ; prefixes every generated link
  :site/author        "Jordan Miller"                                   ; the blog feed author
  :site/languages     [:en :pt-BR]
  :cta/slack          {:label "Join #adventofcode on Clojurians Slack" :url "https://clojurians.net"}
