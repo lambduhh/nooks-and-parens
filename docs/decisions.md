@@ -21,6 +21,7 @@ What's decided, what's open, and who decides. Decided items aren't reopened with
 
 | Date | Decision | Notes |
 |---|---|---|
+| 2026-11-24 | **Session videos are hosted on ClojureTV** and embedded on each day's page (click to load, `youtube-nocookie.com`) | Jordan, in the announcement brief. Most days also get a piece of content about the solution |
 | 2026-11-24 | **Alpha for friends' review.** All placeholder copy accepted as final (draft markers removed); placeholders that were instructions rather than copy, and empty areas (the "Why it works" drawer), removed. About and toolbelt slot 7 left out, so the toolbelt has 6 slots. No alpha banner or feedback link: Jordan collects feedback by message. Tagged `v0.1.0-alpha` | New copy Jordan hasn't written still uses `{:draft …}`. About (with the employer disclosure) returns before launch |
 | 2026-11-24 | **Power-tool emoji and a favicon.** Decorative, `aria-hidden` emoji on page and Learn-drawer headings (`layout/tool-emoji`); a self-hosted SVG favicon of the toolbelt's wrench | Not on RFC-style posts. Headings still read as their words |
 | 2026-11-24 | **Spoiler gate: unlock + 4 days** (was 3). Solutions, replays, tutorials and ring links open at 05:00 UTC four days after the puzzle unlocks | Jordan's choice, so the announcement and the gate agree. Still meets the 2026-11-06 rule of at least 3 days |
