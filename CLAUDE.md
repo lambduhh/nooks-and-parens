@@ -79,7 +79,7 @@ notes/       private (git-ignored)
 ### Public repo
 - No links to or data from internal company systems (internal chat, wikis, issue trackers, channel IDs).
 - Don't quote or cite internal positioning documents. The messaging rules below are the whole of what you need.
-- Jordan's employer role is disclosed on `/about`, and as an author affiliation (Jordan, 2026-11-24: "an engineer on the Clojure team at Nubank"), e.g. in a post's author line. Never use the employer as proof.
+- Jordan's employer role is disclosed on `/about` (left out of the alpha; it returns before launch), and as an author affiliation (Jordan, 2026-11-24: "an engineer on the Clojure team at Nubank"), e.g. in a post's author line. Never use the employer as proof.
 
 ### Messaging
 - One primary button per page. Default: join `#adventofcode` on Clojurians Slack (`https://clojurians.net`). Day pages: "Join session N on Discord" (`https://discord.clojure.camp`) before the spoiler date, "Discuss Day NN in #adventofcode" after it.

@@ -21,13 +21,16 @@
     (is (= "Workbench" (:label/workbench en)))))
 
 (deftest drafts-keep-their-marker
-  (binding [i18n/*strings* strings]
+  ;; Fixture strings: the real files may have no drafts at any given time.
+  (binding [i18n/*strings* {:en {:x/draft {:draft "One line inviting people in."} :x/label {:draft "Slot 7"}
+                                 :label/workbench "Workbench"}
+                            :pt-BR {}}]
     (testing "a draft renders as a span.draft"
-      (is (= [:span.draft "One line inviting people in for December."] (i18n/t :en :home/invite))))
+      (is (= [:span.draft "One line inviting people in."] (i18n/t :en :x/draft))))
     (testing "a final string renders as itself"
       (is (= "Workbench" (i18n/t :en :label/workbench))))
     (testing "plain text keeps a visible marker"
-      (is (= "[draft] Slot 7" (i18n/t-str :en :route/slot-7))))
+      (is (= "[draft] Slot 7" (i18n/t-str :en :x/label))))
     (testing "pt-BR falls back to English"
       (is (= "Workbench" (i18n/t :pt-BR :label/workbench))))
     (testing "a missing key fails the build"

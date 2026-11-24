@@ -3,7 +3,7 @@
  :site/tagline       "It's dangerous to go alone! Take this."
  :site/positioning   "Clojure. A power tool for evolving systems."
  :site/framing       "Each Advent of Code day is a small evolving system: part 2 usually changes the question part 1 asked."
- :site/framing-final? false     ; flip to true once Jordan confirms :site/framing; until then it renders as a draft
+ :site/framing-final? true      ; Jordan accepted it (2026-11-24); false renders it as a draft
  :site/url           "https://lambduhh.github.io/nooks-and-parens"   ; GitHub Pages project site (decided 2026-11-24)
  :site/base-path     "/nooks-and-parens"                               ; every generated link starts with this
  :site/languages     [:en :pt-BR]

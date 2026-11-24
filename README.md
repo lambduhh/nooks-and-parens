@@ -6,7 +6,7 @@ The hub for a December 2026 Clojure [Advent of Code](https://adventofcode.com) c
 
 **Live site:** <https://lambduhh.github.io/nooks-and-parens/>
 
-**Status:** the site shell is up; most copy is still a placeholder (shown as `[draft]` on the page). Day pages, the Workbench and video pages arrive through December. See [the build plan](docs/plan.md).
+**Status:** alpha (`v0.1.0-alpha`), shared with friends for a first review. Day pages, the Workbench and video pages arrive through December. See [the build plan](docs/plan.md).
 
 Not affiliated with Advent of Code. Puzzles are linked, never copied.
 
@@ -73,7 +73,7 @@ Open <http://localhost:1888/nooks-and-parens/blog/my-post.html> and edit `blog/p
 
 - A new post starts with `Preview: true`: reachable at its URL, but not on the blog index, tags or feeds. Delete the line to publish. (Don't write `Preview: false`; quickblog treats any value as a preview in its feeds.)
 - `Style: rfc` lays a post out like an old-school RFC; see [the announcement](blog/posts/announcement.md) for the header fields.
-- Raw HTML is allowed in posts. Wrap unwritten text in `<span class="draft">…</span>`.
+- Raw HTML is allowed in posts. Wrap unwritten text in `<span class="draft">…</span>`; it shows as `[draft]` until you replace it.
 
 ## Checks
 
@@ -102,8 +102,6 @@ Each rule has a test that feeds it a violation.
 ## Contributing
 
 Work on a branch and open a pull request; don't push to `main`. Run `bb test` and `bb check` first, and paste the `bb check` summary in the PR. If you change `docs/`, also run `bb validate`, `bb links` and `bb maturity --check`. CI runs all of them.
-
-*[draft] How people can help, and where to ask first.*
 
 ## Credits
 

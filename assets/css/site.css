@@ -153,14 +153,14 @@ p{margin:6px 0;max-width:68ch}
 
 /* Toolbelt hotbar */
 .hotbar{position:fixed;left:0;right:0;bottom:0;padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));background:repeating-linear-gradient(90deg,rgba(0,0,0,.07) 0 2px,transparent 2px 70px),var(--wood);border-top:4px solid var(--wood-dark);z-index:5}
-.hotbar ul{list-style:none;margin:0 auto;padding:0;max-width:980px;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px}
+.hotbar ul{list-style:none;margin:0 auto;padding:0;max-width:980px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
 .hotbar a{display:block;text-align:center;text-decoration:none;color:var(--black)!important;background:var(--paper);border:3px solid var(--wood-dark);border-radius:14px;padding:4px 2px 5px;font:700 12px/1.15 var(--round);position:relative}
 .hotbar a .k{position:absolute;top:2px;left:6px;font:900 11px/1 var(--mono);color:var(--muted)}
 .hotbar svg{width:24px;height:24px;display:block;margin:2px auto 2px;fill:var(--sky);stroke:var(--black);stroke-width:1.8}
 .hotbar a[aria-current]{background:var(--sky);border-color:var(--black)}
 .hotbar .opts{max-width:980px;margin:4px auto 0;display:flex;justify-content:flex-end;gap:10px;font-size:12px;color:var(--paper)}
 .hotbar .opts button{font:700 12px var(--round);background:none;border:2px solid var(--paper);color:var(--paper);border-radius:999px;padding:0 10px;cursor:pointer}
-@media(max-width:560px){.hotbar ul{grid-template-columns:repeat(4,minmax(0,1fr))}body.np{padding-bottom:170px}}
+@media(max-width:560px){.hotbar ul{grid-template-columns:repeat(3,minmax(0,1fr))}body.np{padding-bottom:170px}}
 
 .foot{font-size:13px;text-align:center;color:var(--black);margin:28px 0 0}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;transform:none!important}}
@@ -216,6 +216,8 @@ p.draft,div.draft{display:block}
 .rfc-refs dt{font-weight:600}
 .rfc-refs dd{margin:0 0 8px 12ch}
 @media(max-width:560px){.rfc-head{grid-template-columns:1fr}.rfc-head ul+ul{text-align:left;margin-top:6px}.rfc-refs dd{margin-left:3ch}.post.rfc .prose p,.post.rfc .prose ul,.post.rfc .prose ol{margin-left:0}}
+
+.emoji{font-style:normal;font-weight:400}
 
 /* Template guides (/start/, /learn/…) */
 .doc .prose{max-width:72ch}

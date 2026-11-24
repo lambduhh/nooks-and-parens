@@ -211,7 +211,7 @@
                    rewrite (link-rewriter {:site site :sha sha :dir dir :hub-for hub-for
                                            :hub-href #(layout/href ctx (str (layout/lang-prefix lang) %))}
                                           path)
-                   {:keys [hiccup title draft?]} (render-markdown lang (slurp (str (fs/path dir path))) rewrite)
+                   {:keys [hiccup title]} (render-markdown lang (slurp (str (fs/path dir path))) rewrite)
                    route (hub-route hub)]
                {:route route
                 :title (or title path)
@@ -221,7 +221,6 @@
                           (layout/crumbs ctx [:a {:href (layout/route-href ctx :learn)} (t lang :route/learn)]
                                          (or title path)))
                         [:article.panel.doc
-                         (when draft? [:p.notice {:role "note"} (t lang :template/draft-notice)])
                          [:div.prose hiccup]
                          (source-line ctx (github-url site sha dir path) path sha)
                          (layout/primary-button ctx)])}))})
@@ -254,17 +253,17 @@
                  [:li [:a {:href (layout/href ctx (str (layout/lang-prefix lang) path))} title]])
           by   (group-by :kind template-pages)
           drawer (fn [kind k]
+                   ;; Empty drawers are left out until they have something in them.
+                   (when (seq (by kind))
                    [:section.drawer
-                    [:h2 (t lang k) " " [:span.count (str "(" (count (by kind)) ")")]]
-                    (if (seq (by kind))
-                      [:ul (map link (sort-by :title (by kind)))]
-                      [:p (t lang :learn/none)])])]
+                    [:h2 (layout/emoji kind) (t lang k) " " [:span.count (str "(" (count (by kind)) ")")]]
+                    [:ul (map link (sort-by :title (by kind)))]]))]
       {:route :learn
        :title (t-str lang :route/learn)
        :main  (list
                (layout/crumbs ctx (t lang :route/learn))
                [:section.panel
-                [:h1 (t lang :route/learn)]
+                [:h1 (layout/emoji :learn) (t lang :route/learn)]
                 [:p (t lang :learn/intro)]
                 [:p [:a {:href (:template/url site)} (t lang :learn/get-template)]]
                 (layout/primary-button ctx)]

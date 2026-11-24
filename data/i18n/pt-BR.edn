@@ -6,4 +6,4 @@
 ;; REPLin'?" and "DIY recipes" (docs/decisions.md § Open).
 {:lang/en          "EN"
  :lang/pt-BR       "PT-BR"
- :i18n/coming-soon {:draft "Tradução em breve"}}
+ :i18n/coming-soon "Tradução em breve"}
