@@ -1,8 +1,10 @@
 ;; en.edn: English UI strings, keyed by keyword. Shape: docs/content-model.md § Strings and languages.
 ;;
 ;; A value is either
-;;   "a string"            final: a decided label, or copy Jordan has written
+;;   "a string"            final: a decided label, or copy Jordan has accepted
 ;;   {:draft "a string"}   a placeholder; renders as <span class="draft">, never as final copy
+;; Jordan accepted every placeholder as final for the alpha (2026-11-24); use
+;; {:draft …} again for new copy she hasn't written.
 ;; %s marks a value filled in at build time (a date, a number). Jordan: to make a
 ;; string final, replace {:draft "…"} with "…".
 {;; Decided labels (CLAUDE.md § Copy). Don't edit.
@@ -16,10 +18,10 @@
  :lang/switch           "Language"
  :skip-link             "Skip to content"
  :toolbelt/label        "Toolbelt"
- :toolbelt/keys-help    {:draft "Keys 1–8 switch tools (not while typing)"}
+ :toolbelt/keys-help    "Keys 1–6 switch tools (not while typing)"
  :toolbelt/keys-on      "Shortcuts: on"
  :toolbelt/keys-off     "Shortcuts: off"
- :footer/line           {:draft "Fan-made community hub, kept by Jordan Miller and collaborators (role disclosed on About). Not affiliated with Advent of Code or any game studio. Puzzles are linked, never copied."}
+ :footer/line           "Fan-made community hub. Not affiliated with Advent of Code or any game studio. Puzzles are linked, never copied."
  :footer/blog           "Blog"
  :crumbs/home           "Home"
  :crumbs/label          "Breadcrumbs"
@@ -32,29 +34,26 @@
  :route/workbench       "Workbench"
  :route/videos          "Videos"
  :route/learn           "Learn"
- :route/slot-7          {:draft "Slot 7"}   ; was Roundups (cut 2026-11-24); maybe reference docs later
- :route/about           "About"
  :route/formats         "Formats"
  :route/blog            "Blog"
- :route/not-found       {:draft "Page not found"}
+ :route/not-found       "Page not found"
 
  ;; Landing
- :home/invite           {:draft "One line inviting people in for December."}
  :home/menu             "Main menu"
- :home/menu-start       {:draft "zero to a running REPL"}
- :home/menu-today-soon  {:draft "from %s"}
+ :home/menu-start       "zero to a running REPL"
+ :home/menu-today-soon  "from %s"
  :home/menu-today-day   "Day %s"
  :home/menu-calendar    "What're ya REPLin'?"
- :home/menu-workbench   {:draft "try Clojure, no install"}
- :home/cta-note         {:draft "Free sign-up. One thread per puzzle, every day."}
+ :home/menu-workbench   "try Clojure, no install"
+ :home/cta-note         "Free sign-up. One thread per puzzle, every day."
  :home/today            "Today · %s"
- :home/today-soon       {:draft "Puzzles start %s at 00:00 EST. First live session: %s."}
- :home/today-day        {:draft "Day %s is out."}
- :home/today-live       {:draft "Live today: session %s, %s (covers Day %s)."}
- :home/today-archive    {:draft "All %s days are out."}
+ :home/today-soon       "Puzzles start %s at 00:00 EST. First live session: %s."
+ :home/today-day        "Day %s is out."
+ :home/today-live       "Live today: session %s, %s (covers Day %s)."
+ :home/today-archive    "All %s days are out."
  :home/readout-label    "Today as data"
- :home/sessions-done    {:draft "All %s sessions are done."}
- :home/see-all          {:draft "See all %s days"}
+ :home/sessions-done    "All %s sessions are done."
+ :home/see-all          "See all %s days"
 
  ;; Sessions (shop list)
  :session/title         "Session %s · %s"
@@ -63,7 +62,7 @@
  :session/time-tba      "[time TBA]"
  :session/guest-tba     "To be announced"
  :session/replay-ready  "Replay ready"
- :session/no-session    {:draft "No session Fri 11 Dec. Formats are drafts."}
+ :session/no-session    "No session Fri 11 Dec. Formats are drafts."
 
  ;; Status chips: always words (docs/design-system.md § Components)
  :chip/open             "Solutions open"
@@ -86,42 +85,35 @@
  :format/tech-talk       "Tech talk"
 
  ;; Stub pages (MVP). Each is a placeholder until its phase.
- :stub/today            {:draft "Today's day page. Before 1 Dec this goes to the home page."}
- :stub/today-link       {:draft "Go to today"}
- :stub/calendar         {:draft "Twelve puzzles, twelve live sessions. The tool wall comes next."}
- :stub/workbench        {:draft "Try Clojure in your browser, no install. Coming in December."}
- :stub/videos           {:draft "Session replays, one line each with format, day and length."}
- :stub/slot-7           {:draft "A placeholder for toolbelt slot 7."}
- :stub/about            {:draft "Who keeps Nooks & Parens, their role, and credits."}
- :stub/formats          {:draft "One card per session format: length, people, what to prepare."}
- :stub/not-found        {:draft "Nothing hangs on this hook."}
- :about/credits         "Credits"
+ :stub/today-link       "Go to today"
+ :stub/calendar         "Twelve puzzles, twelve live sessions."
+ :stub/workbench        "Try Clojure in your browser, no install. Coming in December."
+ :stub/videos           "Session replays, one line each with format, day and length."
+ :stub/not-found        "Nothing hangs on this hook."
  :formats/session       "Session %s"
 
  ;; Learn and the template guides (rendered from the template repo)
- :learn/intro           {:draft "Guides from the template repo: a tutorial, how-to guides and the reference."}
- :learn/get-template    {:draft "Get the template on GitHub"}
+ :learn/intro           "Guides from the template repo: a tutorial, how-to guides and the reference."
+ :learn/get-template    "Get the template on GitHub"
  :learn/tutorials       "Tutorials"
  :learn/how-to          "How-to guides"
  :learn/reference       "Reference"
  :learn/explanation     "Why it works"
- :learn/none            {:draft "Nothing here yet."}
  :learn/ai              "Using an AI agent?"
- :learn/ai-note         {:draft "Optional. The template works without any AI; these files set an agent up as a tutor, not a solver."}
+ :learn/ai-note         "Optional. The template works without any AI; these files set an agent up as a tutor, not a solver."
  :template/source       "From the template:"
- :template/draft-notice {:draft "This guide is still a draft in the template repo."}
- :template/diagram      {:draft "Diagram (Mermaid source)"}
+ :template/diagram      "Diagram (Mermaid source)"
 
  ;; Blog
  :blog/title            "Blog"
- :blog/empty            {:draft "No posts yet."}
+ :blog/empty            "No posts yet."
  :blog/published        "Published"
- :blog/read-more        {:draft "Continue reading"}
+ :blog/read-more        "Continue reading"
  :blog/archive          "Archive"
  :blog/tags             "Tags"
  :blog/feed             "Feed"
  :blog/tagged           "Tagged"
- :blog/preview-banner   {:draft "Preview: this post isn't listed on the blog yet."}
+ :blog/preview-banner   "Preview: this post isn't listed on the blog yet."
 
  ;; Blog posts with Style: rfc (old-school RFC layout). Labels from the RFC format.
  :rfc/number            "Request for Comments"

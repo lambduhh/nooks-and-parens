@@ -12,8 +12,7 @@ Rfc-Date: November 2026
 Draft-Header: false
 
 <!--
-  Jordan's draft, laid out as an old-school RFC (Style: rfc). Every paragraph
-  below is a placeholder; write over it in place.
+  Jordan's post, laid out as an old-school RFC (Style: rfc).
 
   Metadata (the lines above the first blank line):
   - Preview: true keeps this post off the blog index, tags and feeds. It's still
@@ -80,7 +79,7 @@ They're missing the point. The journey, the struggle: that's the important part.
 
 My teacher says learning is all about consistency over time. Five to fifteen minutes every day beats three hours once a week. The same is true for problem solving. The same is true for programming.
 
-<p class="draft">Bridge to December: Advent of Code is exactly that kind of daily practice, a small puzzle every day, and it's better with people. That's what Nooks &amp; Parens is for.</p>
+Advent of Code is exactly that kind of daily practice, a small puzzle every day, and it's better with people. That's what Nooks &amp; Parens is for.
 
 
 ## 2. Schedule

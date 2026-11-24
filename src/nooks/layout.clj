@@ -20,15 +20,14 @@
    :workbench "/workbench/"
    :videos    "/videos/"
    :learn     "/learn/"
-   :slot-7    "/slot-7/"     ; toolbelt slot 7 placeholder (Roundups cut 2026-11-24)
-   :about     "/about/"
    :formats   "/formats/"
    :blog      "/blog/"})
 
 (def toolbelt
-  "Slots 1–8, in key order, with their icon."
+  "Toolbelt slots, in key order, with their icon. Slot 7 (placeholder) and About
+  are out for the alpha (Jordan, 2026-11-24)."
   [[:start "map"] [:today "sun"] [:calendar "cal"] [:workbench "bench"]
-   [:videos "film"] [:learn "book"] [:slot-7 "shelf"] [:about "info"]])
+   [:videos "film"] [:learn "book"]])
 
 (def lang-prefix {:en "" :pt-BR "/pt-br"})
 
@@ -82,6 +81,18 @@
 
 (defn icon [id]
   [:svg {:aria-hidden "true" :focusable "false"} [:use {:href (str "#t-" id)}]])
+
+(def tool-emoji
+  "Power-tool emoji for headings, by route or Learn drawer. Decoration only:
+  aria-hidden, so headings read as their words (Jordan, 2026-11-24)."
+  {:start "🔌" :workbench "🪚" :learn "🧰" :formats "🔧" :videos "🪜"
+   :today "🔦" :not-found "🔩"
+   :tutorial "🔨" :how-to "🪛" :reference "📏" :explanation "⚙️"})
+
+(defn emoji
+  "The emoji for k as a decorative prefix, or nil."
+  [k]
+  (when-let [e (tool-emoji k)] (list [:span.emoji {:aria-hidden "true"} e] " ")))
 
 (defn tool-icon
   "Icon for a day's :day/tool keyword."
@@ -149,8 +160,7 @@
   (let [lang (:lang ctx)]
     [:footer.foot.wrap
      [:p (t lang :footer/line)]
-     [:p [:a {:href (route-href ctx :blog)} (t lang :footer/blog)]
-      " · " [:a {:href (route-href ctx :about)} (t lang :route/about)]]]))
+     [:p [:a {:href (route-href ctx :blog)} (t lang :footer/blog)]]]))
 
 ;; ---- Page ------------------------------------------------------------------
 
@@ -183,6 +193,7 @@
         [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
         [:title title]
         (when description [:meta {:name "description" :content description}])
+        [:link {:rel "icon" :type "image/svg+xml" :href (href ctx "/assets/favicon.svg")}]
         [:link {:rel "stylesheet" :href (href ctx "/assets/css/site.css")}]
         [:link {:rel "preload" :href (href ctx "/assets/fonts/nunito.woff2") :as "font" :type "font/woff2" :crossorigin "anonymous"}]
         head
