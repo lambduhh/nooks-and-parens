@@ -16,5 +16,6 @@
    :ring    (read-edn "ring.edn")
    :formats   (read-edn "formats.edn")
    :resources (read-edn "resources.edn")
+   :learn     (read-edn "learn.edn")
    :i18n    {:en    (read-edn "i18n/en.edn")
              :pt-BR (read-edn "i18n/pt-BR.edn")}})

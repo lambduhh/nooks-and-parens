@@ -242,3 +242,5 @@ figure.diagram figcaption{font-size:14px;margin-top:6px}
 .drawer h2{font-size:17px;border-bottom:3px solid var(--wood-dark);padding-bottom:6px}
 .drawer .count{font-weight:700;color:var(--muted)}
 .drawer ul{padding-left:18px;margin:6px 0}
+.drawer h3{font-size:15px;margin:12px 0 2px}
+.drawer-grouped{grid-column:1/-1}
