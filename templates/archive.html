@@ -1,0 +1,14 @@
+<section class="panel">
+  <p class="crumbs"><a href="index.html">[[t :blog/title]]</a></p>
+  <h1>[[t :blog/archive]]</h1>
+  {% for post-group in post-groups %}
+  <h2>{{post-group.year}}</h2>
+  <ul class="posts">
+    {% for post-link in post-group.post-links %}
+    <li><a href="{{post-link.url}}">{{post-link.title}}</a> · <time datetime="{{post-link.date}}">{{post-link.date}}</time></li>
+    {% endfor %}
+  </ul>
+  {% empty %}
+  <p>[[t :blog/empty]]</p>
+  {% endfor %}
+</section>

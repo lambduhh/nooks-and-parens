@@ -3,9 +3,11 @@
  :site/tagline       "It's dangerous to go alone! Take this."
  :site/positioning   "Clojure. A power tool for evolving systems."
  :site/framing       "Each Advent of Code day is a small evolving system: part 2 usually changes the question part 1 asked."
- :site/url           "https://nooks-and-parens.pages.dev"   ; confirm after the Pages project exists
- :site/base-path     ""                                       ; "/nooks-and-parens" only on the GitHub Pages fallback
+ :site/framing-final? false     ; flip to true once Jordan confirms :site/framing; until then it renders as a draft
+ :site/url           "https://lambduhh.github.io/nooks-and-parens"   ; GitHub Pages project site (decided 2026-11-24)
+ :site/base-path     "/nooks-and-parens"                               ; every generated link starts with this
  :site/languages     [:en :pt-BR]
+ :site/author        "Jordan Miller"
  :cta/slack          {:label "Join #adventofcode on Clojurians Slack" :url "https://clojurians.net"}
  :cta/slack-channel  nil        ; Jordan pastes the verified #adventofcode channel link here
  :cta/discord        {:url "https://discord.clojure.camp"}

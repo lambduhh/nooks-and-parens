@@ -1,0 +1,9 @@
+;; pt-BR.edn: Portuguese (Brazil) UI strings. Same keys and value forms as en.edn.
+;;
+;; Every pt-BR page is untranslated for now: it shows the English page, marked
+;; lang="en", under a "Tradução em breve" notice. Keys missing here fall back to
+;; en.edn. The pt-BR reviewer decides how to render the tagline, "What're ya
+;; REPLin'?" and "DIY recipes" (docs/decisions.md § Open).
+{:lang/en          "EN"
+ :lang/pt-BR       "PT-BR"
+ :i18n/coming-soon {:draft "Tradução em breve"}}
