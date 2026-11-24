@@ -1,0 +1,33 @@
+;; resources.edn: outside resources shown in the Learn drawers next to the
+;; template's guides. :resource/kind is the drawer: :tutorial :how-to
+;; :reference :explanation. Titles are the resources' own names. Anything the
+;; template's guides already link (install pages, editors, Calva, the Clojure
+;; Camp handbook) isn't repeated here. URLs checked (HTTP 200) on 2026-11-24.
+;; Shape: docs/content-model.md.
+[{:resource/title "Clojure: Zero to REPL (video walkthroughs)"
+  :resource/url   "https://clojure.org/news/2026/03/30/zero_to_repl"
+  :resource/kind  :tutorial}
+ {:resource/title "ClojureDocs"
+  :resource/url   "https://clojuredocs.org"
+  :resource/kind  :reference}
+ {:resource/title "Advent of Code: about and FAQ"
+  :resource/url   "https://adventofcode.com/2026/about"
+  :resource/kind  :reference}
+ {:resource/title "Clojure Camp mob sessions"
+  :resource/url   "https://github.com/clojure-camp/wiki/blob/main/initiatives/mob-sessions.md"
+  :resource/kind  :how-to}
+ {:resource/title "Clojure Camp"
+  :resource/url   "https://clojure.camp"
+  :resource/kind  :explanation}
+ {:resource/title "ClojureTV"
+  :resource/url   "https://www.youtube.com/@ClojureTV"
+  :resource/kind  :explanation}
+ {:resource/title "Teaching Clojure Together (Clojure/conj 2024)"
+  :resource/url   "https://www.youtube.com/watch?v=xOPoYHxZjdc"
+  :resource/kind  :explanation}
+ ;; AI-assisted analysis of public Clojure AoC repos. Its line-count
+ ;; comparison (Q11) is unreviewed but cleared for quoting, with its caveat:
+ ;; it counts published solutions only.
+ {:resource/title "clojure-aoc-research"
+  :resource/url   "https://github.com/lambduhh/clojure-aoc-research"
+  :resource/kind  :explanation}]

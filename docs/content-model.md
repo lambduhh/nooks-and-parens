@@ -91,6 +91,21 @@ DIY recipes and Workbench starters. Made-up data only, never puzzle text or exam
 
 Only members who have opted in. Ring links for a day render only after that day's spoiler date.
 
+## `data/formats.edn`
+
+The pool of session formats, for `/formats/`. Each day's session is picked from the pool, by puzzle and guest availability; there is no day-by-day format plan.
+
+- `:formats/pool`: one map per format.
+  - `:format/id` is a keyword with a `:format/<id>` string in `data/i18n/`.
+  - `:format/source` is `:favorite` (the guide's 12 favorites) or `:extra` (this campaign's additions).
+  - Optional: `:format/length`, `:format/people`, `:format/prepare`, `:format/example-video`. Until they're set, the page shows a draft "to be written".
+- `:formats/sources`: where the managers note's two terms (cognitive debt, comprehension debt) come from: `:source/term`, `:source/title`, `:source/author`, `:source/date`, `:source/url`, and an optional `:source/caveat-url`.
+- Tests check that every day's draft `:format` is in the pool.
+
+## `data/resources.edn`
+
+Outside resources shown in the Learn drawers, next to the template's guides: `:resource/title` (the resource's own name), `:resource/url` (https), and `:resource/kind`, which is the drawer: `:tutorial`, `:how-to`, `:reference` or `:explanation`. Don't repeat links the template's guides already carry.
+
 ## `data/template.edn`
 
 Guides from the template repo (`:template/url` in `site.edn`), rendered into the hub at build time.
