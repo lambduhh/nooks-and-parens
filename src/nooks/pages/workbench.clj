@@ -105,10 +105,11 @@
            (for [[k r] rs]
              [:li [:button.ghost {:type "button" :id (name k)
                                   :data-recipe (name k)
+                                  :data-title (:title r)
                                   :data-code (:code r)
                                   :data-expect (:expect r)
                                   :data-kind (value-kind (:expect r))}
-                   (:title r)]])]]]
+                   (t lang :workbench/load (:title r))]])]]]
         [:div
          [:h2.result-h (t lang :workbench/result)]
          [:div.slotout {:id "wb-out"}
