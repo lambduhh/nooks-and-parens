@@ -29,7 +29,7 @@ Facts below were checked on 2026-11-24. Free tiers change; re-check the linked p
 
 ## How GitHub Pages fits
 
-GitHub allows **one user site per account** (`lambduhh.github.io`, already used), but **one project site per repository**. The public `nooks-and-parens` repo publishes at `https://lambduhh.github.io/nooks-and-parens/`. Source: [GitHub Pages limits](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits) (1 GB site, soft 100 GB a month; not for commercial sites, and a free community hub isn't one).
+GitHub allows **one user site per account** (`lambduhh.github.io`, already used), but **one project site per repository**. The `nooks-and-parens` repo, once public, publishes at `https://lambduhh.github.io/nooks-and-parens/`. Source: [GitHub Pages limits](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits) (1 GB site, soft 100 GB a month; not for commercial sites, and a free community hub isn't one).
 
 What follows from it:
 
@@ -38,14 +38,14 @@ What follows from it:
 | The site lives under `/nooks-and-parens/` | Every generated link starts with `:site/base-path` in `data/site.edn`. `bb check` fails on an internal link outside it. `bb dev` serves the same path locally |
 | No custom response headers | The CSP is a `<meta http-equiv="Content-Security-Policy">` tag in every page ([`layout.clj`](../src/nooks/layout.clj)). A meta CSP can't set `frame-ancestors` |
 | No PR previews | PRs run `bb test`, `bb check` and `bb build` only. Review a PR locally with `bb dev` |
-| The repo must be public | It is (Jordan made it public in the GitHub web UI, 2026-11-24) |
+| The repo must be public | Not yet. Jordan made it public in the GitHub web UI on 2026-11-24, then private again the same day, pending a security review. The site can't deploy until the review approves making it public |
 
 Pages source is **GitHub Actions** (set in the repo's Pages settings).
 
 ## Setup
 
 ### Jordan, once (done 2026-11-24)
-1. Make the repo public.
+1. Make the repo public (blocked until the security review approves it; see `docs/decisions.md`).
 2. In Settings → Pages, set the source to GitHub Actions.
 
 ### Claude Code: the workflow

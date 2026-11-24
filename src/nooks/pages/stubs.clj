@@ -19,24 +19,87 @@
                 [:li [:a {:href "https://github.com/babashka/scittle"} "Scittle"]]
                 [:li [:a {:href "https://babashka.org"} "babashka"]]]))
 
+(defn- format-anchor [id] (str "format-" (name id)))
+
+(defn- pool-facts
+  "Length, people, what to prepare for a pool format; drafts until written."
+  [lang {:format/keys [length people prepare example-video]}]
+  (let [field (fn [label-k v] (list [:dt (t lang label-k)] [:dd (or v (t lang :formats/tbd))]))]
+    (list
+     [:dl.facts
+      (field :formats/length length)
+      (field :formats/people people)
+      (field :formats/prepare prepare)]
+     (when example-video
+       [:p [:a {:href example-video} (t lang :formats/example)]]))))
+
+(defn- guide-entry
+  "One format in the guide: name, \"Favorite\" in words, Jordan's text,
+  and the practical facts when it's in this December's pool."
+  [lang pool-by-id {:format/keys [id name text pool favorite?]}]
+  [:li {:id (format-anchor id)}
+   [:h4 name (when favorite? (list " " [:span.chip.fav (t lang :formats/favorite)]))]
+   [:p text]
+   (when pool (pool-facts lang (pool-by-id pool)))])
+
 (defn formats
-  "/formats/: one card per format in data/formats.edn (plan task 6). Length,
-  people and what to prepare show as drafts until Jordan writes them."
+  "/formats/: Jordan's session formats guide (data/formats.edn :formats/guide),
+  then this campaign's additions to the pool and the managers note. The
+  favorites table is built from the pool's :favorite formats, so its names are
+  the same labels the schedule uses."
   [ctx]
   (let [lang (:lang ctx)
-        {:formats/keys [pool sources]} (get-in ctx [:data :formats])
-        field (fn [label-k v] (list [:dt (t lang label-k)] [:dd (or v (t lang :formats/tbd))]))]
+        {:formats/keys [pool guide sources]} (get-in ctx [:data :formats])
+        pool-by-id (into {} (map (juxt :format/id identity)) pool)
+        entries    (mapcat :group/formats (:guide/groups guide))
+        ;; Where a pool format's row in the table links: its first guide entry
+        ;; (:pairing-mob has two, pairing and mob).
+        entry-for  (fn [pool-id] (some #(when (= pool-id (:format/pool %)) (:format/id %)) entries))]
     (c/stub-page ctx :formats :formats/intro
-                 [:div.drawers
-                  (for [{:format/keys [id length people prepare example-video]} pool]
-                    [:section.drawer {:id (str "format-" (name id))}
-                     [:h2 (t lang (keyword "format" (name id)))]
-                     [:dl
-                      (field :formats/length length)
-                      (field :formats/people people)
-                      (field :formats/prepare prepare)]
-                     (when example-video
-                       [:p [:a {:href example-video} (t lang :formats/example)]])])]
+                 [:div.prose.guide
+                  [:h2 (:guide/title guide)]
+                  [:p (:guide/lede guide)]
+                  [:ul
+                   (for [{:audience/keys [who text]} (:guide/audiences guide)]
+                     [:li [:b who] " — " text])]
+                  [:p (:guide/variety guide)]
+
+                  [:h3#favorites (:guide/favorites-title guide)]
+                  [:p (:guide/favorites-lede guide)]
+                  [:table
+                   [:thead [:tr [:th {:scope "col"} (t lang :formats/col-format)]
+                            [:th {:scope "col"} (t lang :formats/col-good-for)]]]
+                   [:tbody
+                    (for [{:format/keys [id source good-for]} pool
+                          :when (= :favorite source)]
+                      [:tr
+                       [:th {:scope "row"}
+                        [:a {:href (str "#" (format-anchor (entry-for id)))}
+                         (t lang (keyword "format" (name id)))]]
+                       [:td good-for]])]]
+                  [:p (:guide/menu-lede guide)]
+
+                  (for [{:group/keys [id title blurb formats]} (:guide/groups guide)]
+                    [:section {:aria-labelledby (str "group-" (name id))}
+                     [:h3 {:id (str "group-" (name id))} title]
+                     [:p.blurb blurb]
+                     [:ul.format-list (for [e formats] (guide-entry lang pool-by-id e))]])
+
+                  [:h3#heuristics (:guide/heuristics-title guide)]
+                  [:ul
+                   (for [{:heuristic/keys [q a]} (:guide/heuristics guide)]
+                     [:li [:b q] " " a])]]
+
+                 [:section {:aria-labelledby "extras"}
+                  [:h2#extras (t lang :formats/extras-heading)]
+                  [:ul.format-list
+                   (for [{:format/keys [id source] :as f} pool
+                         :when (= :extra source)]
+                     [:li {:id (format-anchor id)}
+                      [:h3 (t lang (keyword "format" (name id)))]
+                      [:p (t lang :formats/tbd)]
+                      (pool-facts lang f)])]]
+
                  [:h2 (t lang :formats/managers-heading)]
                  [:p (t lang :formats/managers)]
                  [:ul
@@ -58,7 +121,8 @@
               (layout/primary-button ctx)]
              [:section.panel
               (c/session-list ctx (get-in ctx [:data :days]))
-              [:p.small (t lang :session/no-session)]])}))
+              [:p.small (t lang :session/no-session) " "
+               [:a {:href (layout/route-href ctx :formats)} (t lang :calendar/formats-link)]]])}))
 
 (defn today-target
   "Where /today/ points as of build time. Day pages aren't built yet (next
