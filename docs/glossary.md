@@ -18,7 +18,7 @@ verified: { by: "human:lambduhh", at: 2026-11-24T14:13:52Z }
 
 # Glossary
 
-> **AI-generated (L0).** Claude Code drafted every definition below from the other files in `docs/` and from `CLAUDE.md`. No one has checked them yet, and AI drafts often contain false statements. Each entry links to its source. Where they disagree, the source wins.
+> **AI-generated, human-reviewed (L2).** Claude Code drafted every definition below from the other files in `docs/` and from `CLAUDE.md`. Jordan read it in PR #3, but no claim has been individually verified, and AI drafts often contain false statements. Each entry links to its source. Where they disagree, the source wins.
 
 Terms that have a specific meaning in this project. Each entry says what the term means here, where it comes from, and which nearby terms are different things. Link an entry as `glossary.md#term`. `bb links --glossary` lists entries that no doc links to yet.
 
