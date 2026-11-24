@@ -75,8 +75,17 @@
    (when (re-find #"(?i)<script(?![^>]*\ssrc=)[^>]*>" html)
      ["inline script (blocked by the CSP)"])))
 
+(defn- strip-comments
+  "HTML with <!-- … --> removed. A link inside a comment isn't followable, e.g.
+  the author notes a blog post carries into the blog index's excerpt. Only the
+  link and anchor checks use this: comments still ship in the page source, so
+  the name and host checks read them."
+  [html]
+  (str/replace html #"(?s)<!--.*?-->" ""))
+
 (defn- check-links [{:keys [base out-dir file]} html]
-  (let [here (java.net.URI. (page-url base out-dir file))
+  (let [html (strip-comments html)
+        here (java.net.URI. (page-url base out-dir file))
         refresh (for [[_ u] (re-seq #"http-equiv=\"refresh\"[^>]*content=\"\d+;\s*url=([^\"]+)\"" html)] u)
         refresh2 (for [[_ u] (re-seq #"content=\"\d+;\s*url=([^\"]+)\"[^>]*http-equiv=\"refresh\"" html)] u)]
     (for [u (concat (attr-values html "a|link" "href")
@@ -93,7 +102,8 @@
   "Every same-page link (<a href=\"#x\">) has an element with id=\"x\". Catches a
   table-of-contents entry left behind when a heading is renamed."
   [_ctx html]
-  (let [ids (set (map second (re-seq #"\sid=\"([^\"]+)\"" html)))]
+  (let [html (strip-comments html)
+        ids  (set (map second (re-seq #"\sid=\"([^\"]+)\"" html)))]
     (for [tag (re-seq #"<a\b[^>]*>" html)
           :let [[_ frag] (re-find #"\shref=\"#([^\"]+)\"" tag)]
           :when (and frag (not (ids frag)))]

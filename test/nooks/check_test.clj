@@ -73,4 +73,11 @@
 
 (deftest anchors
   (is (run #'nooks.check/check-anchors "<a href=\"#2.-schedule\">2</a><h2 id=\"2.-timetable\">2. Timetable</h2>"))
-  (is (nil? (run #'nooks.check/check-anchors "<a href=\"#main\">skip</a><main id=\"main\"></main><svg aria-hidden=\"true\"><use href=\"#t-map\"></use></svg>")) "svg <use> isn't a link"))
+  (is (nil? (run #'nooks.check/check-anchors "<a href=\"#main\">skip</a><main id=\"main\"></main><svg aria-hidden=\"true\"><use href=\"#t-map\"></use></svg>")) "svg <use> isn't a link")
+  (is (nil? (run #'nooks.check/check-anchors "<!-- cite with <a href=\"#ref-aoc\">[AOC]</a> --><p>x</p>")) "a link inside an HTML comment isn't a link"))
+
+(deftest links-in-comments
+  (let [out (str (fs/create-temp-dir))
+        ctx {:base "/n" :out-dir out :file (str (fs/path out "index.html"))}]
+    (is (run #'nooks.check/check-links "<a href=\"/n/nope/\">x</a>" ctx) "the same link outside a comment fails")
+    (is (nil? (run #'nooks.check/check-links "<!-- <a href=\"/n/nope/\">x</a> -->" ctx)) "a link inside an HTML comment isn't a link")))
