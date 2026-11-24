@@ -164,10 +164,20 @@
       (update node :content (fn [c] (mapv #(walk-ast f %) c)))
       node)))
 
-(defn- transform [ast rewrite]
+(defn- use-template-cta?
+  "**Use this template** in a guide names GitHub's button; on the hub it
+  becomes a link to the repo page that has it. ::linked stops walk-ast,
+  which visits children after their parent, from wrapping it again."
+  [node]
+  (and (= :strong (:type node)) (not (::linked node))
+       (= "use this template" (str/lower-case (str/trim (md/node->text node))))))
+
+(defn- transform [ast rewrite & [template-url]]
   (let [seen (atom {})]
     (walk-ast
      (fn [node]
+       (if (and template-url (use-template-cta? node))
+         {:type :link :attrs {:href template-url} :content [(assoc node ::linked true)]}
        (case (:type node)
          :heading (let [slug (github-slug (md/node->text node))
                         n    (get @seen slug 0)]
@@ -175,7 +185,7 @@
                     (assoc-in node [:attrs :id] (if (zero? n) slug (str slug "-" n))))
          :link    (update-in node [:attrs :href] rewrite)
          :image   (update-in node [:attrs :src] rewrite)
-         node))
+         node)))
      ast)))
 
 (defn- diagram-figure [lang href]
@@ -220,9 +230,9 @@
 
 (defn render-markdown
   "{:hiccup … :title … :draft? …} for Markdown text from repo path `from`."
-  [lang text rewrite & [{:keys [diagram-first?] :as opts}]]
+  [lang text rewrite & [{:keys [diagram-first? template-url] :as opts}]]
   (let [text (strip-front-matter text)
-        ast  (cond-> (transform (md/parse text) rewrite) diagram-first? hoist-diagram)
+        ast  (cond-> (transform (md/parse text) rewrite template-url) diagram-first? hoist-diagram)
         h1   (first (filter #(and (= :heading (:type %)) (= 1 (:heading-level %))) (:content ast)))]
     {:hiccup (mdt/->hiccup (renderers lang opts) ast)
      :title  (some-> h1 md/node->text)
@@ -277,7 +287,9 @@
                                           path)
                    {:keys [hiccup title]} (render-markdown lang (slurp (str (fs/path dir path))) rewrite
                                                            {:diagram-first? diagram-first?
-                                                            :diagram-href #(layout/href ctx (str "/assets/diagrams/" % ".svg"))})
+                                                            :diagram-href #(layout/href ctx (str "/assets/diagrams/" % ".svg"))
+                                                            ;; Gated: never link the template repo while it's private.
+                                                            :template-url (when (:template/public? site) (:template/url site))})
                    route (hub-route hub)]
                {:route route
                 :title (or title path)

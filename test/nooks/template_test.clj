@@ -41,6 +41,18 @@
       (testing "mermaid becomes a collapsed source block"
         (is (re-find #"<details class=\"diagram\">" (str (hiccup2.core/html (render "```mermaid\ngraph TD\n```")))))))))
 
+(deftest use-this-template-link
+  (let [url  "https://github.com/x/template"
+        html #(str (hiccup2.core/html (:hiccup (tpl/render-markdown :en %1 identity {:template-url %2}))))]
+    (testing "bold **Use this template** links once to the repo page"
+      (let [out (html "Click **Use this template** on GitHub." url)]
+        (is (re-find #"<a href=\"https://github.com/x/template\"><strong>Use this template</strong></a>" out))
+        (is (= 1 (count (re-seq #"<a " out))))))
+    (testing "no link while the template is private (no url)"
+      (is (not (re-find #"<a " (html "Click **Use this template**." nil)))))
+    (testing "plain text and other bold text are left alone"
+      (is (not (re-find #"<a " (html "use this template, **Use it**" url)))))))
+
 (deftest blog-heading-ids
   (require 'nooks.blog)
   (let [f (resolve 'nooks.blog/github-heading-ids)]
