@@ -355,7 +355,7 @@
           drawer (fn [kind k]
                    ;; Empty drawers are left out until they have something in them.
                    (when (seq (by kind))
-                   [:section.drawer {:class (when (= kind :how-to) "drawer-grouped")}
+                   [:section.drawer {:class (str "drawer-" (name kind))}
                     [:h2 (layout/emoji kind) (t lang k) " " [:span.count (str "(" (count (by kind)) ")")]]
                     (body kind)]))]
       {:route :learn
@@ -367,12 +367,20 @@
                 [:p (t lang :learn/intro)]
                 [:p [:a {:href (:template/url site)} (t lang :learn/get-template)]]
                 (layout/primary-button ctx)]
-               [:div.drawers
-                (drawer :tutorial :learn/tutorials)
-                (drawer :how-to :learn/how-to)
-                (drawer :reference :learn/reference)
-                (drawer :explanation :learn/explanation)
-                (drawer :blog :learn/blog)]
+               ;; Diátaxis compass as two columns: study (tutorials over
+               ;; explanation) and work (how-to over reference), practical on
+               ;; top. Each column stacks on its own, so a short tile keeps
+               ;; its height instead of stretching to match the long How-to.
+               ;; Blog isn't a quadrant, but it holds the announcement, the
+               ;; first thing to read, so it tops the study column.
+               [:div.drawers.diataxis
+                [:div.diataxis-col
+                 (drawer :blog :learn/blog)
+                 (drawer :tutorial :learn/tutorials)
+                 (drawer :explanation :learn/explanation)]
+                [:div.diataxis-col
+                 (drawer :how-to :learn/how-to)
+                 (drawer :reference :learn/reference)]]
                [:section.panel
                 [:h2 (t lang :learn/ai)]
                 [:p (t lang :learn/ai-note)]
