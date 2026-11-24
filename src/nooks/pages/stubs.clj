@@ -19,14 +19,30 @@
                 [:li [:a {:href "https://github.com/babashka/scittle"} "Scittle"]]
                 [:li [:a {:href "https://babashka.org"} "babashka"]]]))
 
-(defn formats [ctx]
-  (let [lang (:lang ctx)]
-    (c/stub-page ctx :formats nil
+(defn formats
+  "/formats/: one card per format in data/formats.edn (plan task 6). Length,
+  people and what to prepare show as drafts until Jordan writes them."
+  [ctx]
+  (let [lang (:lang ctx)
+        {:formats/keys [pool sources]} (get-in ctx [:data :formats])
+        field (fn [label-k v] (list [:dt (t lang label-k)] [:dd (or v (t lang :formats/tbd))]))]
+    (c/stub-page ctx :formats :formats/intro
+                 [:div.drawers
+                  (for [{:format/keys [id length people prepare example-video]} pool]
+                    [:section.drawer {:id (str "format-" (name id))}
+                     [:h2 (t lang (keyword "format" (name id)))]
+                     [:dl
+                      (field :formats/length length)
+                      (field :formats/people people)
+                      (field :formats/prepare prepare)]
+                     (when example-video
+                       [:p [:a {:href example-video} (t lang :formats/example)]])])]
+                 [:h2 (t lang :formats/managers-heading)]
+                 [:p (t lang :formats/managers)]
                  [:ul
-                  (for [d (get-in ctx [:data :days])
-                        :let [{:keys [n format]} (:day/session d)]]
-                    [:li [:b (t lang (keyword "format" (name format)))]
-                     " · " (t lang :formats/session (i18n/pad2 n))])])))
+                  (for [{:source/keys [term title author date url caveat-url]} sources]
+                    [:li [:b term] ": " [:a {:href url} title] ", " author ", " date
+                     (when caveat-url (list " (" [:a {:href caveat-url} (t lang :formats/caveat)] ")"))])])))
 
 (defn calendar
   "Stub until the tool wall lands: the decided heading and the full schedule."

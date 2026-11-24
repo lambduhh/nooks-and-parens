@@ -63,7 +63,7 @@ Build in this order; each one passes the definition of done in `CLAUDE.md`.
 3. **Day pages** `/days/01/` … `/days/12/`: facts note, gate sign, primary button by state, DIY recipes (always visible), then by state: live session info, or replay + community solutions.
 4. **Start here** `/start/`: the onboarding path in § Start here requirements below. Since 2026-11-24 it renders the template's `docs/setup-flowchart.md`; the OS tabs, click-to-load videos and copy buttons are still to come.
 5. **About** `/about/`: who runs it, employer role disclosed, credits (quickblog, Scittle, borkdude), "not affiliated" line. Copy is draft.
-6. **Formats** `/formats/`: one card per format (name, length, people, what to prepare, example recording when one exists). It also serves managers as a guide to leading technical conversations that keep humans in the loop. Copy is draft.
+6. **Formats** `/formats/`: one card per format in `data/formats.edn` (name, length, people, what to prepare, example recording when one exists). It also serves managers as a guide to leading technical conversations that keep humans in the loop. Copy is draft.
 7. **Today** `/today/`: redirect page (meta refresh + link) to the current day page as of build time, or to `/` before Dec 1.
 
 ### 6. Blog — Claude Code

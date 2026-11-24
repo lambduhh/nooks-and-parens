@@ -83,6 +83,20 @@
  :format/show-and-tell   "Show and tell"
  :format/paper-club      "Paper club"
  :format/tech-talk       "Tech talk"
+ :format/how-not-to-solve "How NOT to solve it"
+ :format/side-by-side    "Side by side"
+ :format/datomic         "Solving with Datomic"
+
+ ;; Formats page (data/formats.edn). Prose is draft until Jordan writes it.
+ :formats/intro          {:draft "Each day's session is picked from this pool, by puzzle and by who can join."}
+ :formats/length         "Length"
+ :formats/people         "People"
+ :formats/prepare        "What to prepare"
+ :formats/tbd            {:draft "To be written"}
+ :formats/example        "Example recording"
+ :formats/managers-heading {:draft "For managers"}
+ :formats/managers       {:draft "A guide to leading technical conversations that keep humans in the loop, against cognitive debt and comprehension debt."}
+ :formats/caveat         "a contested preprint; see the commentary"
 
  ;; Stub pages (MVP). Each is a placeholder until its phase.
  :stub/today-link       "Go to today"
