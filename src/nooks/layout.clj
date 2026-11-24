@@ -24,10 +24,21 @@
    :blog      "/blog/"})
 
 (def toolbelt
-  "Toolbelt slots, in key order, with their icon. Slot 7 (placeholder) and About
-  are out for the alpha (Jordan, 2026-11-24)."
-  [[:start "map"] [:today "sun"] [:calendar "cal"] [:workbench "bench"]
-   [:videos "film"] [:learn "book"]])
+  "Toolbelt slots, in key order, with their icon. Keys start at 0: slot i is
+  number key i (Jordan, 2026-11-24). Slot 7 (placeholder) and About are out
+  for the alpha."
+  [[:today "sun"] [:calendar "cal"] [:workbench "bench"] [:learn "book"]
+   [:videos "film"] [:start "map"]])
+
+(def toolbelt-labels
+  "Slots whose toolbelt label differs from the route name. Only the toolbelt
+  says \"First time?\"; the page itself is still \"Start here\" (Jordan, 2026-11-24)."
+  {:start :toolbelt/start})
+
+(defn toolbelt-key
+  "The number key for a route's toolbelt slot (0-based), or nil."
+  [route]
+  (first (keep-indexed (fn [i [r _]] (when (= r route) i)) toolbelt)))
 
 (def lang-prefix {:en "" :pt-BR "/pt-br"})
 
@@ -143,14 +154,14 @@
      [:ul
       (map-indexed
        (fn [i [r ic]]
-         [:li [:a (cond-> {:href (route-href ctx r) :data-k (str (inc i))}
+         [:li [:a (cond-> {:href (route-href ctx r) :data-k (str i)}
                     (= r route) (assoc :aria-current "page"))
-               [:span.k {:aria-hidden "true"} (inc i)]
+               [:span.k {:aria-hidden "true"} i]
                (icon ic)
-               (t lang (keyword "route" (name r)))]])
+               (t lang (get toolbelt-labels r (keyword "route" (name r))))]])
        toolbelt)]
      [:div.opts
-      [:span (t lang :toolbelt/keys-help)]
+      [:span (t lang :toolbelt/keys-help 0 (dec (count toolbelt)))]
       ;; Hidden until site.js runs: without JS there are no shortcuts to switch.
       [:button {:type "button" :id "np-keys" :aria-pressed "true" :hidden true
                 :data-on (t-str lang :toolbelt/keys-on) :data-off (t-str lang :toolbelt/keys-off)}

@@ -1,4 +1,4 @@
-// Toolbelt shortcuts: number keys follow the toolbelt links (1 = first slot).
+// Toolbelt shortcuts: number keys follow the toolbelt links (0 = first slot).
 // Never fires in a text field or with a modifier key; the switch turns it off.
 // The on/off choice is kept in localStorage on this device only (no cookie,
 // sent nowhere). If storage is blocked, the switch still works for the page.
@@ -24,7 +24,9 @@
     if (!on || e.ctrlKey || e.metaKey || e.altKey || e.shiftKey || e.isComposing) return;
     var t = e.target, tag = t && t.tagName;
     if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (t && t.isContentEditable)) return;
-    var i = '123456789'.slice(0, links.length).indexOf(e.key);
-    if (i >= 0 && e.key.length === 1 && links[i]) { location.href = links[i].href; }
+    // Each slot's key is its data-k (0-based since 2026-11-24).
+    for (var i = 0; i < links.length; i++) {
+      if (links[i].getAttribute('data-k') === e.key) { location.href = links[i].href; return; }
+    }
   });
 })();

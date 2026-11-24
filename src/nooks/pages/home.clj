@@ -69,15 +69,17 @@
        [:section.panel {:aria-labelledby "mm"}
         [:h2#mm (t lang :home/menu)]
         [:ul.menu
-         (for [[i route desc] [[1 :start (t lang :home/menu-start)]
-                               [2 :today (if today
-                                           (t lang :home/menu-today-day (i18n/pad2 (:day/n today)))
-                                           (t lang :home/menu-today-soon
-                                              (i18n/day-label (state/utc-date (:day/unlock (first days))))))]
-                               [3 :calendar (t lang :home/menu-calendar)]
-                               [4 :workbench (t lang :home/menu-workbench)]]]
+         ;; Toolbelt order; each row's number is its toolbelt shortcut key.
+         (for [[route desc] (sort-by (comp layout/toolbelt-key first)
+                                     [[:today (if today
+                                                (t lang :home/menu-today-day (i18n/pad2 (:day/n today)))
+                                                (t lang :home/menu-today-soon
+                                                   (i18n/day-label (state/utc-date (:day/unlock (first days))))))]
+                                      [:calendar (t lang :home/menu-calendar)]
+                                      [:workbench (t lang :home/menu-workbench)]
+                                      [:start (t lang :home/menu-start)]])]
            [:li [:a {:href (layout/route-href ctx route)}
-                 [:span.key {:aria-hidden "true"} i]
+                 [:span.key {:aria-hidden "true"} (layout/toolbelt-key route)]
                  (t lang (keyword "route" (name route)))
                  [:small desc]]])]
         (layout/primary-button ctx)
