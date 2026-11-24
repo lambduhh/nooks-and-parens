@@ -14,6 +14,7 @@
             [hiccup2.core :as h]
             [nooks.i18n :as i18n]
             [nooks.layout :as layout]
+            [nooks.template :as template]
             [quickblog.api :as qb]))
 
 (def posts-dir "blog/posts")
@@ -49,6 +50,24 @@
     (spit (str (fs/path dir (fs/file-name f))) (i18n-tokens (slurp (str f)))))
   (spit (str (fs/path dir "base.html")) (base-template ctx)))
 
+(defn- unescape [s]
+  (-> s (str/replace #"<[^>]*>" "")
+      (str/replace "&apos;" "'") (str/replace "&#39;" "'") (str/replace "&quot;" "\"")
+      (str/replace "&lt;" "<") (str/replace "&gt;" ">") (str/replace "&amp;" "&")))
+
+(defn github-heading-ids
+  "Give every heading in a post the id GitHub would (\"## 1. Introduction\" ->
+  #1-introduction), as the template guides on the hub have, so a post's table
+  of contents uses the anchors people expect. Duplicates get -1, -2."
+  [html]
+  (let [seen (atom {})]
+    (str/replace html #"(?s)<h([1-6]) id=\"[^\"]*\">(.*?)</h\1>"
+                 (fn [[_ level inner]]
+                   (let [slug (template/github-slug (unescape inner))
+                         n    (get @seen slug 0)]
+                     (swap! seen update slug (fnil inc 0))
+                     (str "<h" level " id=\"" (if (zero? n) slug (str slug "-" n)) "\">" inner "</h" level ">"))))))
+
 (defn quickblog-opts [ctx out-dir work-dir]
   (let [site (get-in ctx [:data :site])]
     {:blog-title       (str (i18n/t-str :en :blog/title) " · " (:site/name site))
@@ -61,6 +80,7 @@
      :out-dir          (str (fs/path out-dir "blog"))
      :cache-dir        (str (fs/path work-dir "cache"))
      :force-render     true
+     :post-process-html-fn github-heading-ids
      :num-index-posts  10
      :default-metadata {:tags #{}}}))
 
@@ -70,6 +90,20 @@
   [ctx out-dir work-dir]
   (write-templates! ctx (fs/path work-dir "templates"))
   (qb/render (quickblog-opts ctx out-dir work-dir)))
+
+(defn post-list
+  "Every post in blog/posts, preview or not, as Learn-page entries:
+  [{:kind :blog :title :path :date :shared?}], newest first. :shared? means the
+  link is the same in every language (the blog is English only)."
+  []
+  (->> (fs/glob posts-dir "*.md")
+       (map (fn [f]
+              (let [header (take-while (complement str/blank?) (str/split-lines (slurp (str f))))
+                    meta   (into {} (for [l header :let [[_ k v] (re-matches #"([A-Za-z-]+):\s*(.*)" l)] :when k]
+                                      [(keyword (str/lower-case k)) (str/trim v)]))]
+                {:kind :blog :shared? true :title (:title meta) :date (:date meta)
+                 :path (str "/blog/" (str/replace (fs/file-name f) #"\.md$" ".html"))})))
+       (sort-by :date #(compare %2 %1))))
 
 ;; ---- bb blog:new -----------------------------------------------------------
 

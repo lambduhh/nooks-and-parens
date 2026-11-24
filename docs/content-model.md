@@ -45,7 +45,7 @@ A vector of 12 maps. See the file for all of them.
 ```clojure
 {:day/n             1
  :day/unlock        #inst "2026-12-01T05:00:00Z"   ; 00:00 EST
- :day/spoiler-until #inst "2026-12-04T05:00:00Z"   ; unlock + 3 days
+ :day/spoiler-until #inst "2026-12-05T05:00:00Z"   ; unlock + 4 days
  :day/puzzle-url    "https://adventofcode.com/2026/day/1"
  :day/tool          :hammer                        ; icon on the tool wall
  :day/session       {:n 1 :date #inst "2026-12-04" :format :live-coding
@@ -90,6 +90,18 @@ DIY recipes and Workbench starters. Made-up data only, never puzzle text or exam
 ```
 
 Only members who have opted in. Ring links for a day render only after that day's spoiler date.
+
+## `data/template.edn`
+
+Guides from the template repo (`:template/url` in `site.edn`), rendered into the hub at build time.
+
+```clojure
+{:template/sha   "5e0f08f…"   ; full 40-character commit; move it with bb template:bump
+ :template/pages [{:path "docs/setup-flowchart.md" :hub "/start/" :kind :how-to}
+                  {:path "docs/tutorial.md"        :hub "/learn/tutorial/" :kind :tutorial}]}
+```
+
+`:kind` is the Learn drawer (`:tutorial` `:how-to` `:reference` `:explanation`), or `:ai` for the optional "Using an AI agent?" shelf. Every `src/howto/*.clj` also becomes a how-to page at `/learn/howto/<name>/`. Links between listed files go to their hub pages; links to anything else open on GitHub at the pinned commit. A leading `<!-- DRAFT … -->` comment shows a draft notice on the page.
 
 ## Derived state
 

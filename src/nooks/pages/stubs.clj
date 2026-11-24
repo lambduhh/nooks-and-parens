@@ -7,11 +7,8 @@
             [nooks.pages.home :as home]
             [nooks.state :as state]))
 
-(defn start [ctx]     (c/stub-page ctx :start :stub/start))
 (defn workbench [ctx] (c/stub-page ctx :workbench :stub/workbench))
 (defn videos [ctx]    (c/stub-page ctx :videos :stub/videos))
-(defn learn [ctx]     (c/stub-page ctx :learn :stub/learn))
-(defn slot-7 [ctx]    (c/stub-page ctx :slot-7 :stub/slot-7))
 
 (defn about [ctx]
   (c/stub-page ctx :about :stub/about
@@ -24,7 +21,7 @@
 
 (defn formats [ctx]
   (let [lang (:lang ctx)]
-    (c/stub-page ctx :formats :stub/formats
+    (c/stub-page ctx :formats nil
                  [:ul
                   (for [d (get-in ctx [:data :days])
                         :let [{:keys [n format]} (:day/session d)]]
@@ -64,8 +61,7 @@
      :main  (list
              (layout/crumbs ctx (t lang :route/today))
              [:section.panel
-              [:h1 (t lang :route/today)]
-              [:p (t lang :stub/today)]
+              [:h1 (layout/emoji :today) (t lang :route/today)]
               [:p [:a {:href target} (t lang :stub/today-link)]]
               (layout/primary-button ctx)])}))
 
@@ -74,21 +70,18 @@
     {:route nil
      :title (t-str lang :route/not-found)
      :main  [:section.panel
-             [:h1 (t lang :route/not-found)]
+             [:h1 (layout/emoji :not-found) (t lang :route/not-found)]
              [:p (t lang :stub/not-found)]
              [:p [:a {:href (layout/route-href ctx :home)} (t lang :route/home)] " · "
               [:a {:href (layout/route-href ctx :calendar)} (t lang :route/calendar)]]
              (layout/primary-button ctx)]}))
 
 (def pages
-  "Route → page fn, for every non-blog route in `layout/routes`."
+  "Route → page fn for the hub's own pages. :start and :learn come from the
+  template repo; see nooks.build/all-pages."
   {:home      home/page
-   :start     start
    :today     today
    :calendar  calendar
    :workbench workbench
    :videos    videos
-   :learn     learn
-   :slot-7    slot-7
-   :about     about
    :formats   formats})

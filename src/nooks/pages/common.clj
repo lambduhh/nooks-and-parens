@@ -69,7 +69,7 @@
    [:span.p "user=>"] " " form "\n" (edn-hiccup value 0)])
 
 (defn stub-page
-  "A placeholder page: crumbs, a heading, a draft line, the primary button."
+  "A simple page: crumbs, a heading, an optional line, extra content, the primary button."
   [ctx route body-key & extra]
   (let [lang (:lang ctx)]
     {:route route
@@ -77,7 +77,7 @@
      :main  (list
              (layout/crumbs ctx (t lang (keyword "route" (name route))))
              [:section.panel
-              [:h1 (t lang (keyword "route" (name route)))]
-              [:p (t lang body-key)]
+              [:h1 (layout/emoji route) (t lang (keyword "route" (name route)))]
+              (when body-key [:p (t lang body-key)])
               extra
               (layout/primary-button ctx)])}))

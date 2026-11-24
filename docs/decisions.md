@@ -21,6 +21,12 @@ What's decided, what's open, and who decides. Decided items aren't reopened with
 
 | Date | Decision | Notes |
 |---|---|---|
+| 2026-11-24 | **Alpha for friends' review.** All placeholder copy accepted as final (draft markers removed); placeholders that were instructions rather than copy, and empty areas (the "Why it works" drawer), removed. About and toolbelt slot 7 left out, so the toolbelt has 6 slots. No alpha banner or feedback link: Jordan collects feedback by message. Tagged `v0.1.0-alpha` | New copy Jordan hasn't written still uses `{:draft …}`. About (with the employer disclosure) returns before launch |
+| 2026-11-24 | **Power-tool emoji and a favicon.** Decorative, `aria-hidden` emoji on page and Learn-drawer headings (`layout/tool-emoji`); a self-hosted SVG favicon of the toolbelt's wrench | Not on RFC-style posts. Headings still read as their words |
+| 2026-11-24 | **Spoiler gate: unlock + 4 days** (was 3). Solutions, replays, tutorials and ring links open at 05:00 UTC four days after the puzzle unlocks | Jordan's choice, so the announcement and the gate agree. Still meets the 2026-11-06 rule of at least 3 days |
+| 2026-11-24 | **The template's guides are rendered into the hub.** `docs/setup-flowchart.md` is `/start/`; the tutorial, README, how-to namespaces and AI files are under `/learn/`. Rendered at build time from a commit pinned in `data/template.edn`, moved by `bb template:bump` in a PR | Pinned so `bb check` reviews template changes and a template edit can't break the daily gate-opening build. Mermaid diagrams show as source; the guides' numbered steps carry the same route |
+| 2026-11-24 | **Template is public, with "Use this template" on.** `:template/public?` is `true` | Unlocks the template links and the Codespaces route |
+| 2026-11-24 | **Employer disclosure:** Jordan may be named as "Software Engineer, Clojure Team" as an author affiliation (post author lines), as well as on `/about` | Still never as proof |
 | 2026-11-24 | **Toolbelt slot 7 stays, as a placeholder.** It links to a stub page (`/slot-7/`) with a draft label | Was Roundups, cut the same day. Jordan may put reference docs there |
 | 2026-11-24 | **Roundups cut.** No weekly roundup posts | Community solutions are still linked per day, after the gate, and the January wrap-up stays |
 | 2026-11-24 | **Repo is public.** `lambduhh/nooks-and-parens` | Needed for a free GitHub Pages site. Jordan changed visibility in the GitHub web UI |
@@ -55,4 +61,3 @@ What's decided, what's open, and who decides. Decided items aren't reopened with
 | pt-BR renderings of the tagline, "What're ya REPLin'?" and "DIY recipes" | | The pt-BR reviewer | Before pt-BR pages go live |
 | A setup clinic in the Clojure Camp Discord before 1 Dec | | Jordan | Mon 30 Nov |
 | A custom domain later | | Jordan | After December |
-| Template public with "Use this template" on | Unlocks the template links and the Codespaces route | Jordan | As soon as possible |
