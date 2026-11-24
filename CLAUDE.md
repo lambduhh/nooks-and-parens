@@ -21,7 +21,7 @@ Jordan Miller owns this project. **All site copy is Jordan's to write.** You bui
 A static site. No server, no database.
 
 - **babashka** renders every page that isn't a blog post (landing, calendar, day pages, video pages, Learn, Start here, Workbench, About) from `data/*.edn` into `public/`, using hiccup.
-- **quickblog** renders `/blog/` (roundups, explanation articles, the announcement).
+- **quickblog** renders `/blog/` (explanation articles, the announcement, the wrap-up).
 - **Scittle** (vendored into `public/vendor/`, pinned) runs the Workbench in the browser.
 - A few lines of plain JS for click-to-load video and the toolbelt shortcuts.
 

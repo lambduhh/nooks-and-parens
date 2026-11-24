@@ -110,7 +110,7 @@ What a day page shows:
 |---|---|---|
 | `:soon` | Facts note, "Not open yet" sign with unlock time, DIY recipes, session info | Puzzle link, solutions, replay, tutorial, ring |
 | `:locked` | Facts, puzzle link, "Closed" sign with gate date, DIY recipes, live session info | Solutions, replay, tutorial, ring |
-| `:open` | Facts, puzzle link, "Open" sign, DIY recipes, replay (if `replay?`), tutorial (days 1–3), credited solutions, ring strip, roundup link | — |
+| `:open` | Facts, puzzle link, "Open" sign, DIY recipes, replay (if `replay?`), tutorial (days 1–3), credited solutions, ring strip | — |
 
 ## Strings and languages
 
