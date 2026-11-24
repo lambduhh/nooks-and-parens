@@ -40,3 +40,10 @@
         (is (not (:draft? (tpl/render-markdown :en "# T" identity)))))
       (testing "mermaid becomes a collapsed source block"
         (is (re-find #"<details class=\"diagram\">" (str (hiccup2.core/html (render "```mermaid\ngraph TD\n```")))))))))
+
+(deftest blog-heading-ids
+  (require 'nooks.blog)
+  (let [f (resolve 'nooks.blog/github-heading-ids)]
+    (is (= "<h2 id=\"1-introduction\">1. Introduction</h2>" (f "<h2 id=\"1.-introduction\">1. Introduction</h2>")))
+    (is (= "<h2 id=\"7-authors-address\">7. Author&apos;s Address</h2>" (f "<h2 id=\"x\">7. Author&apos;s Address</h2>")))
+    (is (re-find #"id=\"notes-1\"" (f "<h3 id=\"a\">Notes</h3><h3 id=\"b\">Notes</h3>")) "duplicates numbered")))
