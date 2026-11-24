@@ -210,6 +210,25 @@
       (check (str "/workbench/#" (name k) " opens that recipe")
              (= (:code r) (js s "document.getElementById('wb-code').value"))))
 
+    (println "Toolbelt shortcut keys (0-based):")
+    (goto! s url)
+    (js s "(() => { const c = document.getElementById('wb-code'); c.focus();
+             c.dispatchEvent(new KeyboardEvent('keydown', {key: '3', bubbles: true})); })()")
+    (Thread/sleep 300)
+    (check "a number typed in the code box doesn't switch tools"
+           (str/ends-with? (js s "location.pathname") "/workbench/"))
+    (js s "document.body.dispatchEvent(new KeyboardEvent('keydown', {key: '3', bubbles: true}))")
+    (wait-for #(and (str/ends-with? (js s "location.pathname") "/learn/")
+                    (= "complete" (js s "document.readyState"))) "key 3 → Learn")
+    (check "key 3 opens Learn" true)
+    ;; /today/ redirects at once (to the day's page, or home before 1 Dec),
+    ;; so check slot 0's link, then that key 0 follows it.
+    (check "slot 0 is Today"
+           (str/ends-with? (js s "document.querySelector('.hotbar a[data-k=\"0\"]').pathname") "/today/"))
+    (js s "document.body.dispatchEvent(new KeyboardEvent('keydown', {key: '0', bubbles: true}))")
+    (wait-for #(not (str/ends-with? (js s "location.pathname") "/learn/")) "key 0 to leave Learn")
+    (check "key 0 follows it" true)
+
     (check "no CSP violations or page errors" (empty? (csp-problems @events)) (str/join "\n        " (csp-problems @events)))
 
     ;; CDP's URL blocking doesn't reach a worker's script fetches (checked in

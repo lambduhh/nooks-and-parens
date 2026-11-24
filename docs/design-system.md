@@ -75,7 +75,7 @@ Avoid colour pairings that read as a real tool brand: no yellow-and-black, no re
 |---|---|---|
 | **Sign header** | Every page | Hanging wooden sign: name + tagline. Links home. Language switch beneath |
 | **Dialog box** | Landing | Cream bubble, blue name tab ("Nooks & Parens"), positioning line first, a ▼ hint |
-| **Main menu** | Landing | Numbered rows `[1] Start here [2] Today [3] Calendar [4] Workbench` with short descriptions |
+| **Main menu** | Landing | Numbered rows `[0] Today [1] Calendar [2] Workbench [5] Start here` with short descriptions; each number is that tool's toolbelt key |
 | **Primary button** | One per page | Green pill, black text and outline |
 | **Chip** | Status | Always words: "Solutions open", "Solutions locked", "Not out yet", "Live today". Distinct borders (solid, plain, dashed) as well as colour |
 | **Data readout** | Landing, Workbench | Black panel showing a REPL result as Clojure data |
@@ -85,7 +85,7 @@ Avoid colour pairings that read as a real tool brand: no yellow-and-black, no re
 | **Gate sign** | Day page | Hanging wooden sign: "Closed" + the date in words; "Open" in paper when solutions are out |
 | **Recipe card** | DIY recipes | Blue "DIY recipe" header, title, ingredients (functions), footer links: the how-to, and "Try it at the Workbench" |
 | **Workbench** | `/workbench/` | Wood top bar with evaluator status; code textarea; "Craft it: run code", "Clear code" and (while running) "Stop running code" buttons; result slot with a kind label; "Load: <title>" starter recipe buttons |
-| **Toolbelt** | Every page, fixed bottom | 8 slots with key numbers 1–8; current page highlighted; shortcut on/off switch |
+| **Toolbelt** | Every page, fixed bottom | 6 slots with key numbers 0–5: Today, Calendar, Workbench, Learn, Videos, First time? (the Start here page); current page highlighted; shortcut on/off switch |
 
 ## Motion
 
