@@ -87,6 +87,16 @@
           :when (or (nil? f) (not (fs/regular-file? f)))]
       (str "broken internal link: " u (when (nil? f) (str " (outside " base "/)"))))))
 
+(defn- check-anchors
+  "Every same-page link (<a href=\"#x\">) has an element with id=\"x\". Catches a
+  table-of-contents entry left behind when a heading is renamed."
+  [_ctx html]
+  (let [ids (set (map second (re-seq #"\sid=\"([^\"]+)\"" html)))]
+    (for [tag (re-seq #"<a\b[^>]*>" html)
+          :let [[_ frag] (re-find #"\shref=\"#([^\"]+)\"" tag)]
+          :when (and frag (not (ids frag)))]
+      (str "in-page link to a missing anchor: #" frag))))
+
 (defn- check-template-gate [{:keys [site]} html]
   (when (and (not (:template/public? site)) (str/includes? html "clojure-template-aoc"))
     ["links the template repo while :template/public? is false"]))
@@ -118,7 +128,7 @@
       [(str "<html> should have lang=\"" want "\"")])))
 
 (def page-checks
-  [check-primary check-external-loads check-links check-template-gate
+  [check-primary check-external-loads check-links check-anchors check-template-gate
    check-guests check-forbidden-words check-img-svg check-lang])
 
 ;; ---- Site-wide checks ------------------------------------------------------
