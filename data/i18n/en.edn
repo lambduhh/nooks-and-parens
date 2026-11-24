@@ -87,10 +87,53 @@
  ;; Stub pages (MVP). Each is a placeholder until its phase.
  :stub/today-link       "Go to today"
  :stub/calendar         "Twelve puzzles, twelve live sessions."
- :stub/workbench        "Try Clojure in your browser, no install. Coming in December."
  :stub/videos           "Session replays, one line each with format, day and length."
  :stub/not-found        "Nothing hangs on this hook."
  :formats/session       "Session %s"
+
+ ;; Workbench (/workbench/). "Craft it" is from docs/plan.md § Workbench
+ ;; requirements; the rest is placeholder copy, mostly from the prototype.
+ ;; The *-kind strings label the result slot; Clojure kinds (map, vector, set,
+ ;; seq…) come from the evaluator and aren't translated.
+ :workbench/intro          {:draft "Try Clojure in your browser. No install, nothing saved."}
+ :workbench/status-no-js   {:draft "Evaluator: needs JavaScript"}
+ :workbench/status-starting {:draft "Evaluator starting…"}
+ :workbench/starting       {:draft "The evaluator is still starting. Your code will run in a moment."}
+ :workbench/busy-kind      {:draft "running"}
+ :workbench/busy           {:draft "Crafting…"}
+ :workbench/stop           {:draft "Stop"}
+ :workbench/stopped-kind   {:draft "stopped"}
+ :workbench/stopped-timeout {:draft "Stopped after %s seconds: the code was still running. A loop that never ends, like (loop [] (recur)), is the usual cause. The evaluator has restarted, so earlier definitions are gone."}
+ :workbench/stopped-by-you {:draft "Stopped. The evaluator has restarted, so earlier definitions are gone."}
+ :workbench/know-time-limit {:draft "Code that runs longer than %s seconds is stopped, so a loop that never ends can't freeze your browser."}
+ :workbench/status-ready   {:draft "Evaluator ready: Scittle, running in your browser"}
+ :workbench/status-offline {:draft "Offline preview: only the starter recipes run"}
+ :workbench/code-label     {:draft "Your code"}
+ :workbench/code-help      {:draft "Tab moves to the next control. Ctrl+Enter (or Cmd+Enter) crafts."}
+ :workbench/craft          "Craft it"
+ :workbench/clear          {:draft "Clear"}
+ :workbench/starters       {:draft "Starter recipes"}
+ :workbench/result         {:draft "Result"}
+ :workbench/printed        {:draft "Printed output"}
+ :workbench/no-js-kind     {:draft "needs JavaScript"}
+ :workbench/no-js          {:draft "The Workbench needs JavaScript to run code. For the full setup on your own computer, see Start here."}
+ :workbench/waiting-kind   {:draft "waiting"}
+ :workbench/waiting        {:draft "Press \"Craft it\" to evaluate."}
+ :workbench/loaded         {:draft "Loaded \"%s\". Press \"Craft it\" to evaluate."}
+ :workbench/empty-kind     {:draft "empty"}
+ :workbench/empty          {:draft "Type some Clojure first, or pick a starter recipe."}
+ :workbench/error-kind     {:draft "error"}
+ :workbench/error-at       {:draft "Line %s, column %s"}
+ :workbench/error-help     {:draft "How to read this:"}
+ :workbench/error-link     {:draft "Reading an error"}
+ :workbench/offline-kind   {:draft "offline preview"}
+ :workbench/offline        {:draft "The evaluator didn't load, so only unedited starter recipes run. Reload the page to try again."}
+ :workbench/know           {:draft "Good to know"}
+ :workbench/know-data      {:draft "Results print as Clojure data: maps, vectors, sets."}
+ :workbench/know-local     {:draft "Nothing you type leaves your browser, and nothing is saved. Don't paste your puzzle input or your Advent of Code session cookie anywhere; the Workbench never asks for them."}
+ :workbench/know-no-ai     {:draft "No AI here. You build it."}
+ :workbench/know-scratchpad {:draft "This is a place to try things. For the puzzles, set up a local REPL:"}
+ :workbench/know-credit    {:draft "The evaluator is Scittle, by borkdude:"}
 
  ;; Learn and the template guides (rendered from the template repo)
  :learn/intro           "Guides from the template repo: a tutorial, how-to guides and the reference."

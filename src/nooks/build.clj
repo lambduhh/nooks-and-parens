@@ -11,7 +11,8 @@
             [nooks.layout :as layout]
             [nooks.pages.stubs :as stubs]
             [nooks.state :as state]
-            [nooks.template :as template])
+            [nooks.template :as template]
+            [nooks.vendor :as vendor])
   (:import [java.time Instant]))
 
 (def languages [:en :pt-BR])
@@ -70,6 +71,7 @@ setInterval(function(){fetch(u,{cache:'no-store'}).then(function(r){return r.tex
       (fs/delete-tree out-dir)
       (fs/create-dirs out-dir)
       (fs/copy-tree "assets" (fs/path out-dir "assets"))
+      (vendor/install! out-dir)
       (when dev? (write! (fs/path out-dir "assets" "js" "dev-reload.js") dev-reload-js))
       (let [pages (all-pages (:site d))]
         (doseq [lang languages, pg pages]
