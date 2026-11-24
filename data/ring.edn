@@ -1,0 +1,3 @@
+;; ring.edn: webring members for community solutions. Opt-in only.
+;; Ring links for a day render only after that day's spoiler date. Shape: docs/content-model.md.
+{:ring/members []}

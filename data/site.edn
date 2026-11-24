@@ -1,0 +1,15 @@
+;; site.edn: site-wide settings and gated flags. Shape: docs/content-model.md.
+{:site/name          "Nooks & Parens"
+ :site/tagline       "It's dangerous to go alone! Take this."
+ :site/positioning   "Clojure. A power tool for evolving systems."
+ :site/framing       "Each Advent of Code day is a small evolving system: part 2 usually changes the question part 1 asked."
+ :site/url           "https://nooks-and-parens.pages.dev"   ; confirm after the Pages project exists
+ :site/base-path     ""                                       ; "/nooks-and-parens" only on the GitHub Pages fallback
+ :site/languages     [:en :pt-BR]
+ :cta/slack          {:label "Join #adventofcode on Clojurians Slack" :url "https://clojurians.net"}
+ :cta/slack-channel  nil        ; Jordan pastes the verified #adventofcode channel link here
+ :cta/discord        {:url "https://discord.clojure.camp"}
+ :template/public?   false      ; flip only when the template repo is public with "Use this template" on
+ :template/url       "https://github.com/lambduhh/clojure-template-aoc"
+ :aoc/year           2026
+ :aoc/days           12}

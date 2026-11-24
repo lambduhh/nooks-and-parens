@@ -1,0 +1,22 @@
+;; DIY recipes and Workbench starters. Made-up data only: never Advent of Code puzzle text,
+;; puzzle examples or anyone's input. :expect is the pr-str result; tests check it in Scittle.
+{:parse {:title  "Parse lines into maps"
+         :uses   ["clojure.string/split-lines" "clojure.string/split" "parse-long"]
+         :how-to "How to parse puzzle input into data"
+         :code   "(->> \"alice 3\\nbob 5\\ncara 2\"\n     clojure.string/split-lines\n     (map #(clojure.string/split % #\" \"))\n     (map (fn [[name n]]\n            {:name name :count (parse-long n)})))"
+         :expect "({:name \"alice\", :count 3} {:name \"bob\", :count 5} {:name \"cara\", :count 2})"}
+ :freq  {:title  "Count things with frequencies"
+         :uses   ["frequencies" "sort-by"]
+         :how-to "How to count and rank things"
+         :code   "(->> (frequencies \"mississippi\")\n     (sort-by val >))"
+         :expect "([\"i\" 4] [\"s\" 4] [\"p\" 2] [\"m\" 1])"}
+ :grid  {:title  "Build a grid you can look up"
+         :uses   ["map-indexed" "for" "sorted-map"]
+         :how-to "How to work with grids"
+         :code   "(let [rows [\"#..\" \".#.\" \"..#\"]]\n  (into (sorted-map)\n        (for [[y row] (map-indexed vector rows)\n              [x ch]  (map-indexed vector row)]\n          [[x y] (str ch)])))"
+         :expect "{[0 0] \"#\", [0 1] \".\", [0 2] \".\", [1 0] \".\", [1 1] \"#\", [1 2] \".\", [2 0] \".\", [2 1] \".\", [2 2] \"#\"}"}
+ :sets  {:title  "Compare collections with sets"
+         :uses   ["clojure.set/intersection" "clojure.set/difference"]
+         :how-to "How to use sets"
+         :code   "(require '[clojure.set :as set])\n(set/intersection #{:hammer :saw :level}\n                  #{:saw :level :drill})"
+         :expect "#{:saw :level}"}}

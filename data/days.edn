@@ -1,0 +1,53 @@
+;; days.edn: one map per Advent of Code day. Every page is generated from this file,
+;; videos.edn, recipes.edn and ring.edn. Shape: docs/content-model.md.
+;; Times are UTC. Unlock is 00:00 EST (05:00 UTC). Spoiler gate = unlock + 3 days.
+;; Session formats are drafts. Guests are unconfirmed: keep :guests empty until someone agrees.
+;; 12 days is assumed; Advent of Code hasn't published a count for 2026.
+[{:day/n 1  :day/unlock #inst "2026-12-01T05:00:00Z" :day/spoiler-until #inst "2026-12-04T05:00:00Z"
+  :day/puzzle-url "https://adventofcode.com/2026/day/1"  :day/tool :hammer
+  :day/session {:n 1 :date #inst "2026-12-04" :format :live-coding :time nil :guests []}
+  :day/recipes [:parse :freq] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-01"}
+ {:day/n 2  :day/unlock #inst "2026-12-02T05:00:00Z" :day/spoiler-until #inst "2026-12-05T05:00:00Z"
+  :day/puzzle-url "https://adventofcode.com/2026/day/2"  :day/tool :screwdriver
+  :day/session {:n 2 :date #inst "2026-12-07" :format :pairing-mob :time nil :guests []}
+  :day/recipes [:parse :grid] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-02"}
+ {:day/n 3  :day/unlock #inst "2026-12-03T05:00:00Z" :day/spoiler-until #inst "2026-12-06T05:00:00Z"
+  :day/puzzle-url "https://adventofcode.com/2026/day/3"  :day/tool :wrench
+  :day/session {:n 3 :date #inst "2026-12-08" :format :demo :time nil :guests []}
+  :day/recipes [:grid :sets] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-03"}
+ {:day/n 4  :day/unlock #inst "2026-12-04T05:00:00Z" :day/spoiler-until #inst "2026-12-07T05:00:00Z"
+  :day/puzzle-url "https://adventofcode.com/2026/day/4"  :day/tool :saw
+  :day/session {:n 4 :date #inst "2026-12-09" :format :kata :time nil :guests []}
+  :day/recipes [:freq :sets] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-04"}
+ {:day/n 5  :day/unlock #inst "2026-12-05T05:00:00Z" :day/spoiler-until #inst "2026-12-08T05:00:00Z"
+  :day/puzzle-url "https://adventofcode.com/2026/day/5"  :day/tool :level
+  :day/session {:n 5 :date #inst "2026-12-10" :format :lightning-talks :time nil :guests []}
+  :day/recipes [:parse :freq] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-05"}
+ {:day/n 6  :day/unlock #inst "2026-12-06T05:00:00Z" :day/spoiler-until #inst "2026-12-09T05:00:00Z"
+  :day/puzzle-url "https://adventofcode.com/2026/day/6"  :day/tool :tape
+  :day/session {:n 6 :date #inst "2026-12-14" :format :workshop :time nil :guests []}
+  :day/recipes [:parse :grid] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-06"}
+ {:day/n 7  :day/unlock #inst "2026-12-07T05:00:00Z" :day/spoiler-until #inst "2026-12-10T05:00:00Z"
+  :day/puzzle-url "https://adventofcode.com/2026/day/7"  :day/tool :hammer
+  :day/session {:n 7 :date #inst "2026-12-15" :format :ama :time nil :guests []}
+  :day/recipes [:grid :sets] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-07"}
+ {:day/n 8  :day/unlock #inst "2026-12-08T05:00:00Z" :day/spoiler-until #inst "2026-12-11T05:00:00Z"
+  :day/puzzle-url "https://adventofcode.com/2026/day/8"  :day/tool :screwdriver
+  :day/session {:n 8 :date #inst "2026-12-16" :format :fishbowl :time nil :guests []}
+  :day/recipes [:freq :sets] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-08"}
+ {:day/n 9  :day/unlock #inst "2026-12-09T05:00:00Z" :day/spoiler-until #inst "2026-12-12T05:00:00Z"
+  :day/puzzle-url "https://adventofcode.com/2026/day/9"  :day/tool :wrench
+  :day/session {:n 9 :date #inst "2026-12-17" :format :rfc :time nil :guests []}
+  :day/recipes [:parse :freq] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-09"}
+ {:day/n 10 :day/unlock #inst "2026-12-10T05:00:00Z" :day/spoiler-until #inst "2026-12-13T05:00:00Z"
+  :day/puzzle-url "https://adventofcode.com/2026/day/10" :day/tool :saw
+  :day/session {:n 10 :date #inst "2026-12-18" :format :show-and-tell :time nil :guests []}
+  :day/recipes [:parse :grid] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-10"}
+ {:day/n 11 :day/unlock #inst "2026-12-11T05:00:00Z" :day/spoiler-until #inst "2026-12-14T05:00:00Z"
+  :day/puzzle-url "https://adventofcode.com/2026/day/11" :day/tool :level
+  :day/session {:n 11 :date #inst "2026-12-21" :format :paper-club :time nil :guests []}
+  :day/recipes [:grid :sets] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-11"}
+ {:day/n 12 :day/unlock #inst "2026-12-12T05:00:00Z" :day/spoiler-until #inst "2026-12-15T05:00:00Z"
+  :day/puzzle-url "https://adventofcode.com/2026/day/12" :day/tool :tape
+  :day/session {:n 12 :date #inst "2026-12-22" :format :tech-talk :time nil :guests []}
+  :day/recipes [:freq :sets] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-12"}]
