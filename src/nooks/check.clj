@@ -114,6 +114,14 @@
           :when (re-find (re-pattern (str "\\b" (java.util.regex.Pattern/quote w) "\\b")) t)]
       (str "feature word \"" w "\" in a heading or chip: " (str/trim t)))))
 
+(defn- check-no-employer
+  "Jordan, 2026-11-24: the employer is never named anywhere on the site; the
+  role reads \"Software Engineer, Clojure Team\". Checks the whole HTML,
+  attributes and URLs included, case-insensitively."
+  [_ctx html]
+  (when (re-find #"(?i)nubank" html)
+    ["names the employer; use \"Software Engineer, Clojure Team\""]))
+
 (defn- check-img-svg [_ctx html]
   (concat
    (for [tag (re-seq #"<img\b[^>]*>" html) :when (not (re-find #"\salt=\"" tag))]
@@ -129,7 +137,7 @@
 
 (def page-checks
   [check-primary check-external-loads check-links check-anchors check-template-gate
-   check-guests check-forbidden-words check-img-svg check-lang])
+   check-guests check-forbidden-words check-no-employer check-img-svg check-lang])
 
 ;; ---- Site-wide checks ------------------------------------------------------
 

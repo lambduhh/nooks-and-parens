@@ -17,7 +17,7 @@ review_note: "Drafted in Claude Design at Jordan Miller's direction, 2026-11-24;
 
 **Decision (Jordan, 2026-11-24): a GitHub Pages project site at <https://lambduhh.github.io/nooks-and-parens/>, deployed from GitHub Actions.** Cloudflare Pages was the first recommendation; Jordan dropped it the same day because its setup was too complicated. It stays below as an alternative.
 
-**Status (2026-11-24): publishing is paused.** Jordan made the repo private for work reasons, and GitHub Pages on a free plan serves only public repos, so the site is offline. The site was also renamed Power Tools & Parens, and its path moved to `/power-tools-and-parens/` (`:site/base-path` in `data/site.edn`), ready for wherever it's published next. The deploy job runs only when the repo variable `PUBLISH` is `true` (Settings → Secrets and variables → Actions → Variables), so the daily build keeps testing without trying to deploy. Options for publishing again while the source stays private: a separate public repo holding only the built site, GitHub Pro (Pages from private repos), or Cloudflare Pages (below).
+**Status (2026-11-24): publishing is paused.** The repo is private pending a security review (`docs/decisions.md`), and GitHub Pages on a free plan serves only public repos, so the site is offline. The site was also renamed Power Tools & Parens, and its path moved to `/power-tools-and-parens/` (`:site/base-path` in `data/site.edn`), ready for wherever it's published next. The deploy job runs only when the repo variable `PUBLISH` is `true` (Settings → Secrets and variables → Actions → Variables), so the daily build keeps testing without trying to deploy. Options for publishing again while the source stays private: a separate public repo holding only the built site, GitHub Pro (Pages from private repos), or Cloudflare Pages (below).
 
 Facts below were checked on 2026-11-24. Free tiers change; re-check the linked pages before relying on a number.
 
@@ -31,7 +31,7 @@ Facts below were checked on 2026-11-24. Free tiers change; re-check the linked p
 
 ## How GitHub Pages fits
 
-GitHub allows **one user site per account** (`lambduhh.github.io`, already used), but **one project site per repository**. A public `power-tools-and-parens` repo would publish at `https://lambduhh.github.io/power-tools-and-parens/` (the `nooks-and-parens` repo published at `/nooks-and-parens/` until it went private). Source: [GitHub Pages limits](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits) (1 GB site, soft 100 GB a month; not for commercial sites, and a free community hub isn't one).
+GitHub allows **one user site per account** (`lambduhh.github.io`, already used), but **one project site per repository**. Once public, a `power-tools-and-parens` repo publishes at `https://lambduhh.github.io/power-tools-and-parens/`, which matches `:site/base-path`; under its current name, `nooks-and-parens`, it would publish at `/nooks-and-parens/` and the base path would have to change back. Source: [GitHub Pages limits](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits) (1 GB site, soft 100 GB a month; not for commercial sites, and a free community hub isn't one).
 
 What follows from it:
 
@@ -40,14 +40,14 @@ What follows from it:
 | The site lives under `/power-tools-and-parens/` | Every generated link starts with `:site/base-path` in `data/site.edn`. `bb check` fails on an internal link outside it. `bb dev` serves the same path locally |
 | No custom response headers | The CSP is a `<meta http-equiv="Content-Security-Policy">` tag in every page ([`layout.clj`](../src/nooks/layout.clj)). A meta CSP can't set `frame-ancestors` |
 | No PR previews | PRs run `bb test`, `bb check` and `bb build` only. Review a PR locally with `bb dev` |
-| The repo must be public | It is (Jordan made it public in the GitHub web UI, 2026-11-24) |
+| The repo must be public | Not yet. Jordan made it public in the GitHub web UI on 2026-11-24, then private again the same day, pending a security review. The site can't deploy until the review approves making it public |
 
 Pages source is **GitHub Actions** (set in the repo's Pages settings).
 
 ## Setup
 
 ### Jordan, once (done 2026-11-24)
-1. Make the repo public.
+1. Make the repo public (blocked until the security review approves it; see `docs/decisions.md`).
 2. In Settings → Pages, set the source to GitHub Actions.
 
 ### Claude Code: the workflow
