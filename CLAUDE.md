@@ -36,7 +36,8 @@ Site tasks (add them to `bb.edn` as part of plan task 1; it already holds the do
 | `bb check` | Build for a set of dates and run every invariant in `docs/plan.md` § Checks |
 | `bb test` | Unit tests for date and state logic |
 | `bb blog:new "Title"` | New quickblog post |
-| `bb deploy` | CI only. Deploys `public/` (see `docs/hosting.md`) |
+| `bb blog:new "Title" --slug x` | Same, with a chosen file name |
+| (deploy) | No bb task: `.github/workflows/deploy.yml` deploys `public/` to GitHub Pages (see `docs/hosting.md`) |
 
 Planned layout:
 

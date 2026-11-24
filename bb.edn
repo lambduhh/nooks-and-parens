@@ -1,7 +1,31 @@
-{:deps {io.github.lambduhh/temper {:git/sha "92ff73c8d3710432f5373bf776775f8164667d1b"}}
+{:paths ["src"]
+ :deps {io.github.lambduhh/temper {:git/sha "92ff73c8d3710432f5373bf776775f8164667d1b"}
+        ;; quickblog main, not the v0.4.7 tag: main is the only version that
+        ;; documents the alternate-content-root setup and the pre/post-process
+        ;; hooks. Checked 2026-11-24.
+        io.github.borkdude/quickblog {:git/sha "c1d82ce37ae05347fbeae13d330455db275327d5"}}
  :tasks
- {;; Docs checks for the docs/ OKF bundle (temper.okf.*). The site tasks
-  ;; (dev, build, check, test, blog:new, deploy) are added by plan task 1.
+ {;; ---- Site tasks -------------------------------------------------------
+  dev      {:doc "Build, serve public/ at http://localhost:1888/nooks-and-parens/, rebuild on changes. Flags: --as-of DATE --port N"
+            :requires ([nooks.dev])
+            :task (apply nooks.dev/-main *command-line-args*)}
+  build    {:doc "Build the site into public/. Flags: --as-of 2026-12-07 or 2026-12-01T05:00Z (UTC; a bare date means 12:00 UTC)"
+            :requires ([nooks.build])
+            :task (apply nooks.build/-main *command-line-args*)}
+  check    {:doc "Build for every date in the check set and run the invariants in docs/plan.md § Checks"
+            :requires ([nooks.check])
+            :task (apply nooks.check/-main *command-line-args*)}
+  test     {:doc "Unit tests: data shape, state logic at the date edges, i18n"
+            :extra-paths ["test"]
+            :requires ([clojure.test :as t]
+                       [nooks.data-test] [nooks.state-test] [nooks.i18n-test] [nooks.check-test])
+            :task (let [{:keys [fail error]} (t/run-tests 'nooks.data-test 'nooks.state-test 'nooks.i18n-test 'nooks.check-test)]
+                    (System/exit (if (zero? (+ fail error)) 0 1)))}
+  blog:new {:doc "New blog post, created as a Preview (reachable by URL, not listed). Usage: bb blog:new \"Title\""
+            :requires ([nooks.blog])
+            :task (apply nooks.blog/new-post! *command-line-args*)}
+
+  ;; ---- Docs checks for the docs/ OKF bundle (temper.okf.*) --------------
   validate {:doc "Validate docs/ frontmatter (temper.okf.validate)"
             :requires ([temper.okf.validate])
             :task (apply temper.okf.validate/-main *command-line-args*)}

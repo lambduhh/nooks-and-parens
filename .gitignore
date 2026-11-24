@@ -15,3 +15,6 @@ target/
 
 # Working notes (plans, handoffs): local history, never committed.
 notes/
+
+# Build work dir (quickblog cache, generated templates)
+.work/

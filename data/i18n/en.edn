@@ -1,0 +1,115 @@
+;; en.edn: English UI strings, keyed by keyword. Shape: docs/content-model.md § Strings and languages.
+;;
+;; A value is either
+;;   "a string"            final: a decided label, or copy Jordan has written
+;;   {:draft "a string"}   a placeholder; renders as <span class="draft">, never as final copy
+;; %s marks a value filled in at build time (a date, a number). Jordan: to make a
+;; string final, replace {:draft "…"} with "…".
+{;; Decided labels (CLAUDE.md § Copy). Don't edit.
+ :label/replin          "What're ya REPLin'?"
+ :label/diy-recipes     "DIY recipes"
+ :label/workbench       "Workbench"
+
+ ;; Chrome
+ :lang/en               "EN"
+ :lang/pt-BR            "PT-BR"
+ :lang/switch           "Language"
+ :skip-link             "Skip to content"
+ :toolbelt/label        "Toolbelt"
+ :toolbelt/keys-help    {:draft "Keys 1–8 switch tools (not while typing)"}
+ :toolbelt/keys-on      "Shortcuts: on"
+ :toolbelt/keys-off     "Shortcuts: off"
+ :footer/line           {:draft "Fan-made community hub, kept by Jordan Miller and collaborators (role disclosed on About). Not affiliated with Advent of Code or any game studio. Puzzles are linked, never copied."}
+ :footer/blog           "Blog"
+ :crumbs/home           "Home"
+ :crumbs/label          "Breadcrumbs"
+
+ ;; Route names (toolbelt, menu, page titles)
+ :route/home            "Home"
+ :route/start           "Start here"
+ :route/today           "Today"
+ :route/calendar        "Calendar"
+ :route/workbench       "Workbench"
+ :route/videos          "Videos"
+ :route/learn           "Learn"
+ :route/slot-7          {:draft "Slot 7"}   ; was Roundups (cut 2026-11-24); maybe reference docs later
+ :route/about           "About"
+ :route/formats         "Formats"
+ :route/blog            "Blog"
+ :route/not-found       {:draft "Page not found"}
+
+ ;; Landing
+ :home/invite           {:draft "One line inviting people in for December."}
+ :home/menu             "Main menu"
+ :home/menu-start       {:draft "zero to a running REPL"}
+ :home/menu-today-soon  {:draft "from %s"}
+ :home/menu-today-day   "Day %s"
+ :home/menu-calendar    "What're ya REPLin'?"
+ :home/menu-workbench   {:draft "try Clojure, no install"}
+ :home/cta-note         {:draft "Free sign-up. One thread per puzzle, every day."}
+ :home/today            "Today · %s"
+ :home/today-soon       {:draft "Puzzles start %s at 00:00 EST. First live session: %s."}
+ :home/today-day        {:draft "Day %s is out."}
+ :home/today-live       {:draft "Live today: session %s, %s (covers Day %s)."}
+ :home/today-archive    {:draft "All %s days are out."}
+ :home/readout-label    "Today as data"
+ :home/sessions-done    {:draft "All %s sessions are done."}
+ :home/see-all          {:draft "See all %s days"}
+
+ ;; Sessions (shop list)
+ :session/title         "Session %s · %s"
+ :session/covers        "Covers Day %s"
+ :session/where         "Clojure Camp Discord"
+ :session/time-tba      "[time TBA]"
+ :session/guest-tba     "To be announced"
+ :session/replay-ready  "Replay ready"
+ :session/no-session    {:draft "No session Fri 11 Dec. Formats are drafts."}
+
+ ;; Status chips: always words (docs/design-system.md § Components)
+ :chip/open             "Solutions open"
+ :chip/locked           "Solutions locked"
+ :chip/soon             "Not out yet"
+ :chip/live             "Live today"
+
+ ;; Session formats (data/days.edn :format). Formats are drafts.
+ :format/live-coding     "Live coding"
+ :format/pairing-mob     "Pairing / mob"
+ :format/demo            "Demo"
+ :format/kata            "Code challenge"
+ :format/lightning-talks "Lightning talks"
+ :format/workshop        "Workshop"
+ :format/ama             "AMA"
+ :format/fishbowl        "Fishbowl"
+ :format/rfc             "RFC / design review"
+ :format/show-and-tell   "Show and tell"
+ :format/paper-club      "Paper club"
+ :format/tech-talk       "Tech talk"
+
+ ;; Stub pages (MVP). Each is a placeholder until its phase.
+ :stub/start            {:draft "The one route from zero to a running REPL: new to programming, no-install options, install per OS, three checks, an editor, the template, Day 01."}
+ :stub/today            {:draft "Today's day page. Before 1 Dec this goes to the home page."}
+ :stub/today-link       {:draft "Go to today"}
+ :stub/calendar         {:draft "Twelve puzzles, twelve live sessions. The tool wall comes next."}
+ :stub/workbench        {:draft "Try Clojure in your browser, no install. Coming in December."}
+ :stub/videos           {:draft "Session replays, one line each with format, day and length."}
+ :stub/learn            {:draft "Tutorials, how-to guides, reference and why it works."}
+ :stub/slot-7           {:draft "A placeholder for toolbelt slot 7."}
+ :stub/about            {:draft "Who keeps Nooks & Parens, their role, and credits."}
+ :stub/formats          {:draft "One card per session format: length, people, what to prepare."}
+ :stub/not-found        {:draft "Nothing hangs on this hook."}
+ :about/credits         "Credits"
+ :formats/session       "Session %s"
+
+ ;; Blog
+ :blog/title            "Blog"
+ :blog/empty            {:draft "No posts yet."}
+ :blog/published        "Published"
+ :blog/read-more        {:draft "Continue reading"}
+ :blog/archive          "Archive"
+ :blog/tags             "Tags"
+ :blog/feed             "Feed"
+ :blog/tagged           "Tagged"
+ :blog/preview-banner   {:draft "Preview: this post isn't listed on the blog yet."}
+
+ ;; pt-BR twins
+ :i18n/coming-soon      "Translation coming soon"}
