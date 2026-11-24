@@ -1,0 +1,27 @@
+;; learn.edn: how the Learn page's How-to drawer is grouped and ordered, from
+;; beginner (top) to advanced (bottom). Order here is order on the page.
+;;
+;; :group is the UI string key for the group's heading (data/i18n/en.edn).
+;; :items are hub paths for template pages ("/start/", "/learn/howto/<name>/")
+;; and :resource/url for outside resources (data/resources.edn).
+;;
+;; Every how-to must be in exactly one group, and every item must exist: the
+;; build fails otherwise, so a `bb template:bump` that adds a how-to shows up
+;; in `bb check` instead of silently vanishing from the page.
+;; Shape: docs/content-model.md.
+{:learn/how-to
+ [{:group :learn.how-to/get-started
+   :items ["/start/"
+           "/learn/howto/errors/"
+           "https://github.com/clojure-camp/wiki/blob/main/initiatives/mob-sessions.md"]}
+  {:group :learn.how-to/input
+   :items ["/learn/howto/json_csv/"
+           "/learn/howto/parsing/"]}
+  {:group :learn.how-to/techniques
+   :items ["/learn/howto/combinatorics/"
+           "/learn/howto/hashing/"
+           "/learn/howto/graphs/"
+           "/learn/howto/shortest_path/"]}
+  {:group :learn.how-to/tools
+   :items ["/learn/howto/channels/"
+           "/learn/howto/datomic/"]}]}

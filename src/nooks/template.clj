@@ -310,8 +310,29 @@
                          (layout/primary-button ctx)])}))})]
     (concat (map doc-page pages) (map howto-page hows))))
 
+(defn how-to-groups
+  "The How-to drawer's items in data/learn.edn's groups and order:
+  [{:group k :items [item …]}]. An item's key is its :url (outside resource)
+  or its hub :path. Throws unless every how-to is in exactly one group and
+  every listed key exists, so a template bump can't drop or invent an entry."
+  [groups items]
+  (let [k-of    #(or (:url %) (:path %))
+        by-key  (into {} (map (juxt k-of identity)) items)
+        listed  (mapcat :items groups)
+        dupes   (keep (fn [[k n]] (when (> n 1) k)) (frequencies listed))
+        unknown (remove by-key listed)
+        missing (remove (set listed) (keys by-key))]
+    (when (or (seq dupes) (seq unknown) (seq missing))
+      (throw (ex-info (str "data/learn.edn doesn't match the How-to drawer."
+                           (when (seq missing) (str " Not in any group: " (vec missing) "."))
+                           (when (seq unknown) (str " No such how-to: " (vec unknown) "."))
+                           (when (seq dupes)   (str " In more than one group: " (vec dupes) ".")))
+                      {:missing (vec missing) :unknown (vec unknown) :duplicates (vec dupes)})))
+    (for [{:keys [group items]} groups]
+      {:group group :items (mapv by-key items)})))
+
 (defn learn-page
-  "/learn/: the template's guides and the blog's posts by kind, then the
+  "/learn/:the template's guides and the blog's posts by kind, then the
   optional AI shelf."
   [site template-pages]
   (fn [ctx]
@@ -322,12 +343,21 @@
           resources (for [{:resource/keys [title url kind]} (get-in ctx [:data :resources])]
                       {:title title :url url :kind kind})
           by   (group-by :kind (concat template-pages resources))
+          ;; The How-to drawer is grouped and ordered by data/learn.edn
+          ;; (beginner first); the other drawers stay alphabetical.
+          groups (how-to-groups (get-in ctx [:data :learn :learn/how-to]) (by :how-to))
+          body (fn [kind]
+                 (cond
+                   (= kind :how-to) (for [{:keys [group items]} groups]
+                                      (list [:h3 (t lang group)] [:ul (map link items)]))
+                   (= kind :blog)   [:ul (map link (by kind))]
+                   :else            [:ul (map link (sort-by :title (by kind)))]))
           drawer (fn [kind k]
                    ;; Empty drawers are left out until they have something in them.
                    (when (seq (by kind))
-                   [:section.drawer
+                   [:section.drawer {:class (when (= kind :how-to) "drawer-grouped")}
                     [:h2 (layout/emoji kind) (t lang k) " " [:span.count (str "(" (count (by kind)) ")")]]
-                    [:ul (map link (if (= kind :blog) (by kind) (sort-by :title (by kind))))]]))]
+                    (body kind)]))]
       {:route :learn
        :title (t-str lang :route/learn)
        :main  (list

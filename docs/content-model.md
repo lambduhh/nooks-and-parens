@@ -106,6 +106,10 @@ The pool of session formats, for `/formats/`. Each day's session is picked from 
 
 Outside resources shown in the Learn drawers, next to the template's guides: `:resource/title` (the resource's own name), `:resource/url` (https), and `:resource/kind`, which is the drawer: `:tutorial`, `:how-to`, `:reference` or `:explanation`. Don't repeat links the template's guides already carry.
 
+## `data/learn.edn`
+
+How the Learn page's How-to drawer is grouped and ordered, beginner first. `:learn/how-to` is a vector of `{:group k :items [key …]}`: `:group` is the UI-string key for the group's heading, and each item key is a hub path for a template page (`"/start/"`, `"/learn/howto/<name>/"`) or a `:resource/url` from `resources.edn`. Order in the file is order on the page. Every how-to must be in exactly one group and every key must exist, or the build fails. Other drawers stay alphabetical.
+
 ## `data/template.edn`
 
 Guides from the template repo (`:template/url` in `site.edn`), rendered into the hub at build time.
