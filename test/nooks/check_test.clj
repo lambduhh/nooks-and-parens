@@ -50,3 +50,7 @@
       (is (run #'nooks.check/check-links "<a href=\"/start/\">x</a>" ctx) "missing base path")
       (is (run #'nooks.check/check-links "<meta http-equiv=\"refresh\" content=\"0; url=/n/gone/\">" ctx)))
     (fs/delete-tree out)))
+
+(deftest anchors
+  (is (run #'nooks.check/check-anchors "<a href=\"#2.-schedule\">2</a><h2 id=\"2.-timetable\">2. Timetable</h2>"))
+  (is (nil? (run #'nooks.check/check-anchors "<a href=\"#main\">skip</a><main id=\"main\"></main><svg aria-hidden=\"true\"><use href=\"#t-map\"></use></svg>")) "svg <use> isn't a link"))

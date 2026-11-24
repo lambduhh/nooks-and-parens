@@ -193,3 +193,26 @@ body.np>.notice{margin:12px 16px}
 .prose table{border-collapse:collapse;display:block;overflow-x:auto}
 .prose th,.prose td{border:2px solid var(--tan);padding:4px 10px;text-align:left}
 p.draft,div.draft{display:block}
+
+/* Blog post with Style: rfc — an old-school RFC: monospace, a 72-column
+   measure, the two-column header block, numbered plain headings, a page
+   footer. Black on paper/white only (checked pairs). Columns stack on narrow
+   screens so 320px needs no sideways scroll. */
+.post.rfc{background:var(--white);border-color:var(--black);border-radius:6px;font:15px/1.5 var(--mono)}
+.post.rfc .prose,.post.rfc .rfc-head,.post.rfc .rfc-foot,.post.rfc h1{max-width:72ch;margin-left:auto;margin-right:auto}
+.post.rfc h1,.post.rfc h2,.post.rfc h3{font:600 15px/1.5 var(--mono)}
+.post.rfc h1{text-align:center;margin:28px auto 20px}
+.post.rfc h2{margin:26px 0 6px}
+.post.rfc h3{margin:18px 0 6px}
+.post.rfc .prose p,.post.rfc .prose ul,.post.rfc .prose ol{margin-left:3ch;max-width:none}
+.post.rfc .prose ol,.post.rfc .prose ul{padding-left:3ch}
+.post.rfc .prose li{margin:0}
+.post.rfc code{background:none;padding:0;font-size:inherit}
+.post.rfc .crumbs,.post.rfc .notice{font-family:var(--round)}
+.rfc-head{display:grid;grid-template-columns:1fr auto;gap:0 4ch;margin-top:10px}
+.rfc-head ul{list-style:none;margin:0;padding:0}
+.rfc-head ul+ul{text-align:right}
+.rfc-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:0 2ch;border-top:2px dashed var(--black);padding-top:8px;margin-top:32px}
+.rfc-refs dt{font-weight:600}
+.rfc-refs dd{margin:0 0 8px 12ch}
+@media(max-width:560px){.rfc-head{grid-template-columns:1fr}.rfc-head ul+ul{text-align:left;margin-top:6px}.rfc-refs dd{margin-left:3ch}.post.rfc .prose p,.post.rfc .prose ul,.post.rfc .prose ol{margin-left:0}}
