@@ -34,7 +34,7 @@ Session schedule and formats are in `data/days.edn`. Formats are drafts; guests 
 ## P0: launch (by Mon 30 Nov)
 
 ### 0. Hosting — Jordan (done 2026-11-24)
-GitHub Pages project site (`docs/hosting.md`): the repo is public and its Pages source is GitHub Actions.
+GitHub Pages project site (`docs/hosting.md`): the repo must be public and its Pages source is GitHub Actions. The repo is private for now, pending a security review, so the site isn't deployed yet.
 **Done when:** `:site/url` and `:site/base-path` in `data/site.edn` match the Pages URL.
 
 ### 1. Scaffold — Claude Code
@@ -62,8 +62,8 @@ Build in this order; each one passes the definition of done in `CLAUDE.md`.
 2. **Calendar** `/days/`: "What're ya REPLin'?" heading, tool wall (12 slots), legend in words, session schedule list.
 3. **Day pages** `/days/01/` … `/days/12/`: facts note, gate sign, primary button by state, DIY recipes (always visible), then by state: live session info, or replay + community solutions.
 4. **Start here** `/start/`: the onboarding path in § Start here requirements below. Since 2026-11-24 it renders the template's `docs/setup-flowchart.md`; the OS tabs, click-to-load videos and copy buttons are still to come.
-5. **About** `/about/`: who runs it, employer role disclosed, credits (quickblog, Scittle, borkdude), "not affiliated" line. Copy is draft.
-6. **Formats** `/formats/`: one card per format in `data/formats.edn` (name, length, people, what to prepare, example recording when one exists). It also serves managers as a guide to leading technical conversations that keep humans in the loop. Copy is draft.
+5. **About** `/about/`: who runs it, Jordan's role ("Software Engineer, Clojure Team"; no employer name), credits (quickblog, Scittle, borkdude), "not affiliated" line. Copy is draft.
+6. **Formats** `/formats/`: Jordan's session formats guide from `data/formats.edn` (favorites table, the full menu grouped by shape, heuristics), then this campaign's additions. Pool formats show length, people, what to prepare and an example recording when one exists. Linked from the calendar and the announcement post. It also serves managers as a guide to leading technical conversations that keep humans in the loop. The guide copy is Jordan's; the page's own labels (intro, additions heading, managers note) are draft.
 7. **Today** `/today/`: redirect page (meta refresh + link) to the current day page as of build time, or to `/` before Dec 1.
 
 ### 6. Blog — Claude Code
@@ -139,6 +139,7 @@ In this order on the page:
 - [ ] a locked or not-yet-out day page lacks its gate text with the date;
 - [ ] `clojure-template-aoc` appears while `:template/public?` is `false`;
 - [ ] a guest name appears whose entry isn't `:confirmed? true`;
+- [ ] the employer is named anywhere in the HTML (Jordan's role is "Software Engineer, Clojure Team");
 - [ ] the forbidden words appear in an `h1`–`h3` or a chip: immutable, functional, data-oriented, concurrent, fast, productive, expressive, scalable;
 - [ ] an internal link points to a page that wasn't built;
 - [ ] an external request would fire on load (any `src` or stylesheet `href` that isn't same-origin);

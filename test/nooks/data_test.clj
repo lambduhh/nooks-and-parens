@@ -61,6 +61,39 @@
       (is (str/starts-with? (:source/url s) "https://"))
       (is (string? (:source/title s))))))
 
+(deftest formats-guide
+  (let [{:formats/keys [pool guide]} (:formats d)
+        pool-ids  (set (map :format/id pool))
+        fav-ids   (set (map :format/id (filter #(= :favorite (:format/source %)) pool)))
+        entries   (mapcat :group/formats (:guide/groups guide))
+        entry-ids (map :format/id entries)]
+    (is (every? string? [(:guide/title guide) (:guide/lede guide) (:guide/variety guide)
+                         (:guide/favorites-title guide) (:guide/favorites-lede guide)
+                         (:guide/menu-lede guide) (:guide/heuristics-title guide)]))
+    (is (= (count entry-ids) (count (set entry-ids))) "no duplicate guide entries")
+    (doseq [{:group/keys [id title blurb formats]} (:guide/groups guide)]
+      (testing id
+        (is (keyword? id))
+        (is (string? title))
+        (is (string? blurb))
+        (is (seq formats))))
+    (doseq [{:format/keys [id name text pool favorite?] :as e} entries]
+      (testing id
+        (is (string? name))
+        (is (string? text))
+        (is (boolean? (boolean favorite?)))
+        (when pool (is (pool-ids pool) "a guide entry's :format/pool is a pool id"))
+        (is (= (boolean favorite?) (contains? fav-ids pool))
+            "favorites are exactly the entries that map to a favorite pool format")))
+    (testing "every favorite pool format has a guide entry and a good-for line"
+      (is (= fav-ids (set (keep :format/pool entries))))
+      (is (every? (comp string? :format/good-for) (filter #(fav-ids (:format/id %)) pool))))
+    (testing "copy rules: no star glyphs (no AoC motifs), no employer name, generic words only"
+      (let [all-text (slurp "data/formats.edn")]
+        (is (not (re-find #"[⭐★☆✨]" all-text)))
+        (is (not (re-find #"(?i)acme" all-text)))
+        (is (not (re-find #"(?i)guild" all-text)) "use generic words: session, group")))))
+
 (deftest resources
   (doseq [r (:resources d)]
     (testing (:resource/title r)

@@ -94,14 +94,21 @@ Only members who have opted in. Ring links for a day render only after that day'
 
 ## `data/formats.edn`
 
-The pool of session formats, for `/formats/`. Each day's session is picked from the pool, by puzzle and guest availability; there is no day-by-day format plan.
+The session formats guide and the pool of session formats, for `/formats/`. Each day's session is picked from the pool, by puzzle and guest availability; there is no day-by-day format plan.
 
 - `:formats/pool`: one map per format.
   - `:format/id` is a keyword with a `:format/<id>` string in `data/i18n/`.
   - `:format/source` is `:favorite` (the guide's 12 favorites) or `:extra` (this campaign's additions).
+  - `:format/good-for`: the favorites table's "Good for" line. Required on `:favorite` formats.
   - Optional: `:format/length`, `:format/people`, `:format/prepare`, `:format/example-video`. Until they're set, the page shows a draft "to be written".
+- `:formats/guide`: Jordan's guide to 40-minute learning sessions, the full menu of formats.
+  - Page copy: `:guide/title`, `:guide/lede`, `:guide/audiences` (`:audience/who`, `:audience/text`), `:guide/variety`, `:guide/favorites-title`, `:guide/favorites-lede`, `:guide/menu-lede`, `:guide/heuristics-title`, `:guide/heuristics` (`:heuristic/q`, `:heuristic/a`).
+  - `:guide/groups`: the menu grouped by shape. Each group has `:group/id`, `:group/title`, `:group/blurb` and `:group/formats`.
+  - Each guide entry has `:format/id` (a guide id, distinct from pool ids), `:format/name` and `:format/text`. An entry that is in the pool has `:format/pool` (the pool id; pairing and mob both map to `:pairing-mob`) and `:format/favorite? true`.
+  - Favorites show as a "Favorite" chip in words, never a star glyph.
+  - The favorites table is built from the pool's `:favorite` formats, so its names match the schedule's labels.
 - `:formats/sources`: where the managers note's two terms (cognitive debt, comprehension debt) come from: `:source/term`, `:source/title`, `:source/author`, `:source/date`, `:source/url`, and an optional `:source/caveat-url`.
-- Tests check that every day's draft `:format` is in the pool.
+- Tests check that every day's draft `:format` is in the pool, that favorites are exactly the guide entries mapped to a `:favorite` pool format, and that `data/formats.edn` has no star glyphs, no employer name and no group-specific name: the guide uses generic words like "session".
 
 ## `data/resources.edn`
 

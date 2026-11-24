@@ -248,3 +248,15 @@ figure.diagram figcaption{font-size:14px;margin-top:6px}
 .drawers.diataxis{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
 .diataxis-col{display:flex;flex-direction:column;gap:14px;min-width:0}
 @media(max-width:760px){.drawers.diataxis{grid-template-columns:minmax(0,1fr)}}
+
+/* Formats guide (/formats/). Favorites are a chip in words, never a star.
+   Black on white and muted on paper only (checked pairs). */
+.chip.fav{background:var(--white);vertical-align:middle;margin-left:4px}
+.guide .blurb{color:var(--muted);font-style:italic;margin-top:0}
+ul.format-list{list-style:none;padding-left:0}
+.format-list>li{border-top:2px solid var(--tan);padding:10px 0}
+.format-list h3,.format-list h4{font-size:16px;margin:0 0 4px}
+.format-list p{margin:4px 0}
+.facts{display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;font-size:14px;margin:6px 0}
+.facts dt{font-weight:900}
+.facts dd{margin:0}

@@ -46,7 +46,7 @@ Draft-Header: false
 
 ## Abstract
 
-<p class="body"> What a girl wants: I want developers new to Clojure to have one clear <a href="/power-tools-and-parens/start/">place to start</a>, with <a href="/power-tools-and-parens/learn/">guides, references and examples</a>. I want to reduce the friction of our onboarding experience. I want to give experimenters a reason to stay: other people to learn with, formats that are fun, and finally - I want to give Clojure developers a way to bring others with them.</p>
+<p class="body"> What a girl wants: I want developers new to Clojure to have one clear <a href="/power-tools-and-parens/start/">place to start</a>, with <a href="/power-tools-and-parens/learn/">guides, references and examples</a>. I want to reduce the friction of our onboarding experience. I want to give experimenters a reason to stay: other people to learn with, <a href="/power-tools-and-parens/formats/">formats that are fun</a>, and finally - I want to give Clojure developers a way to bring others with them.</p>
 
 <!-- end-of-preview -->
 

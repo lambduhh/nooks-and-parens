@@ -1,27 +1,53 @@
-;; formats.edn: the pool of session formats. Each day's session is picked from
-;; this pool by puzzle and guest availability; there is no day-by-day format
-;; plan (decided 2026-11-24). The list is also a resource for managers: a guide
-;; to leading technical conversations that keep humans in the loop.
+;; formats.edn: the session formats guide, and the pool each day's session is
+;; picked from. Shape: docs/content-model.md.
 ;;
-;; The 12 :favorite formats are the favorites from the session formats
-;; list; the :extra ones are this campaign's additions. The names are the only
-;; copy here. Length, people, what to prepare and an example recording come
-;; later as :format/length, :format/people, :format/prepare and
+;; Two lists, on purpose:
+;; - :formats/pool is this December's pool, the ids data/days.edn uses. Each
+;;   day's session is picked from it by puzzle and guest availability; there is
+;;   no day-by-day format plan (decided 2026-11-24). The 12 :favorite formats
+;;   are the guide's favorites; the :extra ones are this campaign's
+;;   additions. Names come from data/i18n (:format/<id>), so the schedule and
+;;   the favorites table say the same thing.
+;; - :formats/guide is Jordan's guide to 40-minute learning sessions: the full
+;;   menu, 30 formats. Each entry that is in the pool says so with
+;;   :format/pool (pairing and mob both map to :pairing-mob).
+;;
+;; Guide copy is Jordan's (2026-11-24), edited for sentence case, two typos,
+;; and Jordan-approved changes for the public repo: no employer or internal
+;; references, "DM" spelled out as "decision matrix", and generic words only
+;; for the group that meets ("session", "group"; not "workshop", which is a
+;; format of its own). Favorites are marked "Favorite" in words, never with a
+;; star glyph (no AoC motifs). data_test enforces the word and glyph rules on
+;; this whole file, comments included, so don't quote banned words here.
+;;
+;; Length, people, what to prepare and an example recording come later, per
+;; pool format, as :format/length, :format/people, :format/prepare and
 ;; :format/example-video; the page shows "to be written" until then.
-;; Shape: docs/content-model.md.
 {:formats/pool
- [{:format/id :live-coding      :format/source :favorite}
-  {:format/id :pairing-mob      :format/source :favorite}
-  {:format/id :demo             :format/source :favorite}
-  {:format/id :kata             :format/source :favorite}
-  {:format/id :lightning-talks  :format/source :favorite}
-  {:format/id :workshop         :format/source :favorite}
-  {:format/id :ama              :format/source :favorite}
-  {:format/id :fishbowl         :format/source :favorite}
-  {:format/id :rfc              :format/source :favorite}
-  {:format/id :show-and-tell    :format/source :favorite}
-  {:format/id :paper-club       :format/source :favorite}
-  {:format/id :tech-talk        :format/source :favorite}
+ [{:format/id :tech-talk       :format/source :favorite
+   :format/good-for "One person has depth to share on a topic"}
+  {:format/id :lightning-talks :format/source :favorite
+   :format/good-for "Many people, small ideas, low prep bar"}
+  {:format/id :demo            :format/source :favorite
+   :format/good-for "\"Let me show you the thing\" beats \"let me describe the thing\""}
+  {:format/id :ama             :format/source :favorite
+   :format/good-for "\"Ask me anything\" a person or team worth inquiring with"}
+  {:format/id :fishbowl        :format/source :favorite
+   :format/good-for "For when you want to inspire real discussion, not monologue"}
+  {:format/id :pairing-mob     :format/source :favorite
+   :format/good-for "Learning by doing, together, on real code"}
+  {:format/id :live-coding     :format/source :favorite
+   :format/good-for "Showing how you think, not just the result"}
+  {:format/id :workshop        :format/source :favorite
+   :format/good-for "Hands-on skill you want people to actually leave with"}
+  {:format/id :kata            :format/source :favorite
+   :format/good-for "Showing how you think through Advent of Code style problems \"the Clojure way\""}
+  {:format/id :rfc             :format/source :favorite
+   :format/good-for "An architectural, design decision or decision matrix worth sharing"}
+  {:format/id :paper-club      :format/source :favorite
+   :format/good-for "A paper (or deep blog post) worth chewing on. You pick the subject we facilitate the discussion."}
+  {:format/id :show-and-tell   :format/source :favorite
+   :format/good-for "Surface cool stuff people are building"}
   ;; Show an overcomplicated, vibe-coded solution, then fix it: the lesson is
   ;; which questions to ask.
   {:format/id :how-not-to-solve :format/source :extra}
@@ -29,6 +55,148 @@
   ;; heading; the guest isn't named until they've agreed.
   {:format/id :side-by-side     :format/source :extra}
   {:format/id :datomic          :format/source :extra}]
+
+ :formats/guide
+ {:guide/title "Learning 40min session formats — a guide"
+  :guide/lede  "A menu of ways to do a learning session (40min). It's here for two kinds of people:"
+  :guide/audiences
+  [{:audience/who  "Speakers / facilitators"
+    :audience/text "pick a format that fits your topic, your energy, and how much prep you can spare."}
+   {:audience/who  "Newcomers / attendees"
+    :audience/text "know what you're walking into before you show up (and what's expected of you in the room)."}]
+  :guide/variety "There's no \"correct\" format. The point is variety — talks are only one type of way to share information, some ideas land way better as a mob session or a paper club than as slides. Plus, it's fun to mix it up!"
+
+  :guide/favorites-title "Favorites at a glance"
+  :guide/favorites-lede  "These are strong defaults for our crowd — REPL-driven, discussion-happy, and allergic to death-by-slides."
+  :guide/menu-lede       "The full menu is below, grouped by shape."
+
+  :guide/groups
+  [{:group/id :talks
+    :group/title "Talks & presentations"
+    :group/blurb "One or a few people prepared something; the room mostly listens, then asks."
+    :group/formats
+    [{:format/id :tech-talk :format/pool :tech-talk :format/favorite? true
+      :format/name "Tech talk"
+      :format/text "A prepared talk on a topic, usually 20–40 min with Q+A after. Use when someone has real depth to share and the material benefits from structure and buildup."}
+     {:format/id :lightning-talks :format/pool :lightning-talks :format/favorite? true
+      :format/name "Lightning talks"
+      :format/text "Several short talks (5–10 min each, hard stop) back to back in one session. Use when you want breadth over depth, want to lower the bar for first-time speakers, or have a lot of small things worth surfacing."}
+     {:format/id :demo :format/pool :demo :format/favorite? true
+      :format/name "Demo"
+      :format/text "Someone shows a working thing — a library, a tool, a project, a workflow. Use when the value is in seeing it move rather than hearing it described. Great for \"I built this, here's what it does.\""}
+     {:format/id :tool-spotlight
+      :format/name "Tool spotlight"
+      :format/text "A focused deep-dive on a single tool or library (think: reitit, malli, a REPL workflow, a build setup). Use when a tool is worth more than a passing mention and people would benefit from a guided tour."}
+     {:format/id :tutorial
+      :format/name "Tutorial / walkthrough"
+      :format/text "A step-by-step how-to on a specific task or setup. Use for onboarding-flavored material where the goal is \"everyone can now do X.\""}
+     {:format/id :guest-speaker
+      :format/name "Guest speaker"
+      :format/text "Someone from outside the group comes to present. Use to bring in a perspective or expertise we don't have in the room."}]}
+
+   {:group/id :conversation
+    :group/title "Conversation & Q+A"
+    :group/blurb "The value is in the live verbal exchange as opposed to in visual aids."
+    :group/formats
+    [{:format/id :fireside-chat
+      :format/name "Interview / fireside chat"
+      :format/text "A host asks a guest questions in a relaxed, conversational format. Use when a person has a great story or hard-won perspective and would shine more in dialogue than in a solo talk."}
+     {:format/id :ama :format/pool :ama :format/favorite? true
+      :format/name "AMA (ask me anything)"
+      :format/text "A person or team fields open questions from the room, minimal prep. Use when there's someone worth grilling — a maintainer, a thought leader, a team that shipped something big, someone with a rare specialty. We will seed a couple of starter questions so it doesn't open to silence."}
+     {:format/id :panel
+      :format/name "Panel"
+      :format/text "A few people discuss a topic, guided by a moderator. Use for topics with multiple valid viewpoints where contrast is the point. Keep the panel small (3–4) or it turns into chaos."}
+     {:format/id :fishbowl :format/pool :fishbowl :format/favorite? true
+      :format/name "Fishbowl"
+      :format/text "A small group discusses a topic in the \"center\" while everyone else observes; open seats let observers rotate in. Use for a juicy, contested topic where you want genuine discussion and broad participation without a free-for-all."}
+     {:format/id :discussion-circle
+      :format/name "Discussion circle / open floor"
+      :format/text "A topic is seeded, then we split into breakout groups of 5–7 people to discuss openly, no single presenter. Use when collective experience or human perspective is the content."}
+     {:format/id :debate
+      :format/name "Debate"
+      :format/text "Two people (or sides) argue opposite positions on a tradeoff, e.g. \"spec vs malli\" or \"libraries vs frameworks.\" Use to make a tradeoff vivid and force the strongest version of each side. Best when good-natured."}]}
+
+   {:group/id :hands-on
+    :group/title "Hands-on coding"
+    :group/blurb "Developers write or read code during the session."
+    :group/formats
+    [{:format/id :pairing :format/pool :pairing-mob :format/favorite? true
+      :format/name "Pairing"
+      :format/text "Two people work on real code together, live, in front of the group (or the group watches one pair). Use to make thinking visible and to model how people actually navigate a problem, not just the polished result."}
+     {:format/id :mob :format/pool :pairing-mob :format/favorite? true
+      :format/name "Mob / ensemble programming"
+      :format/text "A group works on one problem together live in front of a group: rotating driving at the keyboard. Use for learning-by-doing on a shared problem; great for exploring an unfamiliar territory or to unite cross team perspectives."}
+     {:format/id :live-coding :format/pool :live-coding :format/favorite? true
+      :format/name "Live coding (REPL-driven)"
+      :format/text "Someone codes live, thinking out loud, ideally REPL-first. Use when how you get there is the lesson — exploration, error recovery, REPL flow — not just the finished code."}
+     {:format/id :workshop :format/pool :workshop :format/favorite? true
+      :format/name "Workshop"
+      :format/text "Structured, hands-on exercises presented for everyone to work through, usually with a facilitator and clear steps. Use when you want to practice a potential conference workshop and when you want people to leave able to do something they couldn't before."}
+     {:format/id :kata :format/pool :kata :format/favorite? true
+      :format/name "Code challenge / kata"
+      :format/text "Solve a small, well-scoped well-known problem live, \"the Clojure way\"."}
+     {:format/id :refactoring
+      :format/name "Refactoring exercise"
+      :format/text "Start with some gnarly (or realistic) code and improve it together in breakout rooms. Use to build shared taste around what \"good\" looks like and to practice a skill that rarely gets deliberate reps."}
+     {:format/id :debugging
+      :format/name "Debugging challenge"
+      :format/text "A known chore or bug; a person, pair or group hunts it down live. Use to practice diagnosis and to demystify how people actually track down problems."}
+     {:format/id :hackathon
+      :format/name "Hackathon / mini-hackathon"
+      :format/text "A longer, looser build session — could be a single extended hour or a themed sprint. Use for exploration and play, especially around new tools or wild-idea projects."}]}
+
+   {:group/id :review
+    :group/title "Review & reflection"
+    :group/blurb "Looking at something that already exists and learning from it."
+    :group/formats
+    [{:format/id :code-review
+      :format/name "Code review session"
+      :format/text "The group reviews a real PR or chunk of code together. Use to spread review norms and turn review into a teaching moment rather than a gate."}
+     {:format/id :rfc :format/pool :rfc :format/favorite? true
+      :format/name "RFC / design doc review"
+      :format/text "The group reads and discusses a design doc or proposal together. Use when there's a real decision worth thinking through collectively, or to model how we reason about tradeoffs before writing code."}
+     {:format/id :postmortem
+      :format/name "Postmortem / incident retro"
+      :format/text "Walk through something that went wrong: what happened, why, what we learned. Use to turn a painful incident into shared, blameless learning."}
+     {:format/id :show-and-tell :format/pool :show-and-tell :format/favorite? true
+      :format/name "Show & tell"
+      :format/text "Several people each briefly show something they built or learned recently. Use to surface the cool stuff people are quietly working on and to celebrate progress. Lower bar than a demo. Just showing \"here's a cool thing Clojure related\" is enough."}]}
+
+   {:group/id :reading
+    :group/title "Reading & study"
+    :group/blurb "Shared homework, discussed together."
+    :group/formats
+    [{:format/id :paper-club :format/pool :paper-club :format/favorite? true
+      :format/name "Paper club"
+      :format/text "Read a paper (or a substantial blog post / talk transcript) beforehand, then discuss. Use for foundational or thought-provoking material worth chewing on as a group. Rich soil for interesting discussion."}
+     {:format/id :talk-deep-dive
+      :format/name "Tech talk deep dive"
+      :format/text "Discuss and share perspectives on a pre-selected talk."}
+     {:format/id :case-study
+      :format/name "Case study walkthrough"
+      :format/text "Dissect a real system, decision, or outage (ours or someone else's) in depth. Use to learn from a concrete, detailed example rather than abstractions."}]}
+
+   {:group/id :social
+    :group/title "Onboarding & social"
+    :group/blurb "Lower the barrier, build the room."
+    :group/formats
+    [{:format/id :onboarding
+      :format/name "Onboarding session"
+      :format/text "A friendly intro for newcomers to a tool, codebase, pattern, or to the sessions themselves. Use to welcome people in and remove the \"I don't know enough to be here\" fear."}
+     {:format/id :trivia
+      :format/name "Trivia / quiz"
+      :format/text "A light, playful quiz — Clojure gotchas, language history, \"guess the output.\" Use to break up the calendar, welcome newcomers, and have fun. Surprisingly good for surfacing the weird corners of the language."}
+     {:format/id :code-golf
+      :format/name "Puzzle hunt / code golf"
+      :format/text "A playful challenge with a competitive edge (shortest solution, trickiest puzzle). Use for pure fun and to flex the parts of the brain that normal work doesn't."}]}]
+
+  :guide/heuristics-title "Picking a format (quick heuristics)"
+  :guide/heuristics
+  [{:heuristic/q "Is the value in seeing or doing?"
+    :heuristic/a "Seeing → demo, live coding. Doing → workshop, pairing, mob, kata."}
+   {:heuristic/q "Lower the bar often."
+    :heuristic/a "Lightning talks, show & tell, and AMAs are the easiest on-ramps for first-time contributors."}]}
 
  ;; Where the two terms in the managers note come from. URLs checked (HTTP 200)
  ;; on 2026-11-24.
