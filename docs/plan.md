@@ -24,7 +24,6 @@ Ordered tasks for building Nooks & Parens. Each task has an owner (**Claude Code
 | **Tues 24 Nov** | **P0 launch.** Landing, Start here, calendar, About, formats, CTAs live |
 | Tue 1 Dec | Puzzle 1 unlocks, 05:00 UTC |
 | **Fri 4 Dec** | **P1.** Session 1. Day 1's spoiler gate opens 05:00 UTC; replay page goes up after the session |
-| Mon 7, 14, 21 Dec | Roundups |
 | 7–22 Dec | **P2.** Sessions 2–12, replays daily, tutorials for days 1–3, Workbench, webring |
 | Fri 11 Dec | No session |
 | mid-Jan 2027 | **P3.** Wrap-up post, archive state |
@@ -100,7 +99,7 @@ GitHub Actions workflow per `docs/hosting.md`: on push to `main`, on a daily sch
 16. **Learn** `/learn/`: four drawers (tutorials, how-to guides, reference, why it works) with counts.
 17. **Community solutions and webring** from `ring.edn`: links with credit, appear only after each day's gate, prev / random / next pages generated per member so no server is needed. Members opt in.
 18. **Power-tool allusions**: pick from the backlog in `docs/design-system.md` with Jordan.
-19. **Roundups** each Monday as blog posts.
+19. ~~**Roundups**~~ Cut (Jordan, 2026-11-24). The number is kept so references to later tasks stay valid.
 
 ## P3: wrap-up (mid-Jan)
 
