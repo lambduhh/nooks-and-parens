@@ -139,12 +139,15 @@ In this order on the page:
 - [ ] a locked or not-yet-out day page lacks its gate text with the date;
 - [ ] `clojure-template-aoc` appears while `:template/public?` is `false`;
 - [ ] a guest name appears whose entry isn't `:confirmed? true`;
-- [ ] the employer is named anywhere in the HTML (Jordan's role is "Software Engineer, Clojure Team");
+- [ ] the employer is named anywhere in the HTML (Jordan's role is "Software Engineer, Clojure Team"); the name is checked by hash (`src/nooks/denylist.clj`);
+- [ ] a link points to a workplace tool (wiki, chat workspace, shared doc; Clojurians Slack is allowed);
 - [ ] the forbidden words appear in an `h1`–`h3` or a chip: immutable, functional, data-oriented, concurrent, fast, productive, expressive, scalable;
 - [ ] an internal link points to a page that wasn't built;
 - [ ] an external request would fire on load (any `src` or stylesheet `href` that isn't same-origin);
 - [ ] an English route has no `/pt-br/` twin;
 - [ ] an `img` lacks `alt`, or a decorative `svg` lacks `aria-hidden`.
+
+Before the dates, it runs the employer-name and workplace-link checks over every tracked text file and every commit message reachable from `HEAD` (CI checks out full history for this).
 
 Print a one-line summary per date. Exit non-zero on any failure.
 

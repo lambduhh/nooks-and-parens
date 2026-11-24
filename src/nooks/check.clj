@@ -10,9 +10,11 @@
   Not yet checked, because the pages they guard aren't built yet: day-page gate
   contents and gate text (day pages land in the next PR)."
   (:require [babashka.fs :as fs]
+            [clojure.java.shell :as shell]
             [clojure.string :as str]
             [nooks.build :as build]
             [nooks.data :as data]
+            [nooks.denylist :as deny]
             [nooks.state :as state]))
 
 (def dates
@@ -117,10 +119,16 @@
 (defn- check-no-employer
   "Jordan, 2026-11-24: the employer is never named anywhere on the site; the
   role reads \"Software Engineer, Clojure Team\". Checks the whole HTML,
-  attributes and URLs included, case-insensitively."
-  [_ctx html]
-  (when (re-find #"(?i)acme" html)
+  attributes and URLs included, case-insensitively, against the hashed names
+  in nooks.denylist."
+  [{:keys [names] :or {names deny/names}} html]
+  (when (pos? (deny/names-found html names))
     ["names the employer; use \"Software Engineer, Clojure Team\""]))
+
+(defn- check-internal-links
+  "No links to workplace tools (wikis, chat workspaces, shared docs)."
+  [_ctx html]
+  (for [h (deny/internal-hosts html)] (str "links an internal tool: " h)))
 
 (defn- check-img-svg [_ctx html]
   (concat
@@ -137,7 +145,7 @@
 
 (def page-checks
   [check-primary check-external-loads check-links check-anchors check-template-gate
-   check-guests check-forbidden-words check-no-employer check-img-svg check-lang])
+   check-guests check-forbidden-words check-no-employer check-internal-links check-img-svg check-lang])
 
 ;; ---- Site-wide checks ------------------------------------------------------
 
@@ -190,8 +198,46 @@
         [(str (fs/relativize out-dir f)) p])
       (map (fn [p] ["(site)" p]) (concat (check-twins ctx files) (check-previews ctx) (check-css ctx))))}))
 
+;; ---- Repo-wide checks ------------------------------------------------------
+;; The page checks only see built HTML. The repo is public too, so its tracked
+;; files and commit messages get the same name and internal-host checks.
+
+(def ^:private binary-ext #"(?i)\.(woff2?|ttf|otf|png|jpe?g|gif|ico|webp|pdf)$")
+
+(def ^:private host-list-files
+  "Files that name internal-tool hosts on purpose: the deny-list itself, the
+  tests that feed it violating input, and temper's link-check schema."
+  #{"src/nooks/denylist.clj" "test/nooks/check_test.clj" "docs/metadata-schema.edn"})
+
+(defn- git-lines [& args]
+  (let [{:keys [exit out]} (apply shell/sh "git" args)]
+    (when (zero? exit) (str/split-lines out))))
+
+(defn check-repo
+  "Problems in tracked files and in the messages of commits reachable from HEAD,
+  as [where problem] pairs."
+  []
+  (concat
+   (for [f (git-lines "ls-files")
+         :when (and (not (str/blank? f)) (not (re-find binary-ext f)) (fs/regular-file? f))
+         :let [text (slurp f)]
+         p (concat (when (pos? (deny/names-found text)) ["names the employer"])
+                   (when-not (host-list-files f)
+                     (for [h (deny/internal-hosts text)] (str "links an internal tool: " h))))]
+     [f p])
+   (let [{:keys [out]} (shell/sh "git" "log" "--format=%h%x00%B%x01")]
+     (for [entry (str/split out #"\x01")
+           :let [[sha msg] (str/split (str/trim entry) #"\x00" 2)]
+           :when msg
+           p (concat (when (pos? (deny/names-found msg)) ["names the employer"])
+                     (for [h (deny/internal-hosts msg)] (str "links an internal tool: " h)))]
+       [(str "commit " sha) p]))))
+
 (defn -main [& _]
-  (let [results
+  (let [repo (doall (check-repo))
+        _    (println (format "%-18s %s" "repo" (if (empty? repo) "ok" (str (count repo) " problem(s)"))))
+        _    (doseq [[f p] repo] (println "   " f "—" p))
+        results
         (doall
          (for [date dates]
            (let [out  (str (fs/path ".work" "check" (str/replace date ":" "")))
@@ -203,7 +249,7 @@
              (doseq [[f p] (take 30 problems)] (println "   " f "—" p))
              (when (> (count problems) 30) (println "    …and" (- (count problems) 30) "more"))
              (count problems))))
-        total (reduce + results)]
+        total (reduce + (count repo) results)]
     (println (if (zero? total)
                (str "bb check: all " (count dates) " dates pass")
                (str "bb check: " total " problem(s)")))

@@ -3,7 +3,8 @@
   otherwise pass every page silently."
   (:require [babashka.fs :as fs]
             [clojure.test :refer [deftest is testing]]
-            [nooks.check]))
+            [nooks.check]
+            [nooks.denylist]))
 
 (defn run [chk html & [ctx]] (seq ((deref chk) (merge {:site {:template/public? false}} ctx) html)))
 
@@ -35,10 +36,24 @@
   (is (run #'nooks.check/check-forbidden-words "<span class=\"chip open\">Immutable</span>"))
   (is (nil? (run #'nooks.check/check-forbidden-words "<h2>Breakfast</h2><p>fast</p>")) "whole words, headings only"))
 
+;; A stand-in name ("acme"), hashed like the real deny-list, so the test
+;; exercises the matcher without the repo spelling the real name.
+(def acme [{:len 4 :sha256 "822b33ad87c148a0a20a5ba7cd5ebcaa68d36a18e7aad165554903f52ca82757"}])
+
 (deftest no-employer
-  (is (run #'nooks.check/check-no-employer "<p>An engineer at acme</p>"))
-  (is (run #'nooks.check/check-no-employer "<a href=\"https://acme.example\">x</a>") "attributes too")
-  (is (nil? (run #'nooks.check/check-no-employer "<p>Software Engineer, Clojure Team</p>"))))
+  (is (run #'nooks.check/check-no-employer "<p>An engineer at ACME</p>" {:names acme}))
+  (is (run #'nooks.check/check-no-employer "<a href=\"https://acme.example\">x</a>" {:names acme}) "attributes too")
+  (is (run #'nooks.check/check-no-employer "<p>Acmeville</p>" {:names acme}) "inside a longer word")
+  (is (nil? (run #'nooks.check/check-no-employer "<p>Software Engineer, Clojure Team</p>" {:names acme})))
+  (is (nil? (run #'nooks.check/check-no-employer "<p>Software Engineer, Clojure Team</p>")) "the real list")
+  (is (seq nooks.denylist/names) "the real list isn't empty"))
+
+(deftest internal-tool-links
+  (is (run #'nooks.check/check-internal-links "<a href=\"https://acme.atlassian.net/wiki/x\">w</a>"))
+  (is (run #'nooks.check/check-internal-links "<a href=\"https://docs.google.com/document/d/x\">d</a>"))
+  (is (run #'nooks.check/check-internal-links "<a href=\"https://acme.slack.com/archives/C1\">c</a>"))
+  (is (nil? (run #'nooks.check/check-internal-links "<a href=\"https://clojurians.slack.com/archives/C1\">c</a>")) "Clojurians is public")
+  (is (nil? (run #'nooks.check/check-internal-links "<a href=\"https://clojurians.net\">j</a>"))))
 
 (deftest img-and-svg
   (is (run #'nooks.check/check-img-svg "<img src=\"/a.png\">"))
