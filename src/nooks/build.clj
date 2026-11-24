@@ -41,7 +41,7 @@ setInterval(function(){fetch(u,{cache:'no-store'}).then(function(r){return r.tex
   (let [tpl (template/pages site)]
     (concat
      (for [[route f] stubs/pages] {:route route :path (layout/routes route) :page f})
-     [{:route :learn :path (layout/routes :learn) :page (template/learn-page site tpl)}]
+     [{:route :learn :path (layout/routes :learn) :page (template/learn-page site (concat tpl (blog/post-list)))}]
      tpl)))
 
 (defn- render-page! [out-dir ctx {:keys [route path page]}]

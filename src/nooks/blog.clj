@@ -91,6 +91,20 @@
   (write-templates! ctx (fs/path work-dir "templates"))
   (qb/render (quickblog-opts ctx out-dir work-dir)))
 
+(defn post-list
+  "Every post in blog/posts, preview or not, as Learn-page entries:
+  [{:kind :blog :title :path :date :shared?}], newest first. :shared? means the
+  link is the same in every language (the blog is English only)."
+  []
+  (->> (fs/glob posts-dir "*.md")
+       (map (fn [f]
+              (let [header (take-while (complement str/blank?) (str/split-lines (slurp (str f))))
+                    meta   (into {} (for [l header :let [[_ k v] (re-matches #"([A-Za-z-]+):\s*(.*)" l)] :when k]
+                                      [(keyword (str/lower-case k)) (str/trim v)]))]
+                {:kind :blog :shared? true :title (:title meta) :date (:date meta)
+                 :path (str "/blog/" (str/replace (fs/file-name f) #"\.md$" ".html"))})))
+       (sort-by :date #(compare %2 %1))))
+
 ;; ---- bb blog:new -----------------------------------------------------------
 
 (defn slugify [title]

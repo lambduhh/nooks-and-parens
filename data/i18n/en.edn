@@ -99,6 +99,7 @@
  :learn/how-to          "How-to guides"
  :learn/reference       "Reference"
  :learn/explanation     "Why it works"
+ :learn/blog            "Blog"
  :learn/ai              "Using an AI agent?"
  :learn/ai-note         "Optional. The template works without any AI; these files set an agent up as a tutor, not a solver."
  :template/source       "From the template:"
