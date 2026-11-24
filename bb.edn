@@ -25,6 +25,9 @@
             :requires ([nooks.blog])
             :task (apply nooks.blog/new-post! *command-line-args*)}
 
+  diagrams {:doc "Render the template guides' Mermaid diagrams to assets/diagrams/*.svg via kroki.io (commit them)"
+            :requires ([nooks.template])
+            :task (nooks.template/render-diagrams!)}
   template:bump {:doc "Point data/template.edn at the template repo's latest main (then bb check and a PR)"
                  :requires ([nooks.template])
                  :task (nooks.template/bump!)}

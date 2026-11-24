@@ -47,3 +47,10 @@
     (is (= "<h2 id=\"1-introduction\">1. Introduction</h2>" (f "<h2 id=\"1.-introduction\">1. Introduction</h2>")))
     (is (= "<h2 id=\"7-authors-address\">7. Author&apos;s Address</h2>" (f "<h2 id=\"x\">7. Author&apos;s Address</h2>")))
     (is (re-find #"id=\"notes-1\"" (f "<h3 id=\"a\">Notes</h3><h3 id=\"b\">Notes</h3>")) "duplicates numbered")))
+
+(deftest diagram-coordinates
+  (let [r tpl/round-coords]
+    (is (= "M1.23.57L680.93" (r "M1.2345.5678L680.9296875")) "concatenated numbers stay separate")
+    (is (= "#6e4424 12 3.5" (r "#6e4424 12 3.5")) "short numbers and colours untouched")
+    (is (not (re-find #"\d{3}\.?\d{3}\.?\d{3}-?\d{2}" (r "L123.456.789-01 M12.3456789")))
+        "no CPF-shaped runs survive")))

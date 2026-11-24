@@ -103,6 +103,9 @@
  :learn/ai-note         "Optional. The template works without any AI; these files set an agent up as a tutor, not a solver."
  :template/source       "From the template:"
  :template/diagram      "Diagram (Mermaid source)"
+ :template/diagram-alt  "Setup flowchart. The same route is written out as numbered steps below."
+ :template/diagram-skip "Skip the flowchart"
+ :template/diagram-full "Open it full size"
 
  ;; Blog
  :blog/title            "Blog"
