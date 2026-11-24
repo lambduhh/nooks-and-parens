@@ -316,9 +316,12 @@
   [site template-pages]
   (fn [ctx]
     (let [lang (:lang ctx)
-          link (fn [{:keys [path title shared?]}]
-                 [:li [:a {:href (layout/href ctx (if shared? path (str (layout/lang-prefix lang) path)))} title]])
-          by   (group-by :kind template-pages)
+          link (fn [{:keys [path url title shared?]}]
+                 [:li [:a {:href (or url (layout/href ctx (if shared? path (str (layout/lang-prefix lang) path))))} title]])
+          ;; Outside resources (data/resources.edn) join the drawers by :kind.
+          resources (for [{:resource/keys [title url kind]} (get-in ctx [:data :resources])]
+                      {:title title :url url :kind kind})
+          by   (group-by :kind (concat template-pages resources))
           drawer (fn [kind k]
                    ;; Empty drawers are left out until they have something in them.
                    (when (seq (by kind))

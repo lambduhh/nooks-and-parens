@@ -1,0 +1,52 @@
+;; formats.edn: the pool of session formats. Each day's session is picked from
+;; this pool by puzzle and guest availability; there is no day-by-day format
+;; plan (decided 2026-11-24). The list is also a resource for managers: a guide
+;; to leading technical conversations that keep humans in the loop.
+;;
+;; The 12 :favorite formats are the favorites from the session formats
+;; list; the :extra ones are this campaign's additions. The names are the only
+;; copy here. Length, people, what to prepare and an example recording come
+;; later as :format/length, :format/people, :format/prepare and
+;; :format/example-video; the page shows "to be written" until then.
+;; Shape: docs/content-model.md.
+{:formats/pool
+ [{:format/id :live-coding      :format/source :favorite}
+  {:format/id :pairing-mob      :format/source :favorite}
+  {:format/id :demo             :format/source :favorite}
+  {:format/id :kata             :format/source :favorite}
+  {:format/id :lightning-talks  :format/source :favorite}
+  {:format/id :workshop         :format/source :favorite}
+  {:format/id :ama              :format/source :favorite}
+  {:format/id :fishbowl         :format/source :favorite}
+  {:format/id :rfc              :format/source :favorite}
+  {:format/id :show-and-tell    :format/source :favorite}
+  {:format/id :paper-club       :format/source :favorite}
+  {:format/id :tech-talk        :format/source :favorite}
+  ;; Show an overcomplicated, vibe-coded solution, then fix it: the lesson is
+  ;; which questions to ask.
+  {:format/id :how-not-to-solve :format/source :extra}
+  ;; The same puzzle solved in Clojure and one other language. Never named in a
+  ;; heading; the guest isn't named until they've agreed.
+  {:format/id :side-by-side     :format/source :extra}
+  {:format/id :datomic          :format/source :extra}]
+
+ ;; Where the two terms in the managers note come from. URLs checked (HTTP 200)
+ ;; on 2026-11-24.
+ :formats/sources
+ [{:source/term   "comprehension debt"
+   :source/title  "Comprehension debt: the ticking time bomb of LLM-generated code"
+   :source/author "Jason Gorman"
+   :source/date   "2025-09-30"
+   :source/url    "https://codemanship.wordpress.com/2025/09/30/comprehension-debt-the-ticking-time-bomb-of-llm-generated-code/"}
+  {:source/term   "comprehension debt"
+   :source/title  "Comprehension debt"
+   :source/author "Addy Osmani"
+   :source/date   "2026"
+   :source/url    "https://addyosmani.com/blog/comprehension-debt/"}
+  {:source/term   "cognitive debt"
+   :source/title  "Your Brain on ChatGPT: Accumulation of Cognitive Debt when Using an AI Assistant for Essay Writing Task"
+   :source/author "Kosmyna et al., MIT Media Lab"
+   :source/date   "2025"
+   :source/url    "https://arxiv.org/abs/2506.08872"
+   ;; A preprint, and contested: keep the commentary next to it.
+   :source/caveat-url "https://arxiv.org/abs/2601.00856"}]}
