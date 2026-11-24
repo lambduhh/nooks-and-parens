@@ -58,7 +58,7 @@ Port the prototype's CSS into `assets/css/site.css` using the tokens in `docs/de
 
 ### 5. Pages — Claude Code
 Build in this order; each one passes the definition of done in `CLAUDE.md`.
-1. **Landing** `/`: dialog with positioning line, main menu `[1] Start here [2] Today [3] Calendar [4] Workbench`, primary button, Today panel with the REPL-as-data readout, "What're ya REPLin'?" next three sessions.
+1. **Landing** `/`: dialog with positioning line, main menu `[0] Today [1] Calendar [2] Workbench [5] Start here` (in toolbelt order; each number is that tool's shortcut key), primary button, Today panel with the REPL-as-data readout, "What're ya REPLin'?" next three sessions.
 2. **Calendar** `/days/`: "What're ya REPLin'?" heading, tool wall (12 slots), legend in words, session schedule list.
 3. **Day pages** `/days/01/` … `/days/12/`: facts note, gate sign, primary button by state, DIY recipes (always visible), then by state: live session info, or replay + community solutions.
 4. **Start here** `/start/`: the onboarding path in § Start here requirements below. Since 2026-11-24 it renders the template's `docs/setup-flowchart.md`; the OS tabs, click-to-load videos and copy buttons are still to come.
