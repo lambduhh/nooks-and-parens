@@ -5,7 +5,7 @@ description: "Ordered build tasks for Nooks & Parens, each with an owner and acc
 tags: [nooks-and-parens, plan]
 created: 2026-11-24
 modified: 2026-11-24
-ai_assisted: "Claude via Claude Desktop (Claude Design)"
+ai_assisted: "Claude via Claude Desktop (Claude Design); updated by Claude Code"
 session: unrecorded
 tools: unrecorded
 agents_skills: []
@@ -32,13 +32,13 @@ Session schedule and formats are in `data/days.edn`. Formats are drafts; guests 
 
 ## P0: launch (by Mon 30 Nov)
 
-### 0. Hosting accounts — Jordan
-Follow `docs/hosting.md` § Setup, steps 1–4: create the Cloudflare account and Pages project, make the API token, add the two GitHub secrets.
-**Done when:** the secrets exist and the project name is recorded in `data/site.edn` (`:site/url`).
+### 0. Hosting — Jordan (done 2026-11-24)
+GitHub Pages project site (`docs/hosting.md`): the repo is public and its Pages source is GitHub Actions.
+**Done when:** `:site/url` and `:site/base-path` in `data/site.edn` match the Pages URL.
 
 ### 1. Scaffold — Claude Code
 - `bb.edn` with the tasks in `CLAUDE.md`; `deps` for quickblog (pin a version; read its README for the current coordinate).
-- `.gitignore`: `public/`, `notes/`, `.wrangler/`, `.cpcache/`, `node_modules/`.
+- `.gitignore`: `public/`, `notes/`, `.work/`, `.cpcache/`, `node_modules/`.
 - `src/nooks/build.clj` entry point taking `--as-of`.
 - Copy `assets/` structure from the layout in `CLAUDE.md`.
 **Done when:** `bb build` writes `public/index.html` with the layout shell (sign header, toolbelt, footer) and `bb dev` serves it.
@@ -77,7 +77,7 @@ Mirror every route under `/pt-br/`. Untranslated pages show the English page wit
 **Done when:** every English route has a `/pt-br/` twin and `bb check` verifies it.
 
 ### 9. Deploy — Claude Code, then Jordan
-GitHub Actions workflow per `docs/hosting.md`: on push to `main`, on a daily schedule just after 05:00 UTC, and on manual dispatch. PR builds deploy as previews.
+GitHub Actions workflow per `docs/hosting.md`: on push to `main`, on a daily schedule just after 05:00 UTC, and on manual dispatch. PRs run the tests, checks and build but don't deploy (GitHub Pages has no PR previews).
 **Done when:** a push to `main` updates the live site, and a manual run with no changes redeploys.
 
 ### 10. Launch check — Jordan
@@ -150,4 +150,4 @@ Print a one-line summary per date. Exit non-zero on any failure.
 
 1. After a session: add the video map to `data/videos.edn` (id, title, chapters, summary placeholder until Jordan writes it).
 2. After the gate opens: add credited solution links to `data/days.edn` `:day/solutions` and any ring members to `data/ring.edn`.
-3. Commit on a branch, open a PR, check the preview, merge. The 05:05 UTC scheduled build handles gate openings with no commit needed.
+3. Commit on a branch, open a PR, check it locally with `bb dev` (and `bb build --as-of` for a future date), merge. The 05:05 UTC scheduled build handles gate openings with no commit needed.
