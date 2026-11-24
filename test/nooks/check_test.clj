@@ -35,6 +35,11 @@
   (is (run #'nooks.check/check-forbidden-words "<span class=\"chip open\">Immutable</span>"))
   (is (nil? (run #'nooks.check/check-forbidden-words "<h2>Breakfast</h2><p>fast</p>")) "whole words, headings only"))
 
+(deftest no-employer
+  (is (run #'nooks.check/check-no-employer "<p>An engineer at acme</p>"))
+  (is (run #'nooks.check/check-no-employer "<a href=\"https://acme.example\">x</a>") "attributes too")
+  (is (nil? (run #'nooks.check/check-no-employer "<p>Software Engineer, Clojure Team</p>"))))
+
 (deftest img-and-svg
   (is (run #'nooks.check/check-img-svg "<img src=\"/a.png\">"))
   (is (run #'nooks.check/check-img-svg "<svg><use href=\"#t\"></use></svg>"))
