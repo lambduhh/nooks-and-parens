@@ -7,7 +7,7 @@ node_modules/
 .cpcache/
 .nrepl-port
 .calva/
-.clj-kondo/.cache/
+.clj-kondo/
 .lsp/
 .portal/
 target/
