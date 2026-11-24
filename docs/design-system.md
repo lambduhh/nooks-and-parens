@@ -84,7 +84,7 @@ Avoid colour pairings that read as a real tool brand: no yellow-and-black, no re
 | **Pinned note** | Day page | White note with a pin: unlock time, puzzle link, session, guest, gate date |
 | **Gate sign** | Day page | Hanging wooden sign: "Closed" + the date in words; "Open" in paper when solutions are out |
 | **Recipe card** | DIY recipes | Blue "DIY recipe" header, title, ingredients (functions), footer links: the how-to, and "Try it at the Workbench" |
-| **Workbench** | `/workbench/` | Wood top bar with evaluator status; code textarea; "Craft it" button; result slot with a kind label; starter recipe buttons |
+| **Workbench** | `/workbench/` | Wood top bar with evaluator status; code textarea; "Craft it: run code", "Clear code" and (while running) "Stop running code" buttons; result slot with a kind label; "Load: <title>" starter recipe buttons |
 | **Toolbelt** | Every page, fixed bottom | 8 slots with key numbers 1–8; current page highlighted; shortcut on/off switch |
 
 ## Motion

@@ -144,7 +144,7 @@
       for (var i = 0; i < starters.length; i++) {
         if (starters[i].getAttribute('data-recipe') === key) {
           code.value = starters[i].getAttribute('data-code');
-          waiting(announce ? fmt(S.loaded, starters[i].textContent.trim()) : null);
+          waiting(announce ? fmt(S.loaded, starters[i].getAttribute('data-title')) : null);
           return true;
         }
       }

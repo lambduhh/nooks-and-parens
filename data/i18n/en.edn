@@ -105,8 +105,9 @@
  :stub/not-found        "Nothing hangs on this hook."
  :formats/session       "Session %s"
 
- ;; Workbench (/workbench/). "Craft it" is from docs/plan.md § Workbench
- ;; requirements; the rest is placeholder copy, mostly from the prototype.
+ ;; Workbench (/workbench/). Button labels and the starter-recipe heading are
+ ;; final (Jordan, 2026-11-24); the rest is placeholder copy, mostly from the
+ ;; prototype.
  ;; The *-kind strings label the result slot; Clojure kinds (map, vector, set,
  ;; seq…) come from the evaluator and aren't translated.
  :workbench/intro          {:draft "Try Clojure in your browser. No install, nothing saved."}
@@ -115,7 +116,7 @@
  :workbench/starting       {:draft "The evaluator is still starting. Your code will run in a moment."}
  :workbench/busy-kind      {:draft "running"}
  :workbench/busy           {:draft "Crafting…"}
- :workbench/stop           {:draft "Stop"}
+ :workbench/stop           "Stop running code"
  :workbench/stopped-kind   {:draft "stopped"}
  :workbench/stopped-timeout {:draft "Stopped after %s seconds: the code was still running. A loop that never ends, like (loop [] (recur)), is the usual cause. The evaluator has restarted, so earlier definitions are gone."}
  :workbench/stopped-by-you {:draft "Stopped. The evaluator has restarted, so earlier definitions are gone."}
@@ -124,9 +125,10 @@
  :workbench/status-offline {:draft "Offline preview: only the starter recipes run"}
  :workbench/code-label     {:draft "Your code"}
  :workbench/code-help      {:draft "Tab moves to the next control. Ctrl+Enter (or Cmd+Enter) crafts."}
- :workbench/craft          "Craft it"
- :workbench/clear          {:draft "Clear"}
- :workbench/starters       {:draft "Starter recipes"}
+ :workbench/craft          "Craft it: run code"
+ :workbench/clear          "Clear code"
+ :workbench/starters       "Load a starter recipe (replaces your code)"
+ :workbench/load           "Load: %s"
  :workbench/result         {:draft "Result"}
  :workbench/printed        {:draft "Printed output"}
  :workbench/no-js-kind     {:draft "needs JavaScript"}
