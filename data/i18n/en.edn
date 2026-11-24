@@ -23,7 +23,6 @@
  :toolbelt/keys-on      "Shortcuts: on"
  :toolbelt/keys-off     "Shortcuts: off"
  :footer/line           "Fan-made community hub. Not affiliated with Advent of Code or any game studio. Puzzles are linked, never copied."
- :footer/blog           "Blog"
  :crumbs/home           "Home"
  :crumbs/label          "Breadcrumbs"
 
@@ -46,7 +45,7 @@
  :home/menu-today-day   "Day %s"
  :home/menu-calendar    "What're ya REPLin'?"
  :home/menu-workbench   "try Clojure, no install"
- :home/cta-note         "Free sign-up. One thread per puzzle, every day."
+ :home/cta-note         "One thread per puzzle, every day."
  :home/today            "Today · %s"
  :home/today-soon       "Puzzles start %s at 00:00 EST. First live session: %s."
  :home/today-day        "Day %s is out."

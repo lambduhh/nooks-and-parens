@@ -150,10 +150,16 @@
      [:p.lang {:aria-label (t-str lang :lang/switch)}
       (lang-link :en) " · " (lang-link :pt-BR)]]))
 
-(defn- hotbar [ctx]
+(defn- hotbar
+  "The fixed bottom bar: the toolbelt (a nav), then a small row with the
+  site disclaimer and the shortcut switch. It's the page's <footer>, so the
+  disclaimer is still announced as footer content (Jordan, 2026-11-24: the
+  disclaimer moved here, smaller; the footer's Blog link is gone)."
+  [ctx]
   (let [{:keys [lang route]} ctx]
-    [:nav.hotbar {:aria-label (t-str lang :toolbelt/label)}
-     [:ul
+    [:footer.hotbar
+     [:nav {:aria-label (t-str lang :toolbelt/label)}
+      [:ul
       (map-indexed
        (fn [i [r ic]]
          [:li [:a (cond-> {:href (route-href ctx r) :data-k (str i)}
@@ -161,19 +167,15 @@
                [:span.k {:aria-hidden "true"} i]
                (icon ic)
                (t lang (get toolbelt-labels r (keyword "route" (name r))))]])
-       toolbelt)]
+        toolbelt)]]
      [:div.opts
-      [:span (t lang :toolbelt/keys-help 0 (dec (count toolbelt)))]
-      ;; Hidden until site.js runs: without JS there are no shortcuts to switch.
-      [:button {:type "button" :id "np-keys" :aria-pressed "true" :hidden true
-                :data-on (t-str lang :toolbelt/keys-on) :data-off (t-str lang :toolbelt/keys-off)}
-       (t-str lang :toolbelt/keys-on)]]]))
-
-(defn- footer [ctx]
-  (let [lang (:lang ctx)]
-    [:footer.foot.wrap
-     [:p (t lang :footer/line)]
-     [:p [:a {:href (route-href ctx :blog)} (t lang :footer/blog)]]]))
+      [:p.disclaimer (t lang :footer/line)]
+      [:span.keys
+       [:span (t lang :toolbelt/keys-help 0 (dec (count toolbelt)))]
+       ;; Hidden until site.js runs: without JS there are no shortcuts to switch.
+       [:button {:type "button" :id "np-keys" :aria-pressed "true" :hidden true
+                 :data-on (t-str lang :toolbelt/keys-on) :data-off (t-str lang :toolbelt/keys-off)}
+        (t-str lang :toolbelt/keys-on)]]]]))
 
 ;; ---- Page ------------------------------------------------------------------
 
@@ -220,5 +222,4 @@
         [:div in-lang
          (sign-header ctx)
          [:main.wrap {:id "main" :tabindex "-1"} main]
-         (footer ctx)
          (hotbar ctx)]]]))))
