@@ -355,7 +355,7 @@
           drawer (fn [kind k]
                    ;; Empty drawers are left out until they have something in them.
                    (when (seq (by kind))
-                   [:section.drawer {:class (when (= kind :how-to) "drawer-grouped")}
+                   [:section.drawer {:class (str "drawer-" (name kind))}
                     [:h2 (layout/emoji kind) (t lang k) " " [:span.count (str "(" (count (by kind)) ")")]]
                     (body kind)]))]
       {:route :learn
@@ -367,11 +367,15 @@
                 [:p (t lang :learn/intro)]
                 [:p [:a {:href (:template/url site)} (t lang :learn/get-template)]]
                 (layout/primary-button ctx)]
-               [:div.drawers
+               ;; Diátaxis compass: practical row (tutorials, how-to) over
+               ;; understanding row (explanation, reference); study column
+               ;; left, work column right. Blog isn't a quadrant, so it gets
+               ;; its own full row below. Source order = reading order.
+               [:div.drawers.diataxis
                 (drawer :tutorial :learn/tutorials)
                 (drawer :how-to :learn/how-to)
-                (drawer :reference :learn/reference)
                 (drawer :explanation :learn/explanation)
+                (drawer :reference :learn/reference)
                 (drawer :blog :learn/blog)]
                [:section.panel
                 [:h2 (t lang :learn/ai)]
