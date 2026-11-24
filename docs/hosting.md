@@ -1,7 +1,7 @@
 ---
 type: Reference
 title: "Hosting"
-description: "Where Nooks & Parens is hosted (a GitHub Pages project site) and how it deploys."
+description: "Where Power Tools & Parens is hosted (a GitHub Pages project site) and how it deploys."
 tags: [nooks-and-parens, hosting]
 created: 2026-11-24
 modified: 2026-11-24
@@ -17,6 +17,8 @@ review_note: "Drafted in Claude Design at Jordan Miller's direction, 2026-11-24;
 
 **Decision (Jordan, 2026-11-24): a GitHub Pages project site at <https://lambduhh.github.io/nooks-and-parens/>, deployed from GitHub Actions.** Cloudflare Pages was the first recommendation; Jordan dropped it the same day because its setup was too complicated. It stays below as an alternative.
 
+**Status (2026-11-24): publishing is paused.** The repo is private pending a security review (`docs/decisions.md`), and GitHub Pages on a free plan serves only public repos, so the site is offline. The site was also renamed Power Tools & Parens, and its path moved to `/power-tools-and-parens/` (`:site/base-path` in `data/site.edn`), ready for wherever it's published next. The deploy job runs only when the repo variable `PUBLISH` is `true` (Settings → Secrets and variables → Actions → Variables), so the daily build keeps testing without trying to deploy. Options for publishing again while the source stays private: a separate public repo holding only the built site, GitHub Pro (Pages from private repos), or Cloudflare Pages (below).
+
 Facts below were checked on 2026-11-24. Free tiers change; re-check the linked pages before relying on a number.
 
 ## What the site needs
@@ -29,13 +31,13 @@ Facts below were checked on 2026-11-24. Free tiers change; re-check the linked p
 
 ## How GitHub Pages fits
 
-GitHub allows **one user site per account** (`lambduhh.github.io`, already used), but **one project site per repository**. The `nooks-and-parens` repo, once public, publishes at `https://lambduhh.github.io/nooks-and-parens/`. Source: [GitHub Pages limits](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits) (1 GB site, soft 100 GB a month; not for commercial sites, and a free community hub isn't one).
+GitHub allows **one user site per account** (`lambduhh.github.io`, already used), but **one project site per repository**. Once public, a `power-tools-and-parens` repo publishes at `https://lambduhh.github.io/power-tools-and-parens/`, which matches `:site/base-path`; under its current name, `nooks-and-parens`, it would publish at `/nooks-and-parens/` and the base path would have to change back. Source: [GitHub Pages limits](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits) (1 GB site, soft 100 GB a month; not for commercial sites, and a free community hub isn't one).
 
 What follows from it:
 
 | Constraint | What the site does |
 |---|---|
-| The site lives under `/nooks-and-parens/` | Every generated link starts with `:site/base-path` in `data/site.edn`. `bb check` fails on an internal link outside it. `bb dev` serves the same path locally |
+| The site lives under `/power-tools-and-parens/` | Every generated link starts with `:site/base-path` in `data/site.edn`. `bb check` fails on an internal link outside it. `bb dev` serves the same path locally |
 | No custom response headers | The CSP is a `<meta http-equiv="Content-Security-Policy">` tag in every page ([`layout.clj`](../src/nooks/layout.clj)). A meta CSP can't set `frame-ancestors` |
 | No PR previews | PRs run `bb test`, `bb check` and `bb build` only. Review a PR locally with `bb dev` |
 | The repo must be public | Not yet. Jordan made it public in the GitHub web UI on 2026-11-24, then private again the same day, pending a security review. The site can't deploy until the review approves making it public |
@@ -76,11 +78,11 @@ Notes:
 
 | Host | URL shape | Notes |
 |---|---|---|
-| Cloudflare Pages (first recommendation, dropped) | `nooks-and-parens.pages.dev` | Static requests unlimited; 500 builds a month. Direct Upload from CI, `_headers` for a real CSP header, PR preview URLs. Setup needs an account, an API token and two repo secrets |
-| Cloudflare Workers static assets | `nooks-and-parens.<account>.workers.dev` | Cloudflare now puts new features here rather than Pages; the URL includes the account subdomain |
-| Netlify | `nooks-and-parens.netlify.app` | New free accounts get 300 credits a month at 15 per production deploy, about 20 deploys: too few for a daily rebuild |
-| Vercel Hobby | `nooks-and-parens.vercel.app` | Non-commercial personal use only; a campaign run partly in an employee's devrel role is a grey area |
-| Codeberg Pages | `<user>.codeberg.page/nooks-and-parens` | Mid-migration to a new server (old one stops 2026-12-31) |
+| Cloudflare Pages (first recommendation, dropped) | `power-tools-and-parens.pages.dev` | Static requests unlimited; 500 builds a month. Direct Upload from CI, `_headers` for a real CSP header, PR preview URLs. Setup needs an account, an API token and two repo secrets |
+| Cloudflare Workers static assets | `power-tools-and-parens.<account>.workers.dev` | Cloudflare now puts new features here rather than Pages; the URL includes the account subdomain |
+| Netlify | `power-tools-and-parens.netlify.app` | New free accounts get 300 credits a month at 15 per production deploy, about 20 deploys: too few for a daily rebuild |
+| Vercel Hobby | `power-tools-and-parens.vercel.app` | Non-commercial personal use only; a campaign run partly in an employee's devrel role is a grey area |
+| Codeberg Pages | `<user>.codeberg.page/power-tools-and-parens` | Mid-migration to a new server (old one stops 2026-12-31) |
 
 Sources: Cloudflare Pages free-tier summaries ([DEV Community](https://dev.to/david_viejo_4d48fdfa7cfff/cloudflare-pages-free-tier-limits-pricing-2026-1f8f), [convika.com](https://convika.com/compare/cloudflare-pages-vs-workers/)), [Cloudflare Workers static assets](https://developers.cloudflare.com/workers/static-assets/), [Netlify free plan](https://www.netlify.com/blog/introducing-netlify-free-plan/) and [a 2026 limits summary](https://netli.fyi/blog/netlify-free-plan-limits-2026), [Vercel fair use guidelines](https://vercel.com/docs/limits/fair-use-guidelines), [Codeberg Pages](https://docs.codeberg.org/codeberg-pages/) and its [migration guide](https://docs.codeberg.org/codeberg-pages/migrating-from-pages-v2/).
 

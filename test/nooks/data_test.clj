@@ -13,8 +13,8 @@
     (doseq [k [:site/name :site/tagline :site/positioning :site/framing :site/url
                :site/base-path :cta/slack :cta/discord :template/url]]
       (is (contains? s k) (str k)))
-    (is (= "Nooks & Parens" (:site/name s)))
-    (is (= "It's dangerous to go alone! Take this." (:site/tagline s)))
+    (is (= "Power Tools & Parens" (:site/name s)))
+    (is (= "It's dangerous to go alone! Take this." (:site/tagline s)) "the tagline's words stay exact; decoration is :site/tagline-emoji")
     (is (= "Clojure. A power tool for evolving systems." (:site/positioning s)))
     (is (boolean? (:template/public? s)))
     (testing "base path is either empty or /segment, and :site/url ends with it"

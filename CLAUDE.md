@@ -1,4 +1,4 @@
-# Nooks & Parens
+# Power Tools & Parens
 
 The public hub for a December 2026 Clojure Advent of Code campaign: the schedule of live sessions, how to join, session replays with chapters, beginner material, an in-browser Workbench, and links to community solutions. It's for people new to Clojure first, then returning Clojurians and people following along.
 
@@ -60,7 +60,7 @@ notes/       private (git-ignored)
 
 ### Copy
 - Use placeholders, marked `<span class="draft">…</span>`, for any sentence Jordan hasn't written. Never ship invented copy as final.
-- These labels are decided and must appear exactly: **Nooks & Parens** (name), **"It's dangerous to go alone! Take this."** (tagline), **"Clojure. A power tool for evolving systems."** (positioning line), **"What're ya REPLin'?"** (heading over the session schedule, a heading, never a button), **DIY recipes** (per-day beginner how-tos), **Workbench** (in-browser eval).
+- These labels are decided and must appear exactly: **Power Tools & Parens** (name), **"It's dangerous to go alone! Take this."** (tagline), **"Clojure. A power tool for evolving systems."** (positioning line), **"What're ya REPLin'?"** (heading over the session schedule, a heading, never a button), **DIY recipes** (per-day beginner how-tos), **Workbench** (in-browser eval).
 
 ### Advent of Code
 - Don't make it look like Advent of Code: no dark background with green and gold text, no copy of its font, no ASCII-art calendar picture, no star motifs, no AoC-like name.
