@@ -7,10 +7,8 @@
             [nooks.pages.home :as home]
             [nooks.state :as state]))
 
-(defn start [ctx]     (c/stub-page ctx :start :stub/start))
 (defn workbench [ctx] (c/stub-page ctx :workbench :stub/workbench))
 (defn videos [ctx]    (c/stub-page ctx :videos :stub/videos))
-(defn learn [ctx]     (c/stub-page ctx :learn :stub/learn))
 (defn slot-7 [ctx]    (c/stub-page ctx :slot-7 :stub/slot-7))
 
 (defn about [ctx]
@@ -81,14 +79,13 @@
              (layout/primary-button ctx)]}))
 
 (def pages
-  "Route → page fn, for every non-blog route in `layout/routes`."
+  "Route → page fn for the hub's own pages. :start and :learn come from the
+  template repo; see nooks.build/all-pages."
   {:home      home/page
-   :start     start
    :today     today
    :calendar  calendar
    :workbench workbench
    :videos    videos
-   :learn     learn
    :slot-7    slot-7
    :about     about
    :formats   formats})

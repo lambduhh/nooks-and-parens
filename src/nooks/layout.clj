@@ -108,9 +108,12 @@
         site     (get-in ctx [:data :site])
         other    (if (= lang :en) :pt-BR :en)
         ;; The blog has one pt-BR page: a "coming soon" notice.
-        twin     (if (#{:blog :blog-pt} route)
+        twin     (cond
+                   (#{:blog :blog-pt} route)
                    (if (= lang :en) (href ctx "/pt-br/blog/") (route-href ctx :en :blog))
-                   (route-href ctx other (or route :home)))
+                   ;; Pages at their own path (template guides): same path, other language.
+                   (:path ctx) (href ctx (str (lang-prefix other) (:path ctx)))
+                   :else (route-href ctx other (or route :home)))
         lang-link (fn [l]
                     (if (= l lang)
                       [:a {:aria-current "true" :lang (name l)} (t lang (keyword "lang" (name l)))]
