@@ -1,7 +1,7 @@
 ---
 type: Decision Log
 title: "Decisions"
-description: "What's decided and what's open for Nooks & Parens, and who decides."
+description: "What's decided and what's open for Power Tools & Parens, and who decides."
 tags: [nooks-and-parens, decisions]
 created: 2026-11-24
 modified: 2026-11-24
@@ -35,6 +35,9 @@ What's decided, what's open, and who decides. Decided items aren't reopened with
 | 2026-11-24 | **Stack: hybrid.** babashka renders pages from EDN; quickblog renders `/blog/`; Scittle runs only the Workbench | Supersedes "simple ClojureScript site" (2026-11-10). All output is static files |
 | 2026-11-24 | **Look and feel: the v4 prototype**, a cozy life-sim game's menus with a workshop and power-tool theme, in the Clojure colours plus warm neutrals | Add more power-tool allusions (backlog in `docs/design-system.md`). ASCII styling is allowed but not used in v4 |
 | 2026-11-24 | **Name and labels:** Nooks & Parens; tagline "It's dangerous to go alone! Take this."; "What're ya REPLin'?" over the session schedule; "DIY recipes" for per-day how-tos; "Workbench" for in-browser eval | No game art, logos, fonts or character names anywhere |
+| 2026-11-24 | **Name: Power Tools & Parens.** Supersedes "Nooks & Parens" in the name-and-labels row below. The path moves to `/power-tools-and-parens/` | Jordan also wants the repo renamed to match. Internal identifiers (the `nooks.*` namespaces, docs tags, the prototype's filename) keep the old name |
+| 2026-11-24 | **Tagline decoration:** 📝🧚 after "Take this." | Decorative and `aria-hidden`; the tagline's words are unchanged. Jordan's call on the game-reference rule: an emoji is neither game art nor a character name |
+| 2026-11-24 | **Repo is private; publishing paused.** Supersedes "Repo is public" below | Jordan made it private for work reasons. Free GitHub Pages needs a public repo, so the site is offline; the deploy job waits for the `PUBLISH` repo variable. Options: `docs/hosting.md` § Status |
 | 2026-11-24 | **Toolbelt order and keys:** 0 Today, 1 Calendar, 2 Workbench, 3 Learn, 4 Videos, 5 First time? Number keys 0–5 match. The landing main menu follows the same order, numbered by the same keys | "First time?" is the toolbelt label only; the page, its breadcrumb, the menu row and links still say "Start here" |
 | 2026-11-24 | **Workbench button labels:** "Craft it: run code", "Clear code", "Stop running code"; starter recipes as "Load: <title>" under "Load a starter recipe (replaces your code)" | Jordan chose these to say what each button does; "Craft it" stays as the label's lead |
 | 2026-11-24 | **Workbench runs on Scittle.** No squint, not even a credited link | The Workbench is the hub's zero-install path. It's a scratchpad, not a solving environment: no input fetching, no saved sessions (keeps within the 2026-11-06 "no browser solver" decision) |

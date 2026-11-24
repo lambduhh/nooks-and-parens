@@ -16,7 +16,7 @@ Draft-Header: false
 
   Metadata (the lines above the first blank line):
   - Preview: true keeps this post off the blog index, tags and feeds. It's still
-    reachable at /nooks-and-parens/blog/announcement.html. Delete the line to
+    reachable at /power-tools-and-parens/blog/announcement.html. Delete the line to
     publish; don't write "Preview: false".
   - Draft-Title / Draft-Header: true show the title / the RFC header block as
     drafts (only the word true counts; false or deleting the line both work).
@@ -35,7 +35,7 @@ Draft-Header: false
   - The end-of-preview marker below the Abstract is where the blog index
     excerpt stops.
   - Link hub pages by site path. Inside <p class=…> blocks use HTML,
-    <a href="/nooks-and-parens/start/">Start here</a>; in plain paragraphs Markdown
+    <a href="/power-tools-and-parens/start/">Start here</a>; in plain paragraphs Markdown
     works too. Cite a reference with <a href="#ref-aoc">[AOC]</a>.
   - The page adds one next step (the Slack button) after the post.
 -->
@@ -46,7 +46,7 @@ Draft-Header: false
 
 ## Abstract
 
-<p class="body"> What a girl wants: I want developers new to Clojure to have one clear <a href="/nooks-and-parens/start/">place to start</a>, with <a href="/nooks-and-parens/learn/">guides, references and examples</a>. I want to reduce the friction of our onboarding experience. I want to give experimenters a reason to stay: other people to learn with, formats that are fun, and finally - I want to give Clojure developers a way to bring others with them.</p>
+<p class="body"> What a girl wants: I want developers new to Clojure to have one clear <a href="/power-tools-and-parens/start/">place to start</a>, with <a href="/power-tools-and-parens/learn/">guides, references and examples</a>. I want to reduce the friction of our onboarding experience. I want to give experimenters a reason to stay: other people to learn with, formats that are fun, and finally - I want to give Clojure developers a way to bring others with them.</p>
 
 <!-- end-of-preview -->
 
@@ -83,7 +83,7 @@ They're missing the point. The journey, the struggle: that's the important part.
 
 My teacher says learning is all about consistency over time. Five to fifteen minutes every day beats three hours once a week. The same is true for problem solving. The same is true for programming.
 
-Advent of Code is exactly that kind of daily practice, a small puzzle every day, and it's better with people. That's what Nooks &amp; Parens is for.
+Advent of Code is exactly that kind of daily practice, a small puzzle every day, and it's better with people. That's what Power Tools &amp; Parens is for.
 
 
 ## 2. Background
@@ -96,15 +96,15 @@ Of course I had to be super extra about it. I care about pedagogy, and about doi
 
 Before building anything, I wanted to know what people actually do when they solve Advent of Code in Clojure. So I went and found every Advent of Code repo I could, starting from Thiago Carvalho's datasets (<a href="#ref-datasets">[DATASETS]</a>): 10,960 repos across four languages, 3,512 of them in Clojure.
 
-Then I stuck it all in [Datomic](https://www.datomic.com/). For good luck. (If you want a how-to-Datomic reference, the analysis repo doubles as one (<a href="#ref-research">[RESEARCH]</a>), and the template has a short <a href="/nooks-and-parens/learn/howto/datomic/">Datomic how-to</a> too.)
+Then I stuck it all in [Datomic](https://www.datomic.com/). For good luck. (If you want a how-to-Datomic reference, the analysis repo doubles as one (<a href="#ref-research">[RESEARCH]</a>), and the template has a short <a href="/power-tools-and-parens/learn/howto/datomic/">Datomic how-to</a> too.)
 
 With the data in one place, I looked at three things: which dependencies people reach for, what kinds of problems they're solving, and how they solve them.
 
-That analysis is where some of the how-to guides came from. The libraries that kept showing up ([math.combinatorics](https://github.com/clojure/math.combinatorics), [data.priority-map](https://github.com/clojure/data.priority-map), [instaparse](https://github.com/Engelberg/instaparse), [core.async](https://github.com/clojure/core.async), [loom](https://github.com/clj-commons/loom)) each got a guide in the template: <a href="/nooks-and-parens/learn/howto/combinatorics/">combinatorics</a>, <a href="/nooks-and-parens/learn/howto/shortest_path/">shortest paths</a>, <a href="/nooks-and-parens/learn/howto/parsing/">parsing</a>, <a href="/nooks-and-parens/learn/howto/channels/">channels</a> and <a href="/nooks-and-parens/learn/howto/graphs/">graphs</a> (<a href="#ref-template">[TEMPLATE]</a>). They're all on the hub: <a href="/nooks-and-parens/learn/">Learn</a>.
+That analysis is where some of the how-to guides came from. The libraries that kept showing up ([math.combinatorics](https://github.com/clojure/math.combinatorics), [data.priority-map](https://github.com/clojure/data.priority-map), [instaparse](https://github.com/Engelberg/instaparse), [core.async](https://github.com/clojure/core.async), [loom](https://github.com/clj-commons/loom)) each got a guide in the template: <a href="/power-tools-and-parens/learn/howto/combinatorics/">combinatorics</a>, <a href="/power-tools-and-parens/learn/howto/shortest_path/">shortest paths</a>, <a href="/power-tools-and-parens/learn/howto/parsing/">parsing</a>, <a href="/power-tools-and-parens/learn/howto/channels/">channels</a> and <a href="/power-tools-and-parens/learn/howto/graphs/">graphs</a> (<a href="#ref-template">[TEMPLATE]</a>). They're all on the hub: <a href="/power-tools-and-parens/learn/">Learn</a>.
 
 ## 4. The Plan
 
-<p class="body">December: twelve puzzles, twelve sessions, calendar is <a href="/nooks-and-parens/days/">here</a>.</p>
+<p class="body">December: twelve puzzles, twelve sessions, calendar is <a href="/power-tools-and-parens/days/">here</a>.</p>
 
 There's a session every weekday from Friday 4 to Tuesday 22 December (except Friday 11 December). It's staggered: each session works through a puzzle that unlocked 3 to 10 days earlier, and that day's solution goes up here once its <a href="#7-security-considerations">spoiler gate</a> opens.
 
@@ -117,7 +117,7 @@ And every day links the resources it uses: the how-to guides, the references, th
 ## 5. Audience
 
 <p class="body">Who it's for: people new to Clojure (1-3 years experience). First time using Clojure? 
-<a href="/nooks-and-parens/start/">Start here</a>.</p>
+<a href="/power-tools-and-parens/start/">Start here</a>.</p>
 
 ## 6. Joining
 
@@ -137,7 +137,7 @@ And every day links the resources it uses: the how-to guides, the references, th
 <dt id="ref-discord">[DISCORD]</dt>
 <dd>"Clojure Camp Discord", <a href="https://discord.clojure.camp">https://discord.clojure.camp</a>.</dd>
 <dt id="ref-template">[TEMPLATE]</dt>
-<dd>"clojure-template-aoc", <a href="https://github.com/lambduhh/clojure-template-aoc">https://github.com/lambduhh/clojure-template-aoc</a>. Its guides on the hub: <a href="/nooks-and-parens/start/">Start here</a> and <a href="/nooks-and-parens/learn/">Learn</a>.</dd>
+<dd>"clojure-template-aoc", <a href="https://github.com/lambduhh/clojure-template-aoc">https://github.com/lambduhh/clojure-template-aoc</a>. Its guides on the hub: <a href="/power-tools-and-parens/start/">Start here</a> and <a href="/power-tools-and-parens/learn/">Learn</a>.</dd>
 <dt id="ref-research">[RESEARCH]</dt>
 <dd>"clojure-aoc-research": the analysis, with Datomic Local and Datalog, <a href="https://github.com/lambduhh/clojure-aoc-research">https://github.com/lambduhh/clojure-aoc-research</a>.</dd>
 <dt id="ref-datasets">[DATASETS]</dt>
@@ -145,7 +145,7 @@ And every day links the resources it uses: the how-to guides, the references, th
 <dt id="ref-cljtv">[CLJTV]</dt>
 <dd>"ClojureTV", <a href="https://www.youtube.com/@ClojureTV">https://www.youtube.com/@ClojureTV</a>.</dd>
 <dt id="ref-hub">[HUB]</dt>
-<dd>"Nooks &amp; Parens", <a href="/nooks-and-parens/">https://lambduhh.github.io/nooks-and-parens/</a>.</dd>
+<dd>"Power Tools &amp; Parens", <a href="/power-tools-and-parens/">https://lambduhh.github.io/power-tools-and-parens/</a>.</dd>
 </dl>
 
 ## 9. Author's Address

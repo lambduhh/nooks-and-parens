@@ -3,7 +3,7 @@
   switch, toolbelt, footer, and the security <meta> tags.
 
   Every link goes through `href`, which prefixes :site/base-path, so the site
-  works under /nooks-and-parens/ on GitHub Pages and at / on any other host."
+  works under /power-tools-and-parens/ on GitHub Pages and at / on any other host."
   (:require [clojure.string :as str]
             [hiccup2.core :as h]
             [nooks.i18n :as i18n :refer [t t-str]]))
@@ -144,7 +144,9 @@
      [:div.ropes {:aria-hidden "true"} [:span] [:span]]
      [:a.sign {:href (route-href ctx :home)}
       [:span.name (:site/name site)]
-      [:span.tagline (:site/tagline site)]]
+      [:span.tagline (:site/tagline site)
+       (when-let [e (:site/tagline-emoji site)]
+         (list " " [:span.emoji {:aria-hidden "true"} e]))]]
      [:p.lang {:aria-label (t-str lang :lang/switch)}
       (lang-link :en) " · " (lang-link :pt-BR)]]))
 

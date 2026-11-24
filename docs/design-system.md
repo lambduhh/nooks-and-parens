@@ -1,7 +1,7 @@
 ---
 type: Reference
 title: "Design system"
-description: "Colour tokens, type, components and the power-tool backlog for Nooks & Parens, from the approved v4 prototype."
+description: "Colour tokens, type, components and the power-tool backlog for Power Tools & Parens, from the approved v4 prototype."
 tags: [nooks-and-parens, design]
 created: 2026-11-24
 modified: 2026-11-24
@@ -74,7 +74,7 @@ Avoid colour pairings that read as a real tool brand: no yellow-and-black, no re
 | Component | Where | Notes |
 |---|---|---|
 | **Sign header** | Every page | Hanging wooden sign: name + tagline. Links home. Language switch beneath |
-| **Dialog box** | Landing | Cream bubble, blue name tab ("Nooks & Parens"), positioning line first, a ▼ hint |
+| **Dialog box** | Landing | Cream bubble, blue name tab ("Power Tools & Parens"), positioning line first, a ▼ hint |
 | **Main menu** | Landing | Numbered rows `[0] Today [1] Calendar [2] Workbench [5] Start here` with short descriptions; each number is that tool's toolbelt key |
 | **Primary button** | One per page | Green pill, black text and outline |
 | **Chip** | Status | Always words: "Solutions open", "Solutions locked", "Not out yet", "Live today". Distinct borders (solid, plain, dashed) as well as colour |
