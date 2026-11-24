@@ -128,7 +128,7 @@ In this order on the page:
 4. Nothing leaves the browser; nothing is saved; never asks for the AoC session cookie.
 5. No AI.
 6. Starter recipes from `recipes.edn`, made-up data, linked from DIY recipes (`/workbench/#parse`).
-7. Real `<textarea>`; Tab is not trapped; a "Craft it" button plus Ctrl/Cmd+Enter; results and errors in an `aria-live` region; errors link to the "Reading an error" how-to.
+7. Real `<textarea>`; Tab is not trapped; a "Craft it: run code" button plus Ctrl/Cmd+Enter; results and errors in an `aria-live` region; errors link to the "Reading an error" how-to.
 
 ## Checks
 
