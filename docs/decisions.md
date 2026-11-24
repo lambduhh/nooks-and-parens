@@ -21,6 +21,7 @@ What's decided, what's open, and who decides. Decided items aren't reopened with
 
 | Date | Decision | Notes |
 |---|---|---|
+| 2026-11-24 | **Roundups cut.** No weekly roundup posts | Community solutions are still linked per day, after the gate, and the January wrap-up stays |
 | 2026-11-24 | **Hosting: a free platform subdomain.** Recommended host Cloudflare Pages at `nooks-and-parens.pages.dev`, deployed by Direct Upload from GitHub Actions | Jordan's `lambduhh.github.io` user site is taken. A GitHub Pages project site is the fallback. Details: `docs/hosting.md`. Jordan confirms the host when creating the account (plan task 0) |
 | 2026-11-24 | **Stack: hybrid.** babashka renders pages from EDN; quickblog renders `/blog/`; Scittle runs only the Workbench | Supersedes "simple ClojureScript site" (2026-11-10). All output is static files |
 | 2026-11-24 | **Look and feel: the v4 prototype**, a cozy life-sim game's menus with a workshop and power-tool theme, in the Clojure colours plus warm neutrals | Add more power-tool allusions (backlog in `docs/design-system.md`). ASCII styling is allowed but not used in v4 |
