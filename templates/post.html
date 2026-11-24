@@ -3,10 +3,12 @@
    only sees the post's own metadata, so links here stay relative.
 
    Metadata this template reads (keys are lower-cased by quickblog):
-     Draft-Title: true    show the title as a draft
+     Draft-Title: true    show the title as a draft. Only the word true counts:
+                          quickblog keeps metadata as strings, so "false"
+                          would otherwise still be truthy
      Style: rfc           lay the post out like an old-school RFC, with a header
                           block from Rfc-Group, Rfc-Number, Rfc-Category,
-                          Rfc-Author and Rfc-Date
+                          Rfc-Author, Rfc-Org (optional) and Rfc-Date
      Draft-Header: true   show those header values as drafts #}
 <article class="panel post{% if style %} {{style}}{% endif %}">
   {% if preview %}<p class="notice" role="note">[[t :blog/preview-banner]]</p>{% endif %}
@@ -14,17 +16,18 @@
   {% ifequal style "rfc" %}
   <div class="rfc-head">
     <ul>
-      <li>{% if draft-header %}<span class="draft">{{rfc-group}}</span>{% else %}{{rfc-group}}{% endif %}</li>
-      <li>[[t :rfc/number]]: {% if draft-header %}<span class="draft">{{rfc-number}}</span>{% else %}{{rfc-number}}{% endif %}</li>
-      <li>[[t :rfc/category]]: {% if draft-header %}<span class="draft">{{rfc-category}}</span>{% else %}{{rfc-category}}{% endif %}</li>
+      {% if rfc-group %}<li>{% ifequal draft-header "true" %}<span class="draft">{{rfc-group}}</span>{% else %}{{rfc-group}}{% endifequal %}</li>{% endif %}
+      <li>[[t :rfc/number]]: {% ifequal draft-header "true" %}<span class="draft">{{rfc-number}}</span>{% else %}{{rfc-number}}{% endifequal %}</li>
+      <li>[[t :rfc/category]]: {% ifequal draft-header "true" %}<span class="draft">{{rfc-category}}</span>{% else %}{{rfc-category}}{% endifequal %}</li>
     </ul>
     <ul>
-      <li>{% if draft-header %}<span class="draft">{{rfc-author}}</span>{% else %}{{rfc-author}}{% endif %}</li>
-      <li><time datetime="{{date}}">{% if draft-header %}<span class="draft">{{rfc-date}}</span>{% else %}{{rfc-date}}{% endif %}</time></li>
+      <li>{% ifequal draft-header "true" %}<span class="draft">{{rfc-author}}</span>{% else %}{{rfc-author}}{% endifequal %}</li>
+      {% if rfc-org %}<li>{% ifequal draft-header "true" %}<span class="draft">{{rfc-org}}</span>{% else %}{{rfc-org}}{% endifequal %}</li>{% endif %}
+      <li><time datetime="{{date}}">{% ifequal draft-header "true" %}<span class="draft">{{rfc-date}}</span>{% else %}{{rfc-date}}{% endifequal %}</time></li>
     </ul>
   </div>
   {% endifequal %}
-  <h1>{% if draft-title %}<span class="draft">{{title}}</span>{% else %}{{title}}{% endif %}</h1>
+  <h1>{% ifequal draft-title "true" %}<span class="draft">{{title}}</span>{% else %}{{title}}{% endifequal %}</h1>
   {% ifunequal style "rfc" %}<p class="post-meta">[[t :blog/published]] <time datetime="{{date}}">{{date}}</time></p>{% endifunequal %}
   <div class="prose">
 {{body|safe}}
