@@ -367,15 +367,18 @@
                 [:p (t lang :learn/intro)]
                 [:p [:a {:href (:template/url site)} (t lang :learn/get-template)]]
                 (layout/primary-button ctx)]
-               ;; Diátaxis compass: practical row (tutorials, how-to) over
-               ;; understanding row (explanation, reference); study column
-               ;; left, work column right. Blog isn't a quadrant, so it gets
-               ;; its own full row below. Source order = reading order.
+               ;; Diátaxis compass as two columns: study (tutorials over
+               ;; explanation) and work (how-to over reference), practical on
+               ;; top. Each column stacks on its own, so a short tile keeps
+               ;; its height instead of stretching to match the long How-to.
+               ;; Blog isn't a quadrant, so it gets a full row below.
                [:div.drawers.diataxis
-                (drawer :tutorial :learn/tutorials)
-                (drawer :how-to :learn/how-to)
-                (drawer :explanation :learn/explanation)
-                (drawer :reference :learn/reference)
+                [:div.diataxis-col
+                 (drawer :tutorial :learn/tutorials)
+                 (drawer :explanation :learn/explanation)]
+                [:div.diataxis-col
+                 (drawer :how-to :learn/how-to)
+                 (drawer :reference :learn/reference)]
                 (drawer :blog :learn/blog)]
                [:section.panel
                 [:h2 (t lang :learn/ai)]
