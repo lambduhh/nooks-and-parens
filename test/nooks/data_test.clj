@@ -49,6 +49,25 @@
       (is (string? (:code r)))
       (is (string? (:expect r))))))
 
+(deftest formats
+  (let [{:formats/keys [pool sources]} (:formats d)
+        ids (set (map :format/id pool))]
+    (is (= (count pool) (count ids)) "no duplicate formats")
+    (is (every? #{:guild :extra} (map :format/source pool)))
+    (is (= 12 (count (filter #(= :guild (:format/source %)) pool))))
+    (testing "every day's draft format is in the pool"
+      (is (every? ids (map #(get-in % [:day/session :format]) (:days d)))))
+    (doseq [s sources]
+      (is (str/starts-with? (:source/url s) "https://"))
+      (is (string? (:source/title s))))))
+
+(deftest resources
+  (doseq [r (:resources d)]
+    (testing (:resource/title r)
+      (is (string? (:resource/title r)))
+      (is (str/starts-with? (:resource/url r) "https://"))
+      (is (#{:tutorial :how-to :reference :explanation} (:resource/kind r))))))
+
 (deftest videos-and-ring
   (is (vector? (:videos d)))
   (is (vector? (get-in d [:ring :ring/members]))))
