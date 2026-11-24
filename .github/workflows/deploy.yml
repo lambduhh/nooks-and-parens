@@ -1,0 +1,71 @@
+name: deploy
+
+# Builds the site and deploys it to GitHub Pages
+# (https://lambduhh.github.io/nooks-and-parens/). See docs/hosting.md.
+#
+#   push to main      test, check, build, deploy
+#   05:05 UTC daily   same; spoiler gates and "today" open at 05:00 UTC and
+#                     state is computed from the clock at build time, so the
+#                     daily rebuild opens them with no commit. Scheduled runs
+#                     can start late, never early.
+#   manual dispatch   same (a redeploy with no changes)
+#   pull request      test, check, build only. GitHub Pages has no PR
+#                     previews; review with `bb dev`.
+#
+# Actions are pinned by commit SHA (release tag in the comment), checked
+# 2026-11-24.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "5 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install babashka
+        uses: DeLaGuardo/setup-clojure@6d46099eae24853c33c0482f2bb54edf4f1a4c74 # 13.7.0
+        with:
+          bb: 1.13.230
+
+      - name: Unit tests
+        run: bb test
+
+      - name: Checks across the date set
+        run: bb check
+
+      - name: Build as of now
+        run: bb build
+
+      - name: Upload the site
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: public
+
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

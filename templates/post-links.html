@@ -1,0 +1,10 @@
+{# One tag's posts (tags/<tag>.html); urls are relative to tags/. #}
+<section class="panel">
+  <p class="crumbs"><a href="../index.html">[[t :blog/title]]</a> › <a href="index.html">[[t :blog/tags]]</a></p>
+  <h1>{{title}}</h1>
+  <ul class="posts">
+    {% for post-link in post-links %}
+    <li><a href="{{post-link.url}}">{{post-link.title}}</a> · <time datetime="{{post-link.date}}">{{post-link.date}}</time></li>
+    {% endfor %}
+  </ul>
+</section>

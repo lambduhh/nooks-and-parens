@@ -5,7 +5,7 @@ description: "The EDN files every Nooks & Parens page is built from, and how pag
 tags: [nooks-and-parens, data]
 created: 2026-11-24
 modified: 2026-11-24
-ai_assisted: "Claude via Claude Desktop (Claude Design)"
+ai_assisted: "Claude via Claude Desktop (Claude Design); updated by Claude Code"
 session: unrecorded
 tools: unrecorded
 agents_skills: []
@@ -24,8 +24,10 @@ Every page is built from the EDN files in `data/`. A daily update is a data edit
  :site/tagline       "It's dangerous to go alone! Take this."
  :site/positioning   "Clojure. A power tool for evolving systems."
  :site/framing       "Each Advent of Code day is a small evolving system: part 2 usually changes the question part 1 asked."
- :site/url           "https://nooks-and-parens.pages.dev"   ; confirm after the Pages project exists
- :site/base-path     ""                                       ; "/nooks-and-parens" only on the GitHub Pages fallback
+ :site/framing-final? false   ; true once Jordan confirms :site/framing; until then it renders as a draft
+ :site/url           "https://lambduhh.github.io/nooks-and-parens"   ; GitHub Pages project site, no trailing slash
+ :site/base-path     "/nooks-and-parens"                               ; prefixes every generated link
+ :site/author        "Jordan Miller"                                   ; the blog feed author
  :site/languages     [:en :pt-BR]
  :cta/slack          {:label "Join #adventofcode on Clojurians Slack" :url "https://clojurians.net"}
  :cta/slack-channel  nil        ; Jordan pastes the verified channel link here

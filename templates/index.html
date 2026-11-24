@@ -1,0 +1,17 @@
+{# Blog index. Preview posts never reach this list (quickblog removes them). #}
+<section class="panel">
+  <h1>[[t :blog/title]]</h1>
+  <ul class="posts">
+    {% for post in posts %}
+    <li>
+      <h2><a href="{{post.post-link}}">{{post.title}}</a></h2>
+      <p class="post-meta"><time datetime="{{post.date}}">{{post.date}}</time></p>
+      <div class="prose">{{post.body|safe}}</div>
+      {% if post.truncated %}<p><a href="{{post.post-link}}">[[t :blog/read-more]]</a></p>{% endif %}
+    </li>
+    {% empty %}
+    <li>[[t :blog/empty]]</li>
+    {% endfor %}
+  </ul>
+  <p class="post-meta"><a href="archive.html">[[t :blog/archive]]</a> · <a href="tags/index.html">[[t :blog/tags]]</a> · <a href="atom.xml">[[t :blog/feed]]</a></p>
+</section>

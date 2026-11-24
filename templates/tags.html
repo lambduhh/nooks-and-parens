@@ -1,0 +1,11 @@
+<section class="panel">
+  <p class="crumbs"><a href="../index.html">[[t :blog/title]]</a></p>
+  <h1>[[t :blog/tags]]</h1>
+  <ul class="posts">
+    {% for tag in tags %}
+    <li><a href="{{tag.url}}">{{tag.tag}}</a> · {{tag.count}}</li>
+    {% empty %}
+    <li>[[t :blog/empty]]</li>
+    {% endfor %}
+  </ul>
+</section>

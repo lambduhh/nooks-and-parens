@@ -5,7 +5,7 @@ description: "What's decided and what's open for Nooks & Parens, and who decides
 tags: [nooks-and-parens, decisions]
 created: 2026-11-24
 modified: 2026-11-24
-ai_assisted: "Claude via Claude Desktop (Claude Design)"
+ai_assisted: "Claude via Claude Desktop (Claude Design); updated by Claude Code"
 session: unrecorded
 tools: unrecorded
 agents_skills: []
@@ -21,8 +21,10 @@ What's decided, what's open, and who decides. Decided items aren't reopened with
 
 | Date | Decision | Notes |
 |---|---|---|
+| 2026-11-24 | **Toolbelt slot 7 stays, as a placeholder.** It links to a stub page (`/slot-7/`) with a draft label | Was Roundups, cut the same day. Jordan may put reference docs there |
 | 2026-11-24 | **Roundups cut.** No weekly roundup posts | Community solutions are still linked per day, after the gate, and the January wrap-up stays |
-| 2026-11-24 | **Hosting: a free platform subdomain.** Recommended host Cloudflare Pages at `nooks-and-parens.pages.dev`, deployed by Direct Upload from GitHub Actions | Jordan's `lambduhh.github.io` user site is taken. A GitHub Pages project site is the fallback. Details: `docs/hosting.md`. Jordan confirms the host when creating the account (plan task 0) |
+| 2026-11-24 | **Repo is public.** `lambduhh/nooks-and-parens` | Needed for a free GitHub Pages site. Jordan changed visibility in the GitHub web UI |
+| 2026-11-24 | **Hosting: a GitHub Pages project site** at `https://lambduhh.github.io/nooks-and-parens/`, deployed from GitHub Actions | Supersedes the Cloudflare Pages recommendation earlier the same day; Jordan found its setup too complicated. Every link carries `/nooks-and-parens`. Details: `docs/hosting.md` |
 | 2026-11-24 | **Stack: hybrid.** babashka renders pages from EDN; quickblog renders `/blog/`; Scittle runs only the Workbench | Supersedes "simple ClojureScript site" (2026-11-10). All output is static files |
 | 2026-11-24 | **Look and feel: the v4 prototype**, a cozy life-sim game's menus with a workshop and power-tool theme, in the Clojure colours plus warm neutrals | Add more power-tool allusions (backlog in `docs/design-system.md`). ASCII styling is allowed but not used in v4 |
 | 2026-11-24 | **Name and labels:** Nooks & Parens; tagline "It's dangerous to go alone! Take this."; "What're ya REPLin'?" over the session schedule; "DIY recipes" for per-day how-tos; "Workbench" for in-browser eval | No game art, logos, fonts or character names anywhere |
@@ -43,12 +45,12 @@ What's decided, what's open, and who decides. Decided items aren't reopened with
 
 | Question | Options | Who decides | Needed by |
 |---|---|---|---|
-| Confirm the host and project name | Cloudflare Pages `nooks-and-parens.pages.dev` (recommended) / GitHub Pages project site | Jordan | P0, task 0 |
 | Tagline and positioning line both on the landing page: too crowded? | Keep both / Jordan picks which leads | Jordan | P0 review |
 | Workbench primary button | "Craft it" counts as the page's primary action / also add the Slack button | Jordan | P2 |
 | Analytics | None / cookieless (Cloudflare Web Analytics) with outbound clicks to Slack and the template as the events | Jordan | Before launch if wanted |
 | Webring: who keeps the member list, and the opt-in step | `data/ring.edn` edited by Jordan from Slack requests / a PR from each member | Jordan | P2 |
 | Which power-tool allusions to add | Backlog in `docs/design-system.md` | Jordan with Claude Code | P2 |
+| pt-BR for `/blog/` | A "Tradução em breve" notice at `/pt-br/blog/` (what the MVP builds) / translate posts / leave the blog English-only with no pt-BR page | Jordan | Before pt-BR pages go live |
 | Who reviews pt-BR | Candidate in Jordan's notes | Jordan | Before pt-BR pages go live |
 | pt-BR renderings of the tagline, "What're ya REPLin'?" and "DIY recipes" | | The pt-BR reviewer | Before pt-BR pages go live |
 | A setup clinic in the Clojure Camp Discord before 1 Dec | | Jordan | Mon 30 Nov |

@@ -1,0 +1,17 @@
+{# Post body, wrapped by the generated base.html (site chrome). Double-bracket "t" tokens are
+   replaced at build time with the UI string from data/i18n/en.edn. post.html
+   only sees the post's own metadata, so links here stay relative. #}
+<article class="panel post">
+  {% if preview %}<p class="notice" role="note">[[t :blog/preview-banner]]</p>{% endif %}
+  <p class="crumbs"><a href="index.html">[[t :blog/title]]</a></p>
+  <h1>{% if draft-title %}<span class="draft">{{title}}</span>{% else %}{{title}}{% endif %}</h1>
+  <p class="post-meta">[[t :blog/published]] <time datetime="{{date}}">{{date}}</time></p>
+  <div class="prose">
+{{body|safe}}
+  </div>
+  {% if not preview %}{% if tags %}
+  <p class="post-meta">[[t :blog/tagged]]:
+    {% for tag in tags %}<a href="tags/{{tag|escape-tag}}.html">{{tag}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
+  </p>
+  {% endif %}{% endif %}
+</article>
