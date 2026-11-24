@@ -5,9 +5,9 @@
             [nooks.layout :as layout]
             [nooks.pages.common :as c]
             [nooks.pages.home :as home]
+            [nooks.pages.workbench :as workbench]
             [nooks.state :as state]))
 
-(defn workbench [ctx] (c/stub-page ctx :workbench :stub/workbench))
 (defn videos [ctx]    (c/stub-page ctx :videos :stub/videos))
 
 (defn about [ctx]
@@ -82,6 +82,6 @@
   {:home      home/page
    :today     today
    :calendar  calendar
-   :workbench workbench
+   :workbench workbench/page
    :videos    videos
    :formats   formats})

@@ -95,7 +95,7 @@ GitHub Actions workflow per `docs/hosting.md`: on push to `main`, on a daily sch
 
 ## P2: December (7–22 Dec)
 
-14. **Workbench** `/workbench/`: requirements in § Workbench below.
+14. **Workbench** `/workbench/`: requirements in § Workbench below. Built 2026-11-24 (copy is draft); `bb test:browser` runs every starter recipe in headless Chrome.
 15. **Tutorials** for days 1–3 at `/learn/tutorials/day-NN/`, gated like solutions. Made-up data only.
 16. **Learn** `/learn/`: four drawers (tutorials, how-to guides, reference, why it works) with counts.
 17. **Community solutions and webring** from `ring.edn`: links with credit, appear only after each day's gate, prev / random / next pages generated per member so no server is needed. Members opt in.
