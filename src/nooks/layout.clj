@@ -87,7 +87,7 @@
   aria-hidden, so headings read as their words (Jordan, 2026-11-24)."
   {:start "🔌" :workbench "🪚" :learn "🧰" :formats "🔧" :videos "🪜"
    :today "🔦" :not-found "🔩"
-   :tutorial "🔨" :how-to "🪛" :reference "📏" :explanation "⚙️"})
+   :tutorial "🔨" :how-to "🪛" :reference "📏" :explanation "⚙️" :blog "🪧"})
 
 (defn emoji
   "The emoji for k as a decorative prefix, or nil."

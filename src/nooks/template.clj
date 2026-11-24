@@ -311,19 +311,20 @@
     (concat (map doc-page pages) (map howto-page hows))))
 
 (defn learn-page
-  "/learn/: the template's guides by kind, then the optional AI shelf."
+  "/learn/: the template's guides and the blog's posts by kind, then the
+  optional AI shelf."
   [site template-pages]
   (fn [ctx]
     (let [lang (:lang ctx)
-          link (fn [{:keys [path title]}]
-                 [:li [:a {:href (layout/href ctx (str (layout/lang-prefix lang) path))} title]])
+          link (fn [{:keys [path title shared?]}]
+                 [:li [:a {:href (layout/href ctx (if shared? path (str (layout/lang-prefix lang) path)))} title]])
           by   (group-by :kind template-pages)
           drawer (fn [kind k]
                    ;; Empty drawers are left out until they have something in them.
                    (when (seq (by kind))
                    [:section.drawer
                     [:h2 (layout/emoji kind) (t lang k) " " [:span.count (str "(" (count (by kind)) ")")]]
-                    [:ul (map link (sort-by :title (by kind)))]]))]
+                    [:ul (map link (if (= kind :blog) (by kind) (sort-by :title (by kind))))]]))]
       {:route :learn
        :title (t-str lang :route/learn)
        :main  (list
@@ -337,7 +338,8 @@
                 (drawer :tutorial :learn/tutorials)
                 (drawer :how-to :learn/how-to)
                 (drawer :reference :learn/reference)
-                (drawer :explanation :learn/explanation)]
+                (drawer :explanation :learn/explanation)
+                (drawer :blog :learn/blog)]
                [:section.panel
                 [:h2 (t lang :learn/ai)]
                 [:p (t lang :learn/ai-note)]
