@@ -1,0 +1,21 @@
+;; template.edn: guides from the template repo (:template/url in site.edn),
+;; rendered into the hub at build time. Visitors never load anything from GitHub.
+;;
+;; :template/sha pins the commit the hub renders. Move it with `bb template:bump`
+;; in a PR, so `bb check` sees new template content before it ships and a
+;; template edit can't break the daily 05:05 UTC build that opens spoiler gates.
+;;
+;; :template/pages: which Markdown files become hub pages, and where.
+;;   :kind is the Learn drawer: :tutorial :how-to :reference :explanation, or :ai
+;;   for the optional "Using an AI agent?" shelf (never part of the main route).
+;; Every src/howto/*.clj file also becomes a how-to page at /learn/howto/<name>/.
+;; Any other file a guide links to opens on GitHub at the pinned commit.
+{:template/sha "5e0f08fb811a5d645fcb4654564094ec26bc0ae3"
+ :template/pages
+ [{:path "docs/setup-flowchart.md"         :hub "/start/"                   :kind :how-to}
+  {:path "docs/tutorial.md"                :hub "/learn/tutorial/"          :kind :tutorial}
+  {:path "README.md"                       :hub "/learn/template/"          :kind :reference}
+  {:path "ai/README.md"                    :hub "/learn/ai/"                :kind :ai}
+  {:path "ai/AGENTS.md"                    :hub "/learn/ai/agents/"         :kind :ai}
+  {:path "ai/skills/README.md"             :hub "/learn/ai/skills/"         :kind :ai}
+  {:path "ai/skills/setup-clojure/SKILL.md" :hub "/learn/ai/setup-clojure/" :kind :ai}]}

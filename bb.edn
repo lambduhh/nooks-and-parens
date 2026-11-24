@@ -18,12 +18,16 @@
   test     {:doc "Unit tests: data shape, state logic at the date edges, i18n"
             :extra-paths ["test"]
             :requires ([clojure.test :as t]
-                       [nooks.data-test] [nooks.state-test] [nooks.i18n-test] [nooks.check-test])
-            :task (let [{:keys [fail error]} (t/run-tests 'nooks.data-test 'nooks.state-test 'nooks.i18n-test 'nooks.check-test)]
+                       [nooks.data-test] [nooks.state-test] [nooks.i18n-test] [nooks.check-test] [nooks.template-test])
+            :task (let [{:keys [fail error]} (t/run-tests 'nooks.data-test 'nooks.state-test 'nooks.i18n-test 'nooks.check-test 'nooks.template-test)]
                     (System/exit (if (zero? (+ fail error)) 0 1)))}
   blog:new {:doc "New blog post, created as a Preview (reachable by URL, not listed). Usage: bb blog:new \"Title\""
             :requires ([nooks.blog])
             :task (apply nooks.blog/new-post! *command-line-args*)}
+
+  template:bump {:doc "Point data/template.edn at the template repo's latest main (then bb check and a PR)"
+                 :requires ([nooks.template])
+                 :task (nooks.template/bump!)}
 
   ;; ---- Docs checks for the docs/ OKF bundle (temper.okf.*) --------------
   validate {:doc "Validate docs/ frontmatter (temper.okf.validate)"

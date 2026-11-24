@@ -36,6 +36,7 @@ bb build --as-of 2026-12-04T05:00Z # an exact instant
 | `bb check` | Build for each date in the check set and fail on any broken rule (below) |
 | `bb test` | Unit tests: data shape, date and spoiler-gate logic, UI strings, the check rules |
 | `bb blog:new "Title"` | New blog post, created as a preview. Flag: `--slug` |
+| `bb template:bump` | Move the pinned template commit to its latest `main` (then `bb check` and a PR) |
 | `bb validate`, `bb links`, `bb maturity --check` | Checks for the planning docs in `docs/` ([temper](https://github.com/lambduhh/temper)) |
 
 ## How it's built
@@ -44,13 +45,14 @@ A static site; no server, no database, no JavaScript framework.
 
 - **Pages** are rendered by babashka with [hiccup](https://github.com/weavejester/hiccup) from the EDN files in [`data/`](data/). A daily update is a data edit, never a template edit.
 - **Page state** (is a puzzle out, are its solutions open, is a session today) is computed by pure functions in [`src/nooks/state.clj`](src/nooks/state.clj) from an `as-of` instant. Nothing else reads the clock, which is what makes `--as-of` and `bb check` possible.
+- **Guides** under `/start/` and `/learn/` are the [template repo](https://github.com/lambduhh/clojure-template-aoc)'s own Markdown and how-to namespaces, rendered at build time from a commit pinned in [`data/template.edn`](data/template.edn). Links between guides stay on the hub; anything else opens on GitHub at that commit. See [`src/nooks/template.clj`](src/nooks/template.clj).
 - **The blog** at `/blog/` is rendered by [quickblog](https://github.com/borkdude/quickblog) inside the same page layout. Its `base.html` is generated from [`src/nooks/layout.clj`](src/nooks/layout.clj) on every build.
 - **UI strings** live in [`data/i18n/`](data/i18n/). A `{:draft "…"}` value is a placeholder and always renders with a visible draft marker.
 - **Portuguese (pt-BR):** every page has a `/pt-br/` twin; untranslated twins say so ("Tradução em breve").
 - **Deploys** run from GitHub Actions to GitHub Pages on every push to `main` and daily at 05:05 UTC, just after puzzles unlock and spoiler gates open. See [hosting](docs/hosting.md).
 
 ```
-data/        site, days, videos, recipes, webring, UI strings (EDN)
+data/        site, days, videos, recipes, webring, template pin, UI strings (EDN)
 src/nooks/   build, state, layout, pages, blog, check, dev
 blog/posts/  blog posts (Markdown)
 templates/   quickblog templates

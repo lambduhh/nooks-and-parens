@@ -86,19 +86,31 @@
  :format/tech-talk       "Tech talk"
 
  ;; Stub pages (MVP). Each is a placeholder until its phase.
- :stub/start            {:draft "The one route from zero to a running REPL: new to programming, no-install options, install per OS, three checks, an editor, the template, Day 01."}
  :stub/today            {:draft "Today's day page. Before 1 Dec this goes to the home page."}
  :stub/today-link       {:draft "Go to today"}
  :stub/calendar         {:draft "Twelve puzzles, twelve live sessions. The tool wall comes next."}
  :stub/workbench        {:draft "Try Clojure in your browser, no install. Coming in December."}
  :stub/videos           {:draft "Session replays, one line each with format, day and length."}
- :stub/learn            {:draft "Tutorials, how-to guides, reference and why it works."}
  :stub/slot-7           {:draft "A placeholder for toolbelt slot 7."}
  :stub/about            {:draft "Who keeps Nooks & Parens, their role, and credits."}
  :stub/formats          {:draft "One card per session format: length, people, what to prepare."}
  :stub/not-found        {:draft "Nothing hangs on this hook."}
  :about/credits         "Credits"
  :formats/session       "Session %s"
+
+ ;; Learn and the template guides (rendered from the template repo)
+ :learn/intro           {:draft "Guides from the template repo: a tutorial, how-to guides and the reference."}
+ :learn/get-template    {:draft "Get the template on GitHub"}
+ :learn/tutorials       "Tutorials"
+ :learn/how-to          "How-to guides"
+ :learn/reference       "Reference"
+ :learn/explanation     "Why it works"
+ :learn/none            {:draft "Nothing here yet."}
+ :learn/ai              "Using an AI agent?"
+ :learn/ai-note         {:draft "Optional. The template works without any AI; these files set an agent up as a tutor, not a solver."}
+ :template/source       "From the template:"
+ :template/draft-notice {:draft "This guide is still a draft in the template repo."}
+ :template/diagram      {:draft "Diagram (Mermaid source)"}
 
  ;; Blog
  :blog/title            "Blog"
