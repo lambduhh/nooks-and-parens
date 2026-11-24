@@ -1,3 +1,18 @@
+---
+type: Reference
+title: "Hosting"
+description: "Where Nooks & Parens is hosted (Cloudflare Pages recommended, GitHub Pages as fallback) and how it deploys."
+tags: [nooks-and-parens, hosting]
+created: 2026-11-24
+modified: 2026-11-24
+ai_assisted: "Claude via Claude Desktop (Claude Design)"
+session: unrecorded
+tools: unrecorded
+agents_skills: []
+review_maturity: L1 (Human-directed)
+review_note: "Drafted in Claude Design at Jordan Miller's direction, 2026-11-24. The session and tools weren't recorded. Not yet reviewed."
+---
+
 # Hosting
 
 **Decision (Jordan, 2026-11-24): a free platform subdomain. Recommended host: Cloudflare Pages, deployed from GitHub Actions by Direct Upload, at `nooks-and-parens.pages.dev`.** Fallback: a GitHub Pages *project* site.
