@@ -87,8 +87,9 @@
       [:h1.sr-only (:site/name site)]
       [:div.dialog
        [:p.line1 (:site/positioning site)
-        (when-let [e (:site/positioning-emoji site)]
-          (list " " [:span.emoji {:aria-hidden "true"} e]))]
+        ;; Power-tool icons, decoration only: the line reads as its words.
+        (when-let [ids (seq (:site/positioning-icons site))]
+          (list " " [:span.ptools (for [id ids] (layout/icon (name id)))]))]
        ;; What the site is, for someone who just landed (Jordan's QA, 2026-11-28).
        [:p.intro (t lang :home/intro)
         (when (:template/public? site)

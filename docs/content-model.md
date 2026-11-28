@@ -24,7 +24,7 @@ Every page is built from the EDN files in `data/`. A daily update is a data edit
  :site/tagline       "It's dangerous to go alone! Take this."
  :site/tagline-emoji "📝🧚"     ; decorative, after the tagline, aria-hidden; nil for none
  :site/positioning   "Clojure. A power tool for evolving systems."
- :site/positioning-emoji "🔨🪛🔧"   ; decorative, after the positioning line, aria-hidden; nil for none
+ :site/positioning-icons [:drill :circular-saw]   ; sprite icons (nooks.layout/sprite) after the positioning line, aria-hidden; [] for none
  :site/intro-post   "/blog/announcement.html"   ; linked from the landing dialog; nil for none
  :site/url           "https://lambduhh.github.io/powertools-and-parens"   ; GitHub Pages project site, no trailing slash
  :site/base-path     "/powertools-and-parens"                               ; prefixes every generated link

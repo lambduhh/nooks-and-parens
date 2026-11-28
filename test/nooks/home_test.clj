@@ -22,8 +22,13 @@
     (testing "the name pill is gone; the name is still the page's h1"
       (is (not (re-find #"class=\"who\"" en)))
       (is (re-find #"<h1 class=\"sr-only\">Power Tools &amp; Parens</h1>" en)))
-    (testing "the positioning line's emoji are decoration"
-      (is (re-find #"systems\. <span aria-hidden=\"true\" class=\"emoji\">" en)))
+    (testing "the positioning line's power-tool icons are decoration, and exist in the sprite"
+      (is (re-find #"systems\. <span class=\"ptools\"><svg aria-hidden=\"true\" focusable=\"false\"><use href=\"#t-drill\">" en))
+      (is (re-find #"<use href=\"#t-circular-saw\">" en))
+      (is (re-find #"<symbol id=\"t-drill\"" en))
+      (is (re-find #"<symbol id=\"t-circular-saw\"" en)))
+    (testing "the new copy is final: no draft markers on the landing page"
+      (is (not (re-find #"class=\"draft\"" en))))
     (testing "the explainer links the template and the announcement post"
       (is (re-find #"<a href=\"https://github.com/lambduhh/clojure-template-aoc\">" en))
       (is (re-find #"<a href=\"/powertools-and-parens/blog/announcement.html\">" en))
