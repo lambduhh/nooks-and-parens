@@ -15,6 +15,7 @@
             [nooks.build :as build]
             [nooks.data :as data]
             [nooks.denylist :as deny]
+            [nooks.layout :as layout]
             [nooks.state :as state]))
 
 (def dates
@@ -74,6 +75,23 @@
      ["inline style (blocked by the CSP)"])
    (when (re-find #"(?i)<script(?![^>]*\ssrc=)[^>]*>" html)
      ["inline script (blocked by the CSP)"])))
+
+(defn- check-csp-origins
+  "The CSP names no off-site origin but YouTube's no-cookie frames and, when
+  :analytics/goatcounter is set, that one GoatCounter site. Adding a tracker
+  means editing this list on purpose, not just the policy (docs/analytics.md)."
+  [{:keys [site]} html]
+  (let [allowed (set (remove nil? ["https://www.youtube-nocookie.com" (layout/analytics-origin site)]))
+        ;; Attribute order isn't fixed (hiccup puts content= first), so find
+        ;; the tag, then read its content.
+        tag     (some #(when (str/includes? % "http-equiv=\"Content-Security-Policy\"") %)
+                      (re-seq #"<meta\b[^>]*>" html))
+        policy  (some->> tag (re-find #"\scontent=\"([^\"]*)\"") second)]
+    (if-not policy
+      ["no Content-Security-Policy <meta>"]
+      (for [o (distinct (re-seq #"https?://[^\s;]+" policy))
+            :when (not (allowed o))]
+        (str "CSP allows an off-site origin that isn't on the list: " o)))))
 
 (defn- strip-comments
   "HTML with <!-- … --> removed. A link inside a comment isn't followable, e.g.
@@ -171,7 +189,7 @@
       [(str "<html> should have lang=\"" want "\"")])))
 
 (def page-checks
-  [check-primary check-external-loads check-links check-anchors check-template-gate
+  [check-primary check-external-loads check-csp-origins check-links check-anchors check-template-gate
    check-guests check-unannounced check-forbidden-words check-no-employer check-internal-links check-img-svg check-lang])
 
 ;; ---- Site-wide checks ------------------------------------------------------

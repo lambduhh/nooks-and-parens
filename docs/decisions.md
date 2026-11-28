@@ -21,6 +21,7 @@ What's decided, what's open, and who decides. Decided items aren't reopened with
 
 | Date | Decision | Notes |
 |---|---|---|
+| 2026-11-28 | **Analytics: cookieless counts with GoatCounter**, off until `:analytics/goatcounter` is set. Counts page visits, primary-button clicks (Slack, Discord), the template link, Workbench runs and (once the embed exists) video plays | Jordan. Was an open question (none / Cloudflare Web Analytics). Our own same-origin script, no `count.js`; respects DNT and GPC. See [analytics](analytics.md) |
 | 2026-11-28 | **The Workbench has exercises.** 15, in learning order: Advent of Code idioms (parse, count, grids, sets, building results) with four Brain Teasers where they explain a surprise. Types from Teaching Tech Together ch. 12: predict, fill in the blanks, work backward, fix the bug, change it. Each has a task, a goal checked by value, a hint while it doesn't match, and a why with links once it does | Before, learners never had to edit code. Review: `notes/plans/updates/2026-11-28-teachtogether-review.md` |
 | 2026-11-27 | **Workbench starters are Clojure Brain Teasers.** Eight teasers from the book (Alex Miller and L. Jordan Miller, Pragmatic Bookshelf, 2025) replace the four made-up recipes, verbatim, credited on the page. Picked: puzzles 6, 7, 8, 9, 20, 22, 23, 24, the ones whose answer and reason match in ClojureScript and on the JVM | The book is reviewed, so the examples' answers are. Puzzles about numbers, NaN, identity, type hints, I/O or JVM errors stay out of the Workbench: Scittle answers differently |
 | 2026-11-27 | **Spoiler gate: unlock + 3 days** (was 4). Every session now falls on or after its puzzle's gate; Session 1 (Fri 4 Dec, Day 1) had fallen a day early. A test fails any session dated before its gate | Supersedes the 2026-11-24 four-day row. Meets the 2026-11-06 rule of at least 3 days |
@@ -68,7 +69,6 @@ What's decided, what's open, and who decides. Decided items aren't reopened with
 |---|---|---|---|
 | Tagline and positioning line both on the landing page: too crowded? | Keep both / Jordan picks which leads | Jordan | P0 review |
 | Workbench primary button | "Craft it" counts as the page's primary action / also add the Slack button | Jordan | P2. Built 2026-11-24 with the Slack button as primary and "Craft it" as a normal button (Claude Code's default when Jordan said "build it"; not yet Jordan's decision) |
-| Analytics | None / cookieless (Cloudflare Web Analytics) with outbound clicks to Slack and the template as the events | Jordan | Before launch if wanted |
 | Webring: who keeps the member list, and the opt-in step | `data/ring.edn` edited by Jordan from Slack requests / a PR from each member | Jordan | P2 |
 | Which power-tool allusions to add | Backlog in `docs/design-system.md` | Jordan with Claude Code | P2 |
 | pt-BR for `/blog/` | A "Tradução em breve" notice at `/pt-br/blog/` (what the MVP builds) / translate posts / leave the blog English-only with no pt-BR page | Jordan | Before pt-BR pages go live |
