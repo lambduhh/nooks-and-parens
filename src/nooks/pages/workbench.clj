@@ -126,6 +126,8 @@
       [:section.panel {:aria-labelledby "wb-know"}
        [:h2#wb-know (t lang :workbench/know)]
        [:ul
+        [:li (t lang :workbench/know-teasers) " "
+         [:a {:href "https://pragprog.com/titles/mmclobrain/clojure-brain-teasers/"} "Clojure Brain Teasers"]]
         [:li (t lang :workbench/know-data)]
         [:li (t lang :workbench/know-local)]
         [:li (t lang :workbench/know-cljs)]

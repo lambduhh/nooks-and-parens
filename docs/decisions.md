@@ -21,6 +21,7 @@ What's decided, what's open, and who decides. Decided items aren't reopened with
 
 | Date | Decision | Notes |
 |---|---|---|
+| 2026-11-27 | **Workbench starters are Clojure Brain Teasers.** Eight teasers from the book (Alex Miller and Lorilyn Jordan Miller, Pragmatic Bookshelf, 2025) replace the four made-up recipes, verbatim, credited on the page and in the README, used with permission. Picked: puzzles 6, 7, 8, 9, 20, 22, 23, 24, the ones whose answer and reason match in ClojureScript and on the JVM | The book is reviewed, so the examples' answers are. Puzzles about numbers, NaN, identity, type hints, I/O or JVM errors stay out of the Workbench: Scittle answers differently |
 | 2026-11-27 | **Spoiler gate: unlock + 3 days** (was 4). Every session now falls on or after its puzzle's gate; Session 1 (Fri 4 Dec, Day 1) had fallen a day early. A test fails any session dated before its gate | Supersedes the 2026-11-24 four-day row. Meets the 2026-11-06 rule of at least 3 days |
 | 2026-11-27 | **Launch: draft markers removed.** Every remaining `{:draft …}` string accepted as final; the Formats page leaves out empty fields instead of showing "To be written" | New copy Jordan hasn't written still uses `{:draft …}` |
 | 2026-11-27 | **"Shop hours" heads the session schedule,** with "Session calendar" under it. Replaces "What're ya REPLin'?", which didn't say what the list was | A hardware-store riff that still reads as a schedule |

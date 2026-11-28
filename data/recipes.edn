@@ -1,22 +1,40 @@
-;; DIY recipes and Workbench starters. Made-up data only: never Advent of Code puzzle text,
-;; puzzle examples or anyone's input. :expect is the pr-str result; tests check it in Scittle.
-{:parse {:title  "Parse lines into maps"
-         :uses   ["clojure.string/split-lines" "clojure.string/split" "parse-long"]
-         :how-to "How to parse puzzle input into data"
-         :code   "(->> \"alice 3\\nbob 5\\ncara 2\"\n     clojure.string/split-lines\n     (map (fn [line] (clojure.string/split line #\" \")))\n     (map (fn [[name n]]\n            {:name name :count (parse-long n)})))"
-         :expect "({:name \"alice\", :count 3} {:name \"bob\", :count 5} {:name \"cara\", :count 2})"}
- :freq  {:title  "Count things with frequencies"
-         :uses   ["frequencies" "sort-by"]
-         :how-to "How to count and rank things"
-         :code   "(->> (frequencies \"mississippi\")\n     (sort-by val >))"
-         :expect "([\"i\" 4] [\"s\" 4] [\"p\" 2] [\"m\" 1])"}
- :grid  {:title  "Build a grid you can look up"
-         :uses   ["map-indexed" "for" "sorted-map"]
-         :how-to "How to work with grids"
-         :code   "(let [rows [\"#..\" \".#.\" \"..#\"]]\n  (into (sorted-map)\n        (for [[y row] (map-indexed vector rows)\n              [x ch]  (map-indexed vector row)]\n          [[x y] (str ch)])))"
-         :expect "{[0 0] \"#\", [0 1] \".\", [0 2] \".\", [1 0] \".\", [1 1] \"#\", [1 2] \".\", [2 0] \".\", [2 1] \".\", [2 2] \"#\"}"}
- :sets  {:title  "Compare collections with sets"
-         :uses   ["clojure.set/intersection" "clojure.set/difference"]
-         :how-to "How to use sets"
-         :code   "(require '[clojure.set :as set])\n(set/intersection #{:hammer :saw :level}\n                  #{:saw :level :drill})"
-         :expect "#{:saw :level}"}}
+;; recipes.edn: the Workbench's starters, and each day's DIY recipes (:day/recipes keys).
+;; Every starter is a teaser from Clojure Brain Teasers by Alex Miller and Lorilyn Jordan
+;; Miller (Pragmatic Bookshelf, 2025), https://pragprog.com/titles/mmclobrain/clojure-brain-teasers/
+;; Copyright (c) 2025 The Pragmatic Programmers, LLC; used with permission. Not covered by
+;; this repo's licenses. :code is the book's teaser exactly as printed; :expect is the
+;; book's answer for the last form, as pr-str. bb test:browser checks each :expect in
+;; Scittle (ClojureScript); only teasers whose answer and reason are the same in
+;; ClojureScript and on the JVM are here (Jordan, 2026-11-27).
+{:haystack {:title  "Needle in a Haystack"
+            :source {:book "Clojure Brain Teasers" :puzzle 9 :file "book/src/needle_in_a_haystack.clj"}
+            :code   "(def haystack\n  (shuffle (conj (range 100) :needle)))\n\n(contains? haystack :needle)"
+            :expect "false"}
+ :nest {:title  "Build a Nest"
+        :source {:book "Clojure Brain Teasers" :puzzle 22 :file "book/src/build_nest.clj"}
+        :code   "(def ex1\n  (for [a [0 1 2]\n        b [3 4 5]]\n     (* a b)))\n\n(def ex2\n  (for [a [0 1 2]]\n    (for [b [3 4 5]]\n      (* a b))))\n\n(= ex1 ex2)"
+        :expect "false"}
+ :splits {:title  "Banana Splits"
+          :source {:book "Clojure Brain Teasers" :puzzle 20 :file "book/src/banana_splits.clj"}
+          :code   "(require '[clojure.string :as str])\n\n(= (str/split \"banana\" #\"an\") [\"b\" \"\" \"a\"])\n(= (str/split \"banana\" #\"na\") [\"ba\"])"
+          :expect "true"}
+ :thin-air {:title  "From Thin Air"
+            :source {:book "Clojure Brain Teasers" :puzzle 8 :file "book/src/from_thin_air.clj"}
+            :code   "(nil? (assoc nil :ex :nihilo))"
+            :expect "false"}
+ :six-of-one {:title  "Six of One, Half Dozen of Another"
+              :source {:book "Clojure Brain Teasers" :puzzle 6 :file "book/src/six_of_one.clj"}
+              :code   "(= [0 1 2 3 4 5]\n   '(0 1 2 3 4 5)\n   (range 6))"
+              :expect "true"}
+ :rome {:title  "When in Rome"
+        :source {:book "Clojure Brain Teasers" :puzzle 7 :file "book/src/when_in_rome.clj"}
+        :code   "(= (conj '(:colosseum :vatican) :pantheon :trevi-fountain)\n   (conj  [:colosseum :vatican] :pantheon :trevi-fountain))"
+        :expect "false"}
+ :partial-recall {:title  "Partial Recall"
+                  :source {:book "Clojure Brain Teasers" :puzzle 23 :file "book/src/partial_recall.clj"}
+                  :code   "(defn sentence [subject object]\n  (str \"Is \" subject \" a \" object \"?\"))\n\n(def planet \"Mars\")\n\n(def f1 (partial sentence planet))\n(def f2 (fn [object] (sentence planet object)))\n\n;; redefine\n(def planet \"Earth\")\n\n(= (f1 \"dream\") (f2 \"dream\"))"
+                  :expect "false"}
+ :abracordabra {:title  "Abrac-OR-dabra"
+                :source {:book "Clojure Brain Teasers" :puzzle 24 :file "book/src/abracordabra.clj"}
+                :code   "(def flip {:head :tail, :tail :head})\n\n(let [empty {}\n\n      left nil, right nil\n      {:keys [left right] :or {left :head, right (flip left)}} empty\n      right-1 right\n\n      left nil, right nil\n      {:keys [right left] :or {left :head, right (flip left)}} empty\n      right-2 right]\n\n  (println \"Results:\" right-1 right-2)\n  (= right-1 right-2))"
+                :expect "false"}}

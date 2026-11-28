@@ -113,5 +113,6 @@ Work on a branch and open a pull request; don't push to `main`. Run `bb test` an
 - **Code** (everything not listed below) is under the [Eclipse Public License 2.0](LICENSE) (`EPL-2.0`).
 - **Written content** (blog posts in `blog/posts/`, the UI copy in `data/i18n/`, and the docs in `docs/`) is under [Creative Commons Attribution 4.0 International](LICENSE-CONTENT) (`CC-BY-4.0`).
 - **Fonts** in `assets/fonts/` keep their own SIL Open Font License; see the `OFL-*.txt` files there.
+- **Workbench starters** in `data/recipes.edn` are teasers from [Clojure Brain Teasers](https://pragprog.com/titles/mmclobrain/clojure-brain-teasers/) by Alex Miller and Lorilyn Jordan Miller (Pragmatic Bookshelf, 2025). Copyright © 2025 The Pragmatic Programmers, LLC; used with permission. They aren't covered by either licence above.
 
 Advent of Code puzzles and names belong to their owners and aren't part of this repo.
