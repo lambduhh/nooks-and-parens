@@ -127,7 +127,7 @@
  ;; for launch (Jordan, 2026-11-27).
  ;; The *-kind strings label the result slot; Clojure kinds (map, vector, set,
  ;; seq…) come from the evaluator and aren't translated.
- :workbench/intro          "Try Clojure in your browser. No install, nothing saved."
+ :workbench/intro          "Try Clojure in your browser: pick an exercise, change the code, and craft it. No install, nothing saved."
  :workbench/status-no-js   "Evaluator: needs JavaScript"
  :workbench/status-starting "Evaluator starting…"
  :workbench/starting       "The evaluator is still starting. Your code will run in a moment."
@@ -162,11 +162,29 @@
  :workbench/offline-kind   "offline preview"
  :workbench/offline        "The evaluator didn't load, so only unedited starter recipes run. Reload the page to try again."
  :workbench/know           "Good to know"
+
+ ;; Exercises (data/recipes.edn). Types follow Teaching Tech Together, ch. 12.
+ :workbench.kind/predict   "Predict, then run"
+ :workbench.kind/fill      "Fill in the blanks"
+ :workbench.kind/reverse   "Work backward"
+ :workbench.kind/fix       "Fix the bug"
+ :workbench.kind/vary      "Change it"
+ :workbench.group/input    "Reading input"
+ :workbench.group/counting "Counting"
+ :workbench.group/grids    "Grids"
+ :workbench.group/sets     "Sets and searching"
+ :workbench.group/building "Building results"
+ :workbench/goal           "Goal:"
+ :workbench/match          "Matches the goal."
+ :workbench/no-match       "Not yet: the result doesn't match the goal."
+ :workbench/blanks         "Replace each ___ first, then craft it."
+ :workbench/why            "Why"
+ :workbench/read-more      "Read more:"
  :workbench/know-data      "Results print as Clojure data: maps, vectors, sets."
  :workbench/know-local     "Nothing you type leaves your browser, and nothing is saved. Don't paste your puzzle input or your Advent of Code session cookie anywhere; the Workbench never asks for them."
  :workbench/know-cljs      "The Workbench runs ClojureScript, so a few results print differently from a JVM REPL: a character in a string is \"i\" here and \\i there."
  ;; Credit for the starters (data/recipes.edn); wording: Jordan, 2026-11-27.
- :workbench/know-teasers   "The starters are teasers from Clojure Brain Teasers by Alex Miller and L. Jordan Miller (Pragmatic Bookshelf, 2025). Guess each result before you craft it."
+ :workbench/know-teasers   "Some exercises are teasers from Clojure Brain Teasers by Alex Miller and L. Jordan Miller (Pragmatic Bookshelf, 2025)."
  :workbench/know-no-ai     "No AI here. You build it."
  :workbench/know-scratchpad "This is a place to try things. For the puzzles, set up a local REPL:"
  :workbench/know-credit    "The evaluator is Scittle, by borkdude:"

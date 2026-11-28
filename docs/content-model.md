@@ -84,7 +84,17 @@ Format → kind defaults: workshop → tutorial; demo → how-to; everything els
 
 ## `data/recipes.edn`
 
-DIY recipes and Workbench starters: teasers from *Clojure Brain Teasers* by Alex Miller and L. Jordan Miller (Pragmatic Bookshelf, 2025), never puzzle text or examples. Each has `:title` (the puzzle's name), `:source` (`:book`, `:puzzle` number, `:file` in the book's sample code), `:code` exactly as printed in the book, and `:expect`, the book's answer for the last form as `pr-str` (used by `bb test:browser` and by the offline fallback). Only teasers whose answer and reason are the same in ClojureScript and on the JVM belong here: the Workbench runs Scittle.
+The Workbench's exercises, and each day's DIY recipes (`:day/recipes` holds exercise ids). A **vector**, in learning order, grouped by `:group`. Each exercise has `:id`, `:kind`, `:group`, `:title`, `:task`, `:code`, `:why` and `:links`, plus:
+
+| `:kind` | Exercise type ([Teaching Tech Together, ch. 12](https://teachtogether.tech/en/#s:exercises)) | Also has |
+|---|---|---|
+| `:predict` | Guess the result, then run it (teasers, tracing). Running shows `:why` | `:expect` |
+| `:fill` | Replace each `___` so the result matches the goal | `:goal`, `:solution`, `:hint` |
+| `:reverse` | Work backward: an input that gives the goal | `:goal`, `:solution`, `:hint` |
+| `:fix` | One small change that makes the result match the goal | `:expect`, `:goal`, `:solution`, `:hint` |
+| `:vary` | One small change that changes the result to the goal | `:expect`, `:goal`, `:solution`, `:hint` |
+
+`:expect` is the starter's own result as `pr-str` (offline preview, tests). `:goal` is compared with the learner's result by value (`=`), so set and map order don't matter. `:solution` is `[search replace]`, one exact replacement on `:code`, used only by tests and never rendered. Teasers carry `:source` (*Clojure Brain Teasers* by Alex Miller and L. Jordan Miller, Pragmatic Bookshelf, 2025). Never puzzle text or examples. Every exercise must give the same result in ClojureScript (the Workbench) and on the JVM (the template).
 
 ## `data/ring.edn`
 

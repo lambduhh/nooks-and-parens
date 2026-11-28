@@ -14,6 +14,12 @@
 // Privacy: nothing here makes a network request, stores anything, or reads
 // cookies. Definitions live only until reload (no saved sessions).
 //
+// Exercises: each starter button carries data-exercise (kind, task, goal,
+// hint, why, links; never the solution). The goal goes to the worker, which
+// compares by value. Feedback is a verdict in words, the hint while the
+// result doesn't match, and the why and links once it does. Predict
+// exercises have no goal: any run shows the why.
+//
 // Every user-visible string comes from data-strings on #wb (data/i18n/*.edn).
 (function () {
   'use strict';
@@ -36,6 +42,53 @@
         value = $('wb-value'), printedBox = $('wb-printed'), printed = $('wb-printed-text'),
         errhelp = $('wb-errhelp'), out = $('wb-out'), craftBtn = $('wb-craft'), stopBtn = $('wb-stop');
     var starters = document.querySelectorAll('[data-recipe]');
+    var feedbackBox = $('wb-feedback'), verdict = $('wb-verdict'), hint = $('wb-hint'),
+        whyBox = $('wb-why-box'), why = $('wb-why'), links = $('wb-links');
+    var current = null; // the loaded exercise, from its button's data-exercise
+
+    function exerciseOf(button) {
+      try { return JSON.parse(button.getAttribute('data-exercise')); } catch (e) { return null; }
+    }
+
+    function showTask(ex) {
+      $('wb-task').hidden = !ex;
+      if (!ex) return;
+      $('wb-ex-kind').textContent = ex.kindLabel;
+      $('wb-ex-title').textContent = ex.title;
+      $('wb-ex-task').textContent = ex.task;
+      $('wb-ex-goal-box').hidden = !ex.goal;
+      $('wb-ex-goal').textContent = ex.goal || '';
+    }
+
+    function hideFeedback() { feedbackBox.hidden = true; }
+
+    function showWhy(ex) {
+      why.textContent = ex.why;
+      links.textContent = '';
+      (ex.links || []).forEach(function (l, i) {
+        if (i) links.appendChild(document.createTextNode(' · '));
+        var a = document.createElement('a');
+        a.href = l.url; a.textContent = l.title;
+        links.appendChild(a);
+      });
+      whyBox.hidden = false;
+    }
+
+    // matched: true, false, or null (no goal to compare).
+    function feedback(matched) {
+      if (!current) { hideFeedback(); return; }
+      feedbackBox.hidden = false;
+      if (current.kind === 'predict') {
+        verdict.hidden = true; hint.hidden = true; showWhy(current);
+      } else if (matched) {
+        verdict.hidden = false; verdict.textContent = S.match;
+        hint.hidden = true; showWhy(current);
+      } else {
+        verdict.hidden = false; verdict.textContent = S.noMatch;
+        hint.textContent = current.hint || ''; hint.hidden = !current.hint;
+        whyBox.hidden = true;
+      }
+    }
 
     var worker = null, state = 'starting', runId = 0, timer = null, queued = null;
 
@@ -47,6 +100,7 @@
       printed.textContent = opts.printed || '';
       printedBox.hidden = !opts.printed;
       errhelp.hidden = !opts.help;
+      if (!opts.keepFeedback) hideFeedback();
     }
 
     function waiting(msg) { render(S.waitingKind, msg || S.waiting); }
@@ -80,9 +134,11 @@
           setState('ready');
           if (d.ok) {
             render(d.kind, d.value, { printed: d.printed });
+            feedback(d.match);
           } else {
             var where = d.line ? fmt(S.errorAt, d.line, d.column) + '\n' : '';
             render(S.errorKind, where + d.message, { error: true, help: true, printed: d.printed });
+            feedback(false);
           }
         }
       };
@@ -114,13 +170,14 @@
       setState('running');
       render(S.busyKind, S.busy);
       timer = setTimeout(function () { stop(fmt(S.stoppedTimeout, limit)); }, limit * 1000);
-      worker.postMessage({ id: runId, code: src });
+      worker.postMessage({ id: runId, code: src, goal: current && current.goal });
     }
 
     function craft() {
       var src = code.value;
       if (state === 'running') return;
       if (!src.trim()) { render(S.emptyKind, S.empty, { error: true }); return; }
+      if (current && current.kind !== 'predict' && src.indexOf('___') !== -1) { waiting(S.blanks); return; }
       if (state === 'offline') { offline(src); return; }
       if (state === 'starting') { queued = src; render(S.busyKind, S.starting); return; }
       run(src);
@@ -131,8 +188,9 @@
     function offline(src) {
       for (var i = 0; i < starters.length; i++) {
         var b = starters[i];
-        if (norm(b.getAttribute('data-code')) === norm(src)) {
+        if (b.getAttribute('data-expect') && norm(b.getAttribute('data-code')) === norm(src)) {
           render(b.getAttribute('data-kind'), b.getAttribute('data-expect'));
+          if (current && current.kind === 'predict') feedback(null);
           return;
         }
       }
@@ -143,6 +201,8 @@
       if (state === 'running') return false;
       for (var i = 0; i < starters.length; i++) {
         if (starters[i].getAttribute('data-recipe') === key) {
+          current = exerciseOf(starters[i]);
+          showTask(current);
           code.value = starters[i].getAttribute('data-code');
           waiting(announce ? fmt(S.loaded, starters[i].getAttribute('data-title')) : null);
           return true;
@@ -152,6 +212,8 @@
     }
 
     $('wb-controls').hidden = false;
+    // The page opens with the first exercise in the editor.
+    if (starters.length) current = exerciseOf(starters[0]);
     waiting();
     if (location.hash) load(decodeURIComponent(location.hash.slice(1)), false);
     spawn();

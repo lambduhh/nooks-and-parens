@@ -48,7 +48,10 @@
    :errorKind     :workbench/error-kind
    :errorAt       :workbench/error-at
    :offlineKind   :workbench/offline-kind
-   :offline       :workbench/offline})
+   :offline       :workbench/offline
+   :match         :workbench/match
+   :noMatch       :workbench/no-match
+   :blanks        :workbench/blanks})
 
 (def time-limit
   "Seconds a run may take before the Workbench stops it (the infinite-loop
@@ -62,15 +65,38 @@
   (layout/href ctx (str (layout/lang-prefix (:lang ctx)) path)))
 
 (defn recipes
-  "[key recipe] pairs in data/recipes.edn order. (EDN keeps a map's order up
-  to 8 keys; past that, sort here.)"
+  "The exercises, in data/recipes.edn order (a vector: learning order)."
   [ctx]
   (seq (get-in ctx [:data :recipes])))
+
+(defn- kind-label [lang kind] (t-str lang (keyword "workbench.kind" (name kind))))
+
+(defn- exercise-json
+  "What workbench.js needs to show an exercise and check it. Never :solution."
+  [lang {:keys [id kind title task goal hint why links]}]
+  (json/generate-string
+   (cond-> {:id (name id) :kind (name kind) :kindLabel (kind-label lang kind)
+            :title title :task task :why why :links links}
+     goal (assoc :goal goal)
+     hint (assoc :hint hint))))
+
+(defn- task-panel
+  "The current exercise: its type, title, task and goal. Rendered for the
+  first exercise; workbench.js swaps it when another one loads."
+  [lang {:keys [kind title task goal]}]
+  [:div.task {:id "wb-task"}
+   [:p.ex-kind {:id "wb-ex-kind"} (kind-label lang kind)]
+   [:p.ex-title {:id "wb-ex-title"} title]
+   [:p {:id "wb-ex-task"} task]
+   [:div {:id "wb-ex-goal-box" :hidden (nil? goal)}
+    [:span.goal-label (t lang :workbench/goal)]
+    [:pre {:id "wb-ex-goal"} goal]]])
 
 (defn page [ctx]
   (let [lang (:lang ctx)
         rs   (recipes ctx)
-        [_ first-recipe] (first rs)]
+        first-recipe (first rs)
+        groups (partition-by :group rs)]
     {:route :workbench
      :title (t-str lang :route/workbench)
      ;; Scittle itself loads inside the worker (workbench-worker.js), not here.
@@ -89,6 +115,7 @@
        [:div.area
         [:div
          [:p.small.intro (t lang :workbench/intro)]
+         (task-panel lang first-recipe)
          [:label {:for "wb-code"} (t lang :workbench/code-label)]
          [:textarea {:id "wb-code" :spellcheck "false" :autocapitalize "off"
                      :autocomplete "off" :aria-describedby "wb-code-help"}
@@ -101,15 +128,20 @@
            [:button.ghost {:id "wb-stop" :type "button" :hidden true} (t lang :workbench/stop)]
            [:button.ghost {:id "wb-clear" :type "button"} (t lang :workbench/clear)]]
           [:h2.starters-h (t lang :workbench/starters)]
-          [:ul.starters
-           (for [[k r] rs]
-             [:li [:button.ghost {:type "button" :id (name k)
-                                  :data-recipe (name k)
-                                  :data-title (:title r)
-                                  :data-code (:code r)
-                                  :data-expect (:expect r)
-                                  :data-kind (value-kind (:expect r))}
-                   (t lang :workbench/load (:title r))]])]]]
+          (for [g groups :let [group (:group (first g))]]
+            (list
+             [:h3.group-h (t lang (keyword "workbench.group" (name group)))]
+             [:ul.starters
+              (for [r g :let [k (:id r)]]
+                [:li [:button.ghost {:type "button" :id (name k)
+                                     :data-recipe (name k)
+                                     :data-title (:title r)
+                                     :data-code (:code r)
+                                     :data-expect (:expect r)
+                                     :data-kind (some-> (:expect r) value-kind)
+                                     :data-exercise (exercise-json lang r)}
+                      (t lang :workbench/load (:title r))
+                      [:span.ex-kind-small " · " (kind-label lang (:kind r))]]])]))]]
         [:div
          [:h2.result-h (t lang :workbench/result)]
          [:div.slotout {:id "wb-out"}
@@ -122,7 +154,16 @@
            [:pre {:id "wb-printed-text"}]]
           [:p.small {:id "wb-errhelp" :hidden true}
            (t lang :workbench/error-help) " "
-           [:a {:href (lang-href ctx "/learn/howto/errors/")} (t lang :workbench/error-link)]]]]]]
+           [:a {:href (lang-href ctx "/learn/howto/errors/")} (t lang :workbench/error-link)]]
+          ;; Exercise feedback: a verdict in words, a hint while it doesn't
+          ;; match, and the why and links once it does (predict: after any run).
+          [:div {:id "wb-feedback" :aria-live "polite" :hidden true}
+           [:p.verdict {:id "wb-verdict"}]
+           [:p {:id "wb-hint" :hidden true}]
+           [:div {:id "wb-why-box" :hidden true}
+            [:h3.why-h (t lang :workbench/why)]
+            [:p {:id "wb-why"}]
+            [:p.small (t lang :workbench/read-more) " " [:span {:id "wb-links"}]]]]]]]]
       [:section.panel {:aria-labelledby "wb-know"}
        [:h2#wb-know (t lang :workbench/know)]
        [:ul
