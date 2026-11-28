@@ -41,6 +41,8 @@ Draft-Header: false
 
 ## Status of This Memo
 
+This memo provides information for the Clojure community. Distribution of this memo is unlimited.
+
 ## Abstract
 
 <p class="body"> What a girl wants: I want developers new to Clojure to have one clear <a href="/powertools-and-parens/start/">place to start</a>, with <a href="/powertools-and-parens/learn/">guides, references and examples</a>. I want to reduce the friction of our onboarding experience. I want to give experimenters a reason to stay: other people to learn with, <a href="/powertools-and-parens/formats/">formats that are fun</a>, and finally - I want to give Clojure developers a way to bring others with them.</p>
@@ -101,15 +103,11 @@ That analysis is where some of the how-to guides came from. The libraries that k
 
 ## 4. The Plan
 
-<p class="body">December: twelve puzzles, twelve sessions, calendar is <a href="/powertools-and-parens/days/">here</a>.</p>
+<p class="body">December: twelve puzzles, and sessions to work through them together. The calendar is <a href="/powertools-and-parens/days/">here</a>.</p>
 
-There's a session every weekday from Friday 4 to Tuesday 22 December (except Friday 11 December). It's staggered: each session works through a puzzle that unlocked 3 to 10 days earlier, and that day's solution goes up here once its <a href="#7-security-considerations">spoiler gate</a> opens.
+Sessions run on weekdays from Friday 4 to Tuesday 22 December. What each one looks like is still taking shape, so details go up on the calendar as they're set.
 
-On most days there's also a piece of content about the solution: how it was solved, and why.
-
-Videos are hosted on [ClojureTV](https://www.youtube.com/@ClojureTV) (<a href="#ref-cljtv">[CLJTV]</a>) and embedded here, on the day's page. (They only load when you press play.)
-
-And every day links the resources it uses: the how-to guides, the references, the docs.
+Some sessions will be recorded. Recordings go up on [ClojureTV](https://www.youtube.com/@ClojureTV) (<a href="#ref-cljtv">[CLJTV]</a>) afterwards and link from here.
 
 ## 5. Audience
 
@@ -118,11 +116,11 @@ And every day links the resources it uses: the how-to guides, the references, th
 
 ## 6. Joining
 
-<p class="body">How to join: check out the #adventofcode channel on <a href="https://clojurians.net">Clojurians Slack</a> (<a href="#ref-slack">[SLACK]</a>), as well as the live mob and pairing sessions on the <a href="https://discord.clojure.camp">Clojure Camp Discord</a> (<a href="#ref-discord">[DISCORD]</a>).</p>
+<p class="body">How to join: check out the #adventofcode channel on <a href="https://clojurians.net">Clojurians Slack</a> (<a href="#ref-slack">[SLACK]</a>), and the sessions on the <a href="https://discord.clojure.camp">Clojure Camp Discord</a> (<a href="#ref-discord">[DISCORD]</a>).</p>
 
 ## 7. Security Considerations
 
-<p class="body">The spoiler policy: solutions, replays and tutorials appear 4 days after each puzzle unlocks.</p>
+<p class="body">The spoiler policy: anything here that gives away a solution waits until 4 days after its puzzle unlocks.</p>
 
 ## 8. References
 

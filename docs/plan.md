@@ -4,7 +4,7 @@ title: "Build plan"
 description: "Ordered build tasks for Power Tools & Parens, each with an owner and acceptance checks."
 tags: [nooks-and-parens, plan]
 created: 2026-11-24
-modified: 2026-11-24
+modified: 2026-11-27
 ai_assisted: "Claude via Claude Desktop (Claude Design); updated by Claude Code"
 session: unrecorded
 tools: unrecorded
@@ -50,7 +50,7 @@ Create `data/site.edn`, check `data/days.edn`, `data/recipes.edn`, `data/videos.
 
 ### 3. State logic — Claude Code
 `src/nooks/state.clj`: pure functions from `(as-of, day)` to state, exactly as in `docs/content-model.md` § Derived state. No `now` calls inside; `as-of` is passed in.
-**Done when:** `bb test` covers: before Dec 1; unlock morning (04:59 vs 05:00 UTC); gate edge (unlock + 4 days, 04:59 vs 05:00); session day ("Live today"); day after session ("Replay ready" only if a video id exists); after Dec 22; mid-January.
+**Done when:** `bb test` covers: before Dec 1; unlock morning (04:59 vs 05:00 UTC); gate edge (unlock + 4 days, 04:59 vs 05:00); session day ("Today"); day after session ("Replay ready" only if a video id exists); after Dec 22; mid-January.
 
 ### 4. Styles — Claude Code
 Port the prototype's CSS into `assets/css/site.css` using the tokens in `docs/design-system.md`. Self-host Nunito and IBM Plex Mono (check their licences; both are OFL) or fall back to system fonts.
@@ -58,9 +58,9 @@ Port the prototype's CSS into `assets/css/site.css` using the tokens in `docs/de
 
 ### 5. Pages — Claude Code
 Build in this order; each one passes the definition of done in `CLAUDE.md`.
-1. **Landing** `/`: dialog with positioning line, main menu `[0] Today [1] Calendar [2] Workbench [5] Start here` (in toolbelt order; each number is that tool's shortcut key), primary button, Today panel with the REPL-as-data readout, "What're ya REPLin'?" next three sessions.
-2. **Calendar** `/days/`: "What're ya REPLin'?" heading, tool wall (12 slots), legend in words, session schedule list.
-3. **Day pages** `/days/01/` … `/days/12/`: facts note, gate sign, primary button by state, DIY recipes (always visible), then by state: live session info, or replay + community solutions.
+1. **Landing** `/`: dialog with positioning line, main menu `[0] Today [1] Calendar [2] Workbench [5] Start here` (in toolbelt order; each number is that tool's shortcut key), primary button, Today panel with the REPL-as-data readout, "Shop hours" next three sessions.
+2. **Calendar** `/days/`: "Shop hours" heading, tool wall (12 slots), legend in words, session schedule list.
+3. **Day pages** `/days/01/` … `/days/12/`: facts note, gate sign, primary button by state, DIY recipes (always visible), then by state: session info (once announced), or replay + community solutions.
 4. **Start here** `/start/`: the onboarding path in § Start here requirements below. Since 2026-11-24 it renders the template's `docs/setup-flowchart.md`; the OS tabs, click-to-load videos and copy buttons are still to come.
 5. **About** `/about/`: who runs it, Jordan's role ("Software Engineer, Clojure Team"; no employer name), credits (quickblog, Scittle, borkdude), "not affiliated" line. Copy is draft.
 6. **Formats** `/formats/`: Jordan's session formats guide from `data/formats.edn` (favorites table, the full menu grouped by shape, heuristics), then this campaign's additions. Pool formats show length, people, what to prepare and an example recording when one exists. Linked from the calendar and the announcement post. It also serves managers as a guide to leading technical conversations that keep humans in the loop. The guide copy is Jordan's; the page's own labels (intro, additions heading, managers note) are draft.

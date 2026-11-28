@@ -4,7 +4,7 @@ title: "Content model"
 description: "The EDN files every Power Tools & Parens page is built from, and how page state is derived from them."
 tags: [nooks-and-parens, data]
 created: 2026-11-24
-modified: 2026-11-24
+modified: 2026-11-27
 ai_assisted: "Claude via Claude Desktop (Claude Design); updated by Claude Code"
 session: unrecorded
 tools: unrecorded
@@ -49,7 +49,8 @@ A vector of 12 maps. See the file for all of them.
  :day/tool          :hammer                        ; icon on the tool wall
  :day/session       {:n 1 :date #inst "2026-12-04" :format :live-coding
                      :time nil                      ; nil renders "[time TBA]"
-                     :guests [{:name "…" :url "…" :confirmed? false}]}
+                     :guests [{:name "…" :url "…" :confirmed? false}]
+                     :announced? false}             ; false: the row shows pixel bars and the date only
  :day/recipes       [:parse :freq]                 ; keys into recipes.edn
  :day/solutions     [{:author "…" :url "…" :ring? true}]
  :day/tutorial      nil                            ; path once written (days 1–3)
@@ -148,9 +149,9 @@ What a day page shows:
 | Status | Shows | Never shows |
 |---|---|---|
 | `:soon` | Facts note, "Not open yet" sign with unlock time, DIY recipes, session info | Puzzle link, solutions, replay, tutorial, ring |
-| `:locked` | Facts, puzzle link, "Closed" sign with gate date, DIY recipes, live session info | Solutions, replay, tutorial, ring |
+| `:locked` | Facts, puzzle link, "Closed" sign with gate date, DIY recipes, session info (once announced) | Solutions, replay, tutorial, ring |
 | `:open` | Facts, puzzle link, "Open" sign, DIY recipes, replay (if `replay?`), tutorial (days 1–3), credited solutions, ring strip | — |
 
 ## Strings and languages
 
-UI strings (labels, chips, gate text, button text) live in `data/i18n/en.edn` and `data/i18n/pt-BR.edn`, keyed by keyword. The decided labels "Power Tools & Parens" and "Workbench" stay untranslated. The pt-BR reviewer decides how to render "What're ya REPLin'?", "DIY recipes" and the tagline in Portuguese; until then the pt-BR file holds the English string marked as untranslated.
+UI strings (labels, chips, gate text, button text) live in `data/i18n/en.edn` and `data/i18n/pt-BR.edn`, keyed by keyword. The decided labels "Power Tools & Parens" and "Workbench" stay untranslated. The pt-BR reviewer decides how to render "Shop hours", "DIY recipes" and the tagline in Portuguese; until then the pt-BR file holds the English string marked as untranslated.
