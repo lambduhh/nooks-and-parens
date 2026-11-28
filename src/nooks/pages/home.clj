@@ -64,7 +64,9 @@
   and the day's DIY recipes, each opening in the Workbench."
   [ctx day]
   (let [lang    (:lang ctx)
-        recipes (get-in ctx [:data :recipes])]
+        ;; recipes.edn is a vector in learning order (since the Workbench
+        ;; exercises); index it by :id to look up a day's recipe ids.
+        recipes (into {} (map (juxt :id identity)) (get-in ctx [:data :recipes]))]
     [:div.puzzle-card
      [:p [:a {:href (:day/puzzle-url day)}
           (t lang :home/puzzle-link (i18n/pad2 (:day/n day)))]]
