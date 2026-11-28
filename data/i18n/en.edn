@@ -156,6 +156,7 @@
  :workbench/know           "Good to know"
  :workbench/know-data      "Results print as Clojure data: maps, vectors, sets."
  :workbench/know-local     "Nothing you type leaves your browser, and nothing is saved. Don't paste your puzzle input or your Advent of Code session cookie anywhere; the Workbench never asks for them."
+ :workbench/know-cljs      "The Workbench runs ClojureScript, so a few results print differently from a JVM REPL: a character in a string is \"i\" here and \\i there."
  :workbench/know-no-ai     "No AI here. You build it."
  :workbench/know-scratchpad "This is a place to try things. For the puzzles, set up a local REPL:"
  :workbench/know-credit    "The evaluator is Scittle, by borkdude:"

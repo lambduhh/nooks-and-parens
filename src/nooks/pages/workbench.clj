@@ -128,6 +128,7 @@
        [:ul
         [:li (t lang :workbench/know-data)]
         [:li (t lang :workbench/know-local)]
+        [:li (t lang :workbench/know-cljs)]
         [:li (t lang :workbench/know-time-limit time-limit)]
         [:li (t lang :workbench/know-no-ai)]
         [:li (t lang :workbench/know-scratchpad) " "
