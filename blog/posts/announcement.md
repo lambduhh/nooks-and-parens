@@ -70,19 +70,27 @@ A few weeks ago I started taking music lessons. It's funny how much they look li
 
 Until now I've been mostly self-taught. So every lesson is part review, part learning how to do the thing the *actual* right way.
 
-And just like programming, I keep getting better. The more code katas I did, the more bugs I hunted down, the more Advent of Code puzzles (<a href="#ref-aoc">[AOC]</a>) I solved every week, the better I got. Same with the keys. My fingers find their place on their own now. Practising with a metronome means I can actually *hear* whether I'm on the beat or not.
-
-One of the best things about working with a teacher is the scaffolding. It's intentional: each lesson builds on the last. And watching my teacher's workflow on the MPC is what's helping me actually *finish* a beat.
+And just like programming, I keep getting better. The more code katas I did, the more bugs I hunted down, the more Advent of Code puzzles (<a href="#ref-aoc">[AOC]</a>) I solved every week, the better I got. It's the same with the piano keys and drum pads. My fingers find their place on their own now. And just as a metronome helps me get better by creating an instant, live feedback loop to check my own timing with my ear, solving problems with an <a href="https://play.teod.eu/interactive-programming/">"interactive development tool"</a> like the REPL helps us get better at thinking by offering direct access to our live running system. (For more on this, see <a href="https://www.youtube.com/watch?v=8Ab3ArE8W3s">"Stop Writing Dead Programs"</a>.)
 
 The last thing I noticed: just like skating, when I learn around other people, the learning works better and it's more fun. Same goes for programming.
 
-Some people ask: what's the point of lessons, and practising every day, when you can just use Suno?
+> "It's not really enjoyable to make music now… it takes a lot of time, it takes a lot of practice… I think the majority of people don't enjoy the majority of the time they spend making music."
+>
+> — Suno CEO Mikey Shulman, on <a href="https://www.youtube.com/watch?v=E0YL83U5VWk">20VC</a>
 
-They're missing the point. The journey, the struggle: that's the important part.
+IMO, that bro has lost the plot. *sigh*
 
-My teacher says learning is all about consistency over time. Five to fifteen minutes every day beats three hours once a week. The same is true for problem solving. The same is true for programming.
+My reply: "Just ask Sisyphus, it's all about the struggles - hurts so good, keeps us grounded and humble."
+
+My teacher says learning is all about consistency / time. Five to fifteen minutes every day beats three hours once a week.
 
 Advent of Code is exactly that kind of daily practice, a small puzzle every day, and it's better with people. That's what Power Tools &amp; Parens is for.
+
+I realize not everyone has the time or drive to do the challenges, but that's why I'm excited to partner with some folks in the community to create some edutainment resources to live on in history forever. This will take different forms, and videos will be hosted on ClojureTV (<a href="#ref-cljtv">[CLJTV]</a>), linked here under <a href="/powertools-and-parens/videos/">Videos</a>.
+
+Join the #adventofcode channel on <a href="https://clojurians.net">Clojurians Slack</a> (<a href="#ref-slack">[SLACK]</a>) to join the conversation and have some fun with us ^~^
+
+Thanks!
 
 
 ## 2. Background
