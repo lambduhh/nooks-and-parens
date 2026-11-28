@@ -3,9 +3,12 @@
  :site/tagline       "It's dangerous to go alone! Take this."
  :site/tagline-emoji "📝🧚"     ; decorative, after the tagline, hidden from screen readers (Jordan, 2026-11-24)
  :site/positioning   "Clojure. A power tool for evolving systems."
+ :site/positioning-icons [:drill :circular-saw]   ; sprite icons after the positioning line, aria-hidden (Jordan's QA, 2026-11-28)
+ :site/intro-post   "/blog/announcement.html"   ; linked from the landing dialog; nil for none (Jordan's QA, 2026-11-28)
  :site/url           "https://lambduhh.github.io/powertools-and-parens"    ; GitHub Pages project site (decided 2026-11-24)
  :site/base-path     "/powertools-and-parens"                                ; every generated link starts with this
  :site/languages     [:en :pt-BR]
+ :site/translated    #{:en}     ; languages with real translations. Others still build, but the switch shows them faded, "em breve", unlinked (Jordan's QA, 2026-11-28)
  :site/author        "Jordan Miller"
  :cta/slack          {:label "Join #adventofcode on Clojurians Slack" :url "https://clojurians.net"}
  :cta/slack-channel  nil        ; Jordan pastes the verified #adventofcode channel link here

@@ -4,7 +4,7 @@ title: "Design system"
 description: "Colour tokens, type, components and the power-tool backlog for Power Tools & Parens, from the approved v4 prototype."
 tags: [nooks-and-parens, design]
 created: 2026-11-24
-modified: 2026-11-27
+modified: 2026-11-28
 ai_assisted: "Claude via Claude Desktop (Claude Design)"
 session: unrecorded
 tools: unrecorded
@@ -105,7 +105,7 @@ Jordan wants a few more allusions to power tools. Each keeps the meaning in word
 |---|---|---|
 | **Lockout tag** for the spoiler gate | Day page | A tag on a padlock hasp: "DO NOT OPERATE · Solutions locked until Thu 10 Dec, 05:00 UTC". Could replace the hanging "Closed" sign |
 | **Tape-measure timeline** | Landing, calendar | December as a tape measure with ticks 1–12 and a marker at today; text label "Day 7 of 12" |
-| **Battery meter** | Landing Today panel | "7 of 12 puzzles out" as cordless-tool battery bars, with the number in text |
+| **Battery meter** (built 2026-11-28) | Landing Today panel | "7 of 12 puzzles out" as cordless-tool battery bars, with the number in text |
 | **Hang tags** | Status chips | Chips shaped like hardware-store price tags with a hole |
 | **Power LED** | Workbench | A small green LED plus "Evaluator ready" / "Offline preview" text |
 | **Trigger button** | Workbench | "Craft it" styled like a tool trigger; still a normal button |

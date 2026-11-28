@@ -1,40 +1,179 @@
-;; recipes.edn: the Workbench's starters, and each day's DIY recipes (:day/recipes keys).
-;; Every starter is a teaser from Clojure Brain Teasers by Alex Miller and L. Jordan
-;; Miller (Pragmatic Bookshelf, 2025).
-;; https://pragprog.com/titles/mmclobrain/clojure-brain-teasers/
-;; :code is the book's teaser exactly as printed; :expect is the
-;; book's answer for the last form, as pr-str. bb test:browser checks each :expect in
-;; Scittle (ClojureScript); only teasers whose answer and reason are the same in
-;; ClojureScript and on the JVM are here (Jordan, 2026-11-27).
-{:haystack {:title  "Needle in a Haystack"
-            :source {:book "Clojure Brain Teasers" :puzzle 9 :file "book/src/needle_in_a_haystack.clj"}
-            :code   "(def haystack\n  (shuffle (conj (range 100) :needle)))\n\n(contains? haystack :needle)"
-            :expect "false"}
- :nest {:title  "Build a Nest"
-        :source {:book "Clojure Brain Teasers" :puzzle 22 :file "book/src/build_nest.clj"}
-        :code   "(def ex1\n  (for [a [0 1 2]\n        b [3 4 5]]\n     (* a b)))\n\n(def ex2\n  (for [a [0 1 2]]\n    (for [b [3 4 5]]\n      (* a b))))\n\n(= ex1 ex2)"
-        :expect "false"}
- :splits {:title  "Banana Splits"
-          :source {:book "Clojure Brain Teasers" :puzzle 20 :file "book/src/banana_splits.clj"}
-          :code   "(require '[clojure.string :as str])\n\n(= (str/split \"banana\" #\"an\") [\"b\" \"\" \"a\"])\n(= (str/split \"banana\" #\"na\") [\"ba\"])"
-          :expect "true"}
- :thin-air {:title  "From Thin Air"
-            :source {:book "Clojure Brain Teasers" :puzzle 8 :file "book/src/from_thin_air.clj"}
-            :code   "(nil? (assoc nil :ex :nihilo))"
-            :expect "false"}
- :six-of-one {:title  "Six of One, Half Dozen of Another"
-              :source {:book "Clojure Brain Teasers" :puzzle 6 :file "book/src/six_of_one.clj"}
-              :code   "(= [0 1 2 3 4 5]\n   '(0 1 2 3 4 5)\n   (range 6))"
-              :expect "true"}
- :rome {:title  "When in Rome"
-        :source {:book "Clojure Brain Teasers" :puzzle 7 :file "book/src/when_in_rome.clj"}
-        :code   "(= (conj '(:colosseum :vatican) :pantheon :trevi-fountain)\n   (conj  [:colosseum :vatican] :pantheon :trevi-fountain))"
-        :expect "false"}
- :partial-recall {:title  "Partial Recall"
-                  :source {:book "Clojure Brain Teasers" :puzzle 23 :file "book/src/partial_recall.clj"}
-                  :code   "(defn sentence [subject object]\n  (str \"Is \" subject \" a \" object \"?\"))\n\n(def planet \"Mars\")\n\n(def f1 (partial sentence planet))\n(def f2 (fn [object] (sentence planet object)))\n\n;; redefine\n(def planet \"Earth\")\n\n(= (f1 \"dream\") (f2 \"dream\"))"
-                  :expect "false"}
- :abracordabra {:title  "Abrac-OR-dabra"
-                :source {:book "Clojure Brain Teasers" :puzzle 24 :file "book/src/abracordabra.clj"}
-                :code   "(def flip {:head :tail, :tail :head})\n\n(let [empty {}\n\n      left nil, right nil\n      {:keys [left right] :or {left :head, right (flip left)}} empty\n      right-1 right\n\n      left nil, right nil\n      {:keys [right left] :or {left :head, right (flip left)}} empty\n      right-2 right]\n\n  (println \"Results:\" right-1 right-2)\n  (= right-1 right-2))"
-                :expect "false"}}
+;; recipes.edn: the Workbench's exercises, and each day's DIY recipes (:day/recipes ids).
+;; A vector, in learning order. Shape: docs/content-model.md.
+;;
+;; :kind is the exercise type (Teaching Tech Together, ch. 12, https://teachtogether.tech/en/#s:exercises):
+;;   :predict  guess the result, then run it (teasers, tracing). No goal; running shows :why.
+;;   :fill     replace each ___ so the result matches :goal.
+;;   :reverse  work backward: fill the ___ with an input that gives :goal.
+;;   :fix      make one small change so the result matches :goal.
+;;   :vary     make one small change so the result changes to :goal.
+;; :expect   the starter's own result as pr-str (offline preview, tests). Absent when the
+;;           starter has blanks and can't run.
+;; :goal     compared by value (=) with the learner's result, so set and map order don't matter.
+;; :solution [search replace], one exact text replacement on :code. Tests only: never rendered.
+;; :hint     shown when a result doesn't match the goal. :why and :links show once it does.
+;; Teasers (:source) are from Clojure Brain Teasers by Alex Miller and L. Jordan Miller
+;; (Pragmatic Bookshelf, 2025). https://pragprog.com/titles/mmclobrain/clojure-brain-teasers/
+;; Every :expect, :goal and :solution was checked in Scittle and on Clojure 1.12.7; bb test:browser
+;; checks them in Chrome.
+[{:id :sum-lines
+  :kind :predict
+  :group :input
+  :title "Add up the lines"
+  :task "Each line is a number. Guess the total, then run it."
+  :code "(require '[clojure.string :as str])\n\n(->> \"3\\n7\\n2\"\n     str/split-lines\n     (map parse-long)\n     (reduce +))"
+  :expect "12"
+  :why "str/split-lines turns the text into a sequence of lines, parse-long turns each line into a number, and reduce + adds them up. ->> passes each result to the next step as its last argument."
+  :links [{:title "clojure.string/split-lines", :url "https://clojuredocs.org/clojure.string/split-lines"} {:title "parse-long", :url "https://clojuredocs.org/clojure.core/parse-long"} {:title "->>", :url "https://clojuredocs.org/clojure.core/-%3E%3E"}]}
+ {:id :parse-maps
+  :kind :fill
+  :group :input
+  :title "Parse lines into maps"
+  :task "Fill in the blank so each line becomes a map, with its number in :n as a number."
+  :code "(require '[clojure.string :as str])\n\n(->> \"5 apples\\n2 pears\\n7 plums\"\n     str/split-lines\n     (map (fn [line] (str/split line #\" \")))\n     (map (fn [[n fruit]] {:fruit fruit :n (___ n)})))"
+  :goal "({:fruit \"apples\", :n 5} {:fruit \"pears\", :n 2} {:fruit \"plums\", :n 7})"
+  :solution ["(___ n)" "(parse-long n)"]
+  :hint "The pieces of a line are strings. Which function from \"Add up the lines\" turns \"5\" into 5?"
+  :why "str/split cuts each line at the space, and (fn [[n fruit]] ...) takes the two pieces apart by position. The pieces are strings, so parse-long turns \"5\" into 5; without it, :n would hold the string \"5\"."
+  :links [{:title "clojure.string/split", :url "https://clojuredocs.org/clojure.string/split"} {:title "Destructuring in Clojure", :url "https://clojure.org/guides/destructuring"}]}
+ {:id :missing-line
+  :kind :reverse
+  :group :input
+  :title "Find the missing line"
+  :task "Replace ___ with a line of input so the total is 20."
+  :code "(->> [\"4\" \"9\" ___]\n     (map parse-long)\n     (reduce +))"
+  :goal "20"
+  :solution ["___" "\"7\""]
+  :hint "What's 20 minus 4 minus 9? Write it the way the other lines are written."
+  :why "Working backward: 4 + 9 is 13, so the last line has to read as 7. It has to be the string \"7\", like the other lines, because parse-long only reads strings."
+  :links [{:title "parse-long", :url "https://clojuredocs.org/clojure.core/parse-long"}]}
+ {:id :count-tools
+  :kind :fill
+  :group :counting
+  :title "Count with frequencies"
+  :task "Fill in the blank so the result says how many times each tool appears."
+  :code "(->> \"hammer saw hammer level saw hammer\"\n     (re-seq #\"\\w+\")\n     ___)"
+  :goal "{\"hammer\" 3, \"saw\" 2, \"level\" 1}"
+  :solution ["     ___)" "     frequencies)"]
+  :hint "There's a core function whose name means \"how often things happen\"."
+  :why "re-seq returns every match of the pattern, here each word. frequencies counts how many times each distinct value appears and returns a map from value to count."
+  :links [{:title "re-seq", :url "https://clojuredocs.org/clojure.core/re-seq"} {:title "frequencies", :url "https://clojuredocs.org/clojure.core/frequencies"}]}
+ {:id :least-common
+  :kind :vary
+  :group :counting
+  :title "Most common, then least common"
+  :task "This returns the most common tool and its count. Make one small change so it returns the least common one instead."
+  :code "(->> \"hammer saw hammer level saw hammer\"\n     (re-seq #\"\\w+\")\n     frequencies\n     (sort-by val >)\n     first)"
+  :expect "[\"hammer\" 3]"
+  :goal "[\"level\" 1]"
+  :solution ["(sort-by val >)" "(sort-by val)"]
+  :hint "Which part decides the order? What happens if the biggest count no longer goes first?"
+  :why "sort-by val sorts the [tool count] pairs by their count. With > the biggest comes first; without it, the smallest does. Changing first to last works too."
+  :links [{:title "sort-by", :url "https://clojuredocs.org/clojure.core/sort-by"} {:title "val", :url "https://clojuredocs.org/clojure.core/val"}]}
+ {:id :running-total
+  :kind :predict
+  :group :counting
+  :title "Trace the running total"
+  :task "reductions shows each step of a reduce. Guess every value it returns, then run it."
+  :code "(reductions + [3 1 4 1 5])"
+  :expect "(3 4 8 9 14)"
+  :why "reductions returns every intermediate result: 3, then 3 + 1, then 4 + 4, and so on. (reduce + [3 1 4 1 5]) returns only the last one, 14. It's a quick way to see what a reduce is doing."
+  :links [{:title "reductions", :url "https://clojuredocs.org/clojure.core/reductions"} {:title "reduce", :url "https://clojuredocs.org/clojure.core/reduce"}]}
+ {:id :grid-lookup
+  :kind :fill
+  :group :grids
+  :title "Build a grid you can look up"
+  :task "Fill in the blank so the grid holds every character, then look up the middle one."
+  :code "(def grid\n  (into {}\n        (for [[y row] (map-indexed vector [\"#..\" \".#.\" \"..#\"])\n              [x ch]  (map-indexed vector ___)]\n          [[x y] (str ch)])))\n\n(get grid [1 1])"
+  :goal "\"#\""
+  :solution ["vector ___)" "vector row)"]
+  :hint "The inner loop should walk through the characters of the current row."
+  :why "map-indexed vector pairs each item with its position, so the outer loop gives [y row] and the inner loop gives [x ch] for each character in that row. The keys are [x y] positions, so (get grid [1 1]) looks up column 1 of row 1. (str ch) keeps the values strings on the JVM too, where a character prints as \\#."
+  :links [{:title "map-indexed", :url "https://clojuredocs.org/clojure.core/map-indexed"} {:title "for", :url "https://clojuredocs.org/clojure.core/for"}]}
+ {:id :nest
+  :kind :predict
+  :group :grids
+  :title "Build a Nest"
+  :task "Two ways to loop over two vectors. Guess whether they produce the same thing, then run it."
+  :code "(def ex1\n  (for [a [0 1 2]\n        b [3 4 5]]\n     (* a b)))\n\n(def ex2\n  (for [a [0 1 2]]\n    (for [b [3 4 5]]\n      (* a b))))\n\n(= ex1 ex2)"
+  :expect "false"
+  :why "Two bindings in one for give one flat sequence of 9 products. A for inside a for gives a sequence of three sequences of 3. Same numbers, different shape, so = is false."
+  :links [{:title "for", :url "https://clojuredocs.org/clojure.core/for"} {:title "Clojure Brain Teasers", :url "https://pragprog.com/titles/mmclobrain/clojure-brain-teasers/"}]
+  :source {:book "Clojure Brain Teasers", :puzzle 22, :file "book/src/build_nest.clj"}}
+ {:id :neighbors
+  :kind :fix
+  :group :grids
+  :title "The four neighbors"
+  :task "neighbors should return the four cells next to [x y]: up, right, down and left. Make one small change so it does."
+  :code "(defn neighbors [[x y]]\n  (for [[dx dy] [[0 -1] [1 0] [0 1] [-1 0]]]\n    [(+ x dx) (+ x dy)]))\n\n(set (neighbors [5 2]))"
+  :expect "#{[5 4] [6 5] [5 6] [4 5]}"
+  :goal "#{[5 1] [6 2] [5 3] [4 2]}"
+  :solution ["(+ x dy)" "(+ y dy)"]
+  :hint "Look at the second number of each result. Which coordinate should dy change?"
+  :why "Each neighbor adds an offset [dx dy] to the position [x y]. The bug added dy to x instead of y, so every second coordinate started from 5. Comparing your result with the goal one coordinate at a time is a quick way to find a slip like this."
+  :links [{:title "for", :url "https://clojuredocs.org/clojure.core/for"} {:title "Destructuring in Clojure", :url "https://clojure.org/guides/destructuring"}]}
+ {:id :shared-snacks
+  :kind :fill
+  :group :sets
+  :title "Find what two lists share"
+  :task "Fill in the blank so the result is the snacks both elves packed."
+  :code "(require '[clojure.set :as set])\n\n(set/___ #{:cocoa :pretzels :apples}\n        #{:apples :cocoa :popcorn})"
+  :goal "#{:cocoa :apples}"
+  :solution ["set/___" "set/intersection"]
+  :hint "It's the set-theory word for \"in both\"."
+  :why "clojure.set/intersection returns the items in every set you give it. union returns the items in any of them, and difference the items in the first that aren't in the others."
+  :links [{:title "clojure.set/intersection", :url "https://clojuredocs.org/clojure.set/intersection"} {:title "clojure.set/difference", :url "https://clojuredocs.org/clojure.set/difference"}]}
+ {:id :haystack
+  :kind :predict
+  :group :sets
+  :title "Needle in a Haystack"
+  :task "The haystack holds the numbers 0 to 99 and :needle, shuffled. Guess the result, then run it."
+  :code "(def haystack\n  (shuffle (conj (range 100) :needle)))\n\n(contains? haystack :needle)"
+  :expect "false"
+  :why "contains? asks whether a key is present. A vector's keys are its indexes (0 to 100 here), so :needle is never one of them. To search the values, use (some #{:needle} haystack), or keep the items in a set."
+  :links [{:title "contains?", :url "https://clojuredocs.org/clojure.core/contains_q"} {:title "some", :url "https://clojuredocs.org/clojure.core/some"} {:title "Clojure Brain Teasers", :url "https://pragprog.com/titles/mmclobrain/clojure-brain-teasers/"}]
+  :source {:book "Clojure Brain Teasers", :puzzle 9, :file "book/src/needle_in_a_haystack.clj"}}
+ {:id :in-the-toolbox
+  :kind :fix
+  :group :sets
+  :title "Is it in the toolbox?"
+  :task "This should say whether :saw is in the toolbox. Make one small change so it returns true."
+  :code "(def toolbox [:saw :hammer :level])\n\n(contains? toolbox :saw)"
+  :expect "false"
+  :goal "true"
+  :solution ["[:saw :hammer :level]" "#{:saw :hammer :level}"]
+  :hint "contains? looks at keys. What kind of collection uses its items as its keys?"
+  :why "contains? checks keys, and a vector's keys are its indexes. In a set, the items are the keys, so (contains? #{:saw :hammer :level} :saw) is true. If the order of the tools matters, keep the vector and use (some #{:saw} toolbox), which returns :saw."
+  :links [{:title "contains?", :url "https://clojuredocs.org/clojure.core/contains_q"} {:title "Data structures (sets)", :url "https://clojure.org/reference/data_structures#Sets"}]}
+ {:id :rome
+  :kind :predict
+  :group :building
+  :title "When in Rome"
+  :task "conj two landmarks onto a list and onto a vector. Guess whether the results are equal, then run it."
+  :code "(= (conj '(:colosseum :vatican) :pantheon :trevi-fountain)\n   (conj  [:colosseum :vatican] :pantheon :trevi-fountain))"
+  :expect "false"
+  :why "conj adds where it's cheapest for each collection: at the front of a list, at the end of a vector. The list becomes (:trevi-fountain :pantheon :colosseum :vatican) and the vector [:colosseum :vatican :pantheon :trevi-fountain], so they aren't equal."
+  :links [{:title "conj", :url "https://clojuredocs.org/clojure.core/conj"} {:title "Clojure Brain Teasers", :url "https://pragprog.com/titles/mmclobrain/clojure-brain-teasers/"}]
+  :source {:book "Clojure Brain Teasers", :puzzle 7, :file "book/src/when_in_rome.clj"}}
+ {:id :path-order
+  :kind :fix
+  :group :building
+  :title "Keep the steps in order"
+  :task "This should collect the steps in the order they were taken. Make one small change so it does."
+  :code "(reduce conj '() [:start :left :left :up])"
+  :expect "(:up :left :left :start)"
+  :goal "[:start :left :left :up]"
+  :solution ["'()" "[]"]
+  :hint "conj adds to the front of a list. Which empty collection does it add to at the end?"
+  :why "conj on a list adds to the front, so the steps came out reversed. Starting from an empty vector, [], conj adds to the end and keeps them in order."
+  :links [{:title "conj", :url "https://clojuredocs.org/clojure.core/conj"} {:title "reduce", :url "https://clojuredocs.org/clojure.core/reduce"}]}
+ {:id :partial-recall
+  :kind :predict
+  :group :building
+  :title "Partial Recall"
+  :task "f1 and f2 both build a question about planet. Guess whether they agree after planet is redefined, then run it."
+  :code "(defn sentence [subject object]\n  (str \"Is \" subject \" a \" object \"?\"))\n\n(def planet \"Mars\")\n\n(def f1 (partial sentence planet))\n(def f2 (fn [object] (sentence planet object)))\n\n;; redefine\n(def planet \"Earth\")\n\n(= (f1 \"dream\") (f2 \"dream\"))"
+  :expect "false"
+  :why "partial captures planet's value when f1 is made, \"Mars\". f2 looks planet up each time it runs, so after the redefinition it sees \"Earth\". f1 asks \"Is Mars a dream?\" and f2 asks \"Is Earth a dream?\"."
+  :links [{:title "partial", :url "https://clojuredocs.org/clojure.core/partial"} {:title "Vars", :url "https://clojure.org/reference/vars"} {:title "Clojure Brain Teasers", :url "https://pragprog.com/titles/mmclobrain/clojure-brain-teasers/"}]
+  :source {:book "Clojure Brain Teasers", :puzzle 23, :file "book/src/partial_recall.clj"}}]

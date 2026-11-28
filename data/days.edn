@@ -9,48 +9,48 @@
 [{:day/n 1  :day/unlock #inst "2026-12-01T05:00:00Z" :day/spoiler-until #inst "2026-12-04T05:00:00Z"
   :day/puzzle-url "https://adventofcode.com/2026/day/1"  :day/tool :hammer
   :day/session {:n 1 :date #inst "2026-12-04" :format :live-coding :time nil :guests [] :announced? false}
-  :day/recipes [:haystack :nest] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-01"}
+  :day/recipes [:sum-lines :parse-maps] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-01"}
  {:day/n 2  :day/unlock #inst "2026-12-02T05:00:00Z" :day/spoiler-until #inst "2026-12-05T05:00:00Z"
   :day/puzzle-url "https://adventofcode.com/2026/day/2"  :day/tool :screwdriver
   :day/session {:n 2 :date #inst "2026-12-07" :format :pairing-mob :time nil :guests [] :announced? false}
-  :day/recipes [:splits :thin-air] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-02"}
+  :day/recipes [:missing-line :count-tools] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-02"}
  {:day/n 3  :day/unlock #inst "2026-12-03T05:00:00Z" :day/spoiler-until #inst "2026-12-06T05:00:00Z"
   :day/puzzle-url "https://adventofcode.com/2026/day/3"  :day/tool :wrench
   :day/session {:n 3 :date #inst "2026-12-08" :format :demo :time nil :guests [] :announced? false}
-  :day/recipes [:six-of-one :rome] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-03"}
+  :day/recipes [:least-common :running-total] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-03"}
  {:day/n 4  :day/unlock #inst "2026-12-04T05:00:00Z" :day/spoiler-until #inst "2026-12-07T05:00:00Z"
   :day/puzzle-url "https://adventofcode.com/2026/day/4"  :day/tool :saw
   :day/session {:n 4 :date #inst "2026-12-09" :format :kata :time nil :guests [] :announced? false}
-  :day/recipes [:partial-recall :abracordabra] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-04"}
+  :day/recipes [:grid-lookup :nest] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-04"}
  {:day/n 5  :day/unlock #inst "2026-12-05T05:00:00Z" :day/spoiler-until #inst "2026-12-08T05:00:00Z"
   :day/puzzle-url "https://adventofcode.com/2026/day/5"  :day/tool :level
   :day/session {:n 5 :date #inst "2026-12-10" :format :lightning-talks :time nil :guests [] :announced? false}
-  :day/recipes [:haystack :nest] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-05"}
+  :day/recipes [:neighbors :shared-snacks] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-05"}
  {:day/n 6  :day/unlock #inst "2026-12-06T05:00:00Z" :day/spoiler-until #inst "2026-12-09T05:00:00Z"
   :day/puzzle-url "https://adventofcode.com/2026/day/6"  :day/tool :tape
   :day/session {:n 6 :date #inst "2026-12-14" :format :workshop :time nil :guests [] :announced? false}
-  :day/recipes [:splits :thin-air] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-06"}
+  :day/recipes [:haystack :in-the-toolbox] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-06"}
  {:day/n 7  :day/unlock #inst "2026-12-07T05:00:00Z" :day/spoiler-until #inst "2026-12-10T05:00:00Z"
   :day/puzzle-url "https://adventofcode.com/2026/day/7"  :day/tool :hammer
   :day/session {:n 7 :date #inst "2026-12-15" :format :ama :time nil :guests [] :announced? false}
-  :day/recipes [:six-of-one :rome] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-07"}
+  :day/recipes [:rome :path-order] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-07"}
  {:day/n 8  :day/unlock #inst "2026-12-08T05:00:00Z" :day/spoiler-until #inst "2026-12-11T05:00:00Z"
   :day/puzzle-url "https://adventofcode.com/2026/day/8"  :day/tool :screwdriver
   :day/session {:n 8 :date #inst "2026-12-16" :format :fishbowl :time nil :guests [] :announced? false}
-  :day/recipes [:partial-recall :abracordabra] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-08"}
+  :day/recipes [:partial-recall :sum-lines] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-08"}
  {:day/n 9  :day/unlock #inst "2026-12-09T05:00:00Z" :day/spoiler-until #inst "2026-12-12T05:00:00Z"
   :day/puzzle-url "https://adventofcode.com/2026/day/9"  :day/tool :wrench
   :day/session {:n 9 :date #inst "2026-12-17" :format :rfc :time nil :guests [] :announced? false}
-  :day/recipes [:haystack :nest] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-09"}
+  :day/recipes [:parse-maps :missing-line] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-09"}
  {:day/n 10 :day/unlock #inst "2026-12-10T05:00:00Z" :day/spoiler-until #inst "2026-12-13T05:00:00Z"
   :day/puzzle-url "https://adventofcode.com/2026/day/10" :day/tool :saw
   :day/session {:n 10 :date #inst "2026-12-18" :format :show-and-tell :time nil :guests [] :announced? false}
-  :day/recipes [:splits :thin-air] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-10"}
+  :day/recipes [:count-tools :least-common] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-10"}
  {:day/n 11 :day/unlock #inst "2026-12-11T05:00:00Z" :day/spoiler-until #inst "2026-12-14T05:00:00Z"
   :day/puzzle-url "https://adventofcode.com/2026/day/11" :day/tool :level
   :day/session {:n 11 :date #inst "2026-12-21" :format :paper-club :time nil :guests [] :announced? false}
-  :day/recipes [:six-of-one :rome] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-11"}
+  :day/recipes [:running-total :grid-lookup] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-11"}
  {:day/n 12 :day/unlock #inst "2026-12-12T05:00:00Z" :day/spoiler-until #inst "2026-12-15T05:00:00Z"
   :day/puzzle-url "https://adventofcode.com/2026/day/12" :day/tool :tape
   :day/session {:n 12 :date #inst "2026-12-22" :format :tech-talk :time nil :guests [] :announced? false}
-  :day/recipes [:partial-recall :abracordabra] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-12"}]
+  :day/recipes [:nest :neighbors] :day/solutions [] :day/tutorial nil :day/updated #inst "2026-12-12"}]

@@ -40,16 +40,36 @@
         (is (vector? (:guests session)))
         (is (every? #(contains? % :confirmed?) (:guests session)) "every guest says whether they're confirmed")
         (is (boolean? (:announced? session)) "every session says whether it's announced")
-        (is (every? (:recipes d) recipes) "recipes exist in recipes.edn")
+        (is (every? (set (map :id (:recipes d))) recipes) "recipes exist in recipes.edn")
         (is (vector? solutions))
         (is (contains? day :day/tutorial))))))
 
 (deftest recipes
-  (doseq [[k r] (:recipes d)]
-    (testing (str k)
-      (is (string? (:title r)))
-      (is (string? (:code r)))
-      (is (string? (:expect r))))))
+  (let [rs (:recipes d)]
+    (is (vector? rs) "a vector, so order survives past 8 entries")
+    (is (apply distinct? (map :id rs)) "ids are unique")
+    (doseq [{:keys [id kind group title task code expect goal solution hint why links] :as r} rs]
+      (testing (str id)
+        (is (keyword? id))
+        (is (#{:predict :fill :reverse :fix :vary} kind))
+        (is (keyword? group))
+        (is (every? string? [title task code why]))
+        (is (seq links) "every exercise links somewhere to read more")
+        (is (every? #(and (string? (:title %)) (re-find #"^https://" (:url %))) links))
+        (if (= :predict kind)
+          (do (is (string? expect) "a predict exercise shows its answer")
+              (is (nil? goal) "a predict exercise has no goal"))
+          (do (is (string? goal))
+              (is (string? hint) "a goal you can miss comes with a hint")
+              (is (and (vector? solution) (= 2 (count solution))))
+              (is (= 1 (count (re-seq (re-pattern (java.util.regex.Pattern/quote (first solution))) code)))
+                  "the solution's search text occurs once in the code")))
+        (when (#{:fill :reverse} kind)
+          (is (re-find #"___" code) "blanks to fill")
+          (is (nil? expect) "a starter with blanks can't run"))
+        (when (#{:fix :vary} kind)
+          (is (string? expect) "fix and vary starters run")
+          (is (not= expect goal) "and don't already meet the goal"))))))
 
 (deftest formats
   (let [{:formats/keys [pool sources]} (:formats d)
