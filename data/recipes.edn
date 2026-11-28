@@ -1,8 +1,8 @@
 ;; recipes.edn: the Workbench's starters, and each day's DIY recipes (:day/recipes keys).
-;; Every starter is a teaser from Clojure Brain Teasers by Alex Miller and Lorilyn Jordan
-;; Miller (Pragmatic Bookshelf, 2025), https://pragprog.com/titles/mmclobrain/clojure-brain-teasers/
-;; Copyright (c) 2025 The Pragmatic Programmers, LLC; used with permission. Not covered by
-;; this repo's licenses. :code is the book's teaser exactly as printed; :expect is the
+;; Every starter is a teaser from Clojure Brain Teasers by Alex Miller and L. Jordan
+;; Miller (Pragmatic Bookshelf, 2025).
+;; https://pragprog.com/titles/mmclobrain/clojure-brain-teasers/
+;; :code is the book's teaser exactly as printed; :expect is the
 ;; book's answer for the last form, as pr-str. bb test:browser checks each :expect in
 ;; Scittle (ClojureScript); only teasers whose answer and reason are the same in
 ;; ClojureScript and on the JVM are here (Jordan, 2026-11-27).

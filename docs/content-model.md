@@ -81,7 +81,7 @@ Format → kind defaults: workshop → tutorial; demo → how-to; everything els
 
 ## `data/recipes.edn`
 
-DIY recipes and Workbench starters: teasers from *Clojure Brain Teasers* (Pragmatic Bookshelf, 2025), used with permission, never puzzle text or examples. Each has `:title` (the puzzle's name), `:source` (`:book`, `:puzzle` number, `:file` in the book's sample code), `:code` exactly as printed in the book, and `:expect`, the book's answer for the last form as `pr-str` (used by `bb test:browser` and by the offline fallback). Only teasers whose answer and reason are the same in ClojureScript and on the JVM belong here: the Workbench runs Scittle.
+DIY recipes and Workbench starters: teasers from *Clojure Brain Teasers* by Alex Miller and L. Jordan Miller (Pragmatic Bookshelf, 2025), never puzzle text or examples. Each has `:title` (the puzzle's name), `:source` (`:book`, `:puzzle` number, `:file` in the book's sample code), `:code` exactly as printed in the book, and `:expect`, the book's answer for the last form as `pr-str` (used by `bb test:browser` and by the offline fallback). Only teasers whose answer and reason are the same in ClojureScript and on the JVM belong here: the Workbench runs Scittle.
 
 ## `data/ring.edn`
 
