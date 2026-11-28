@@ -31,6 +31,11 @@
   (is (run #'nooks.check/check-guests "<p>With Ada Lovelace</p>" {:unconfirmed ["Ada Lovelace"]}))
   (is (nil? (run #'nooks.check/check-guests "<p>To be announced</p>" {:unconfirmed ["Ada Lovelace"]}))))
 
+(deftest unannounced-sessions
+  (is (run #'nooks.check/check-unannounced "<b>Session 03 · Demo</b>" {:unannounced ["Session 03 · Demo"]}))
+  (is (nil? (run #'nooks.check/check-unannounced "<span>Session 03: details to be announced</span>"
+                 {:unannounced ["Session 03 · Demo"]}))))
+
 (deftest forbidden-words
   (is (run #'nooks.check/check-forbidden-words "<h2 id=\"x\">A <em>fast</em> language</h2>"))
   (is (run #'nooks.check/check-forbidden-words "<span class=\"chip open\">Immutable</span>"))

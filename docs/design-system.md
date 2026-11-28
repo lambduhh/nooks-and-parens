@@ -4,7 +4,7 @@ title: "Design system"
 description: "Colour tokens, type, components and the power-tool backlog for Power Tools & Parens, from the approved v4 prototype."
 tags: [nooks-and-parens, design]
 created: 2026-11-24
-modified: 2026-11-24
+modified: 2026-11-27
 ai_assisted: "Claude via Claude Desktop (Claude Design)"
 session: unrecorded
 tools: unrecorded
@@ -77,9 +77,9 @@ Avoid colour pairings that read as a real tool brand: no yellow-and-black, no re
 | **Dialog box** | Landing | Cream bubble, blue name tab ("Power Tools & Parens"), positioning line first, a ▼ hint |
 | **Main menu** | Landing | Numbered rows `[0] Today [1] Calendar [2] Workbench [5] Start here` with short descriptions; each number is that tool's toolbelt key |
 | **Primary button** | One per page | Green pill, black text and outline |
-| **Chip** | Status | Always words: "Solutions open", "Solutions locked", "Not out yet", "Live today". Distinct borders (solid, plain, dashed) as well as colour |
+| **Chip** | Status | Always words: "Solutions open", "Solutions locked", "Not out yet", "Today". Distinct borders (solid, plain, dashed) as well as colour |
 | **Data readout** | Landing, Workbench | Black panel showing a REPL result as Clojure data |
-| **Shop sign + shop list** | "What're ya REPLin'?" | Blue sign heading; rows with a tool icon, session, covers-day link, and a right-hand "price": date, "Live today" or "Replay ready" |
+| **Shop sign + shop list** | "Shop hours" | Blue sign heading with "Session calendar" under it; rows with a tool icon, session, covers-day link, and a right-hand "price": date, "Today" or "Replay ready". A session that isn't `:announced?` shows pixel bars instead of its icon and details (screen readers hear "Session NN: details to be announced") |
 | **Tool wall** | Calendar | Pegboard in a wooden frame; 12 slots. Not out = dashed outline; locked = blue tool; open = green tool; today = ring. Words in every slot |
 | **Pinned note** | Day page | White note with a pin: unlock time, puzzle link, session, guest, gate date |
 | **Gate sign** | Day page | Hanging wooden sign: "Closed" + the date in words; "Open" in paper when solutions are out |

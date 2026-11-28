@@ -4,7 +4,7 @@ title: "Decisions"
 description: "What's decided and what's open for Power Tools & Parens, and who decides."
 tags: [nooks-and-parens, decisions]
 created: 2026-11-24
-modified: 2026-11-24
+modified: 2026-11-27
 ai_assisted: "Claude via Claude Desktop (Claude Design); updated by Claude Code"
 session: unrecorded
 tools: unrecorded
@@ -21,6 +21,11 @@ What's decided, what's open, and who decides. Decided items aren't reopened with
 
 | Date | Decision | Notes |
 |---|---|---|
+| 2026-11-27 | **Spoiler gate: unlock + 3 days** (was 4). Every session now falls on or after its puzzle's gate; Session 1 (Fri 4 Dec, Day 1) had fallen a day early. A test fails any session dated before its gate | Supersedes the 2026-11-24 four-day row. Meets the 2026-11-06 rule of at least 3 days |
+| 2026-11-27 | **Launch: draft markers removed.** Every remaining `{:draft …}` string accepted as final; the Formats page leaves out empty fields instead of showing "To be written" | New copy Jordan hasn't written still uses `{:draft …}` |
+| 2026-11-27 | **"Shop hours" heads the session schedule,** with "Session calendar" under it. Replaces "What're ya REPLin'?", which didn't say what the list was | A hardware-store riff that still reads as a schedule |
+| 2026-11-27 | **Session details stay hidden until announced.** A session's format, day covered, time and guests render only when `:announced? true` in `data/days.edn`; until then the row is decorative pixel bars, a screen-reader line, and the date. `bb check` fails a page that shows an unannounced session's title | Sessions' contents aren't settled. Mirrors guests' `:confirmed?` |
+| 2026-11-27 | **Fewer promises about content.** No "live" wording; no "one thread per puzzle"; recordings are posted after some sessions, not every one; no promise of per-day solution content | Supersedes the 2026-11-24 videos row's "most days also get a piece of content" |
 | 2026-11-24 | **Session videos are hosted on ClojureTV** and embedded on each day's page (click to load, `youtube-nocookie.com`) | Jordan, in the announcement brief. Most days also get a piece of content about the solution |
 | 2026-11-24 | **Alpha for friends' review.** All placeholder copy accepted as final (draft markers removed); placeholders that were instructions rather than copy, and empty areas (the "Why it works" drawer), removed. About and toolbelt slot 7 left out, so the toolbelt has 6 slots. No alpha banner or feedback link: Jordan collects feedback by message. Tagged `v0.1.0-alpha` | New copy Jordan hasn't written still uses `{:draft …}`. About returns before launch |
 | 2026-11-24 | **Power-tool emoji and a favicon.** Decorative, `aria-hidden` emoji on page and Learn-drawer headings (`layout/tool-emoji`); a self-hosted SVG favicon of the toolbelt's wrench | Not on RFC-style posts. Headings still read as their words |
@@ -66,6 +71,6 @@ What's decided, what's open, and who decides. Decided items aren't reopened with
 | Which power-tool allusions to add | Backlog in `docs/design-system.md` | Jordan with Claude Code | P2 |
 | pt-BR for `/blog/` | A "Tradução em breve" notice at `/pt-br/blog/` (what the MVP builds) / translate posts / leave the blog English-only with no pt-BR page | Jordan | Before pt-BR pages go live |
 | Who reviews pt-BR | Candidate in Jordan's notes | Jordan | Before pt-BR pages go live |
-| pt-BR renderings of the tagline, "What're ya REPLin'?" and "DIY recipes" | | The pt-BR reviewer | Before pt-BR pages go live |
+| pt-BR renderings of the tagline, "Shop hours" and "DIY recipes" | | The pt-BR reviewer | Before pt-BR pages go live |
 | A setup clinic in the Clojure Camp Discord before 1 Dec | | Jordan | Mon 30 Nov |
 | A custom domain later | | Jordan | After December |

@@ -4,7 +4,7 @@ title: Glossary
 description: "Project vocabulary for Power Tools & Parens: what each recurring term means in these docs, and which similar-looking terms are different things."
 tags: [nooks-and-parens, glossary]
 created: 2026-11-24
-modified: 2026-11-24
+modified: 2026-11-27
 ai_assisted: Claude Code (claude-opus-5-5)
 session: f97674e1-0e49-4d17-94aa-7708e57af519
 tools: [Read, Bash]
@@ -75,7 +75,7 @@ The onboarding page at `/start/`: one curated path from official material, with 
 When a day's puzzle opens: 00:00 EST, which is 05:00 UTC (`:day/unlock`). A day is `unlocked?` once the [as-of](#as-of) instant reaches it. Source: [content model](content-model.md#derived-state).
 
 ### Spoiler date
-Unlock + 4 days (`:day/spoiler-until`). From this instant the day is `open?`, and its solutions, replay, tutorial and ring links can appear. Source: [content model](content-model.md#derived-state), [CLAUDE.md](../CLAUDE.md#spoilers).
+Unlock + 3 days (`:day/spoiler-until`). From this instant the day is `open?`, and its solutions, replay, tutorial and ring links can appear. Source: [content model](content-model.md#derived-state), [CLAUDE.md](../CLAUDE.md#spoilers).
 **Not the same as** the [spoiler gate](#spoiler-gate): the date is data, and the gate is what the page shows.
 
 ### Spoiler gate
@@ -103,7 +103,7 @@ The UTC instant that a build treats as "now". `src/nooks/state.clj` takes it as 
 The one main action on a page, styled as a green pill. Every page has exactly one, and `bb check` fails otherwise. Its target depends on the page and the day's status. Source: [CLAUDE.md](../CLAUDE.md#messaging), [content model](content-model.md#derived-state).
 
 ### Decided labels
-Six fixed strings that must appear exactly as written: the name, the tagline, the positioning line, "What're ya REPLin'?", "DIY recipes" and "Workbench". Source: [CLAUDE.md](../CLAUDE.md#copy).
+Six fixed strings that must appear exactly as written: the name, the tagline, the positioning line, "Shop hours", "DIY recipes" and "Workbench". Source: [CLAUDE.md](../CLAUDE.md#copy).
 
 ### Draft placeholder
 A `<span class="draft">…</span>` that holds a sentence Jordan hasn't written yet. Source: [CLAUDE.md](../CLAUDE.md#copy).
@@ -112,7 +112,7 @@ A `<span class="draft">…</span>` that holds a sentence Jordan hasn't written y
 The day-page component that shows the [spoiler gate](#spoiler-gate): a wooden "Closed" sign with the date in words, or "Open" in paper. Source: [design system](design-system.md#components).
 
 ### Chip
-A small status label that always uses words ("Solutions open", "Live today"), with a distinct border as well as a colour. Source: [design system](design-system.md#components).
+A small status label that always uses words ("Solutions open", "Today"), with a distinct border as well as a colour. Source: [design system](design-system.md#components).
 
 ### Tool wall
 The 12-slot pegboard on the calendar page, one slot per day, with words in every slot. Each day has a tool (`:day/tool`). Source: [design system](design-system.md#components).

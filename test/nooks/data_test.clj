@@ -39,6 +39,7 @@
         (is (keyword? (:format session)))
         (is (vector? (:guests session)))
         (is (every? #(contains? % :confirmed?) (:guests session)) "every guest says whether they're confirmed")
+        (is (boolean? (:announced? session)) "every session says whether it's announced")
         (is (every? (:recipes d) recipes) "recipes exist in recipes.edn")
         (is (vector? solutions))
         (is (contains? day :day/tutorial))))))

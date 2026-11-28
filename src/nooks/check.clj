@@ -18,8 +18,8 @@
             [nooks.state :as state]))
 
 (def dates
-  ["2026-11-30" "2026-12-01T04:59Z" "2026-12-01T05:00Z" "2026-12-05T04:59Z"
-   "2026-12-05T05:00Z" "2026-12-07" "2026-12-11" "2026-12-18" "2026-12-23" "2027-01-15"])
+  ["2026-11-30" "2026-12-01T04:59Z" "2026-12-01T05:00Z" "2026-12-04T04:59Z"
+   "2026-12-04T05:00Z" "2026-12-07" "2026-12-11" "2026-12-18" "2026-12-23" "2027-01-15"])
 
 (def forbidden-words
   ["immutable" "functional" "data-oriented" "concurrent" "fast" "productive" "expressive" "scalable"])
@@ -117,6 +117,23 @@
   (for [g unconfirmed :when (str/includes? (strip-tags html) g)]
     (str "names an unconfirmed guest: " g)))
 
+(defn- check-unannounced
+  "An unannounced session's title (\"Session 03 · Demo\") must not appear: its
+  row is a veil until :announced? is true."
+  [{:keys [unannounced]} html]
+  (for [title unannounced :when (str/includes? (strip-tags html) title)]
+    (str "shows an unannounced session: " title)))
+
+(defn- unannounced-titles
+  "English titles of sessions not yet :announced?, as the shop list would print them."
+  [{:keys [days i18n]}]
+  (let [en (:en i18n)]
+    (for [day days
+          :let [{fmt :format :keys [n announced?]} (:day/session day)]
+          :when (not announced?)]
+      (format (:session/title en) (format "%02d" n)
+              (get en (keyword "format" (name fmt)))))))
+
 (defn- check-forbidden-words [_ctx html]
   (let [texts (concat (map second (re-seq #"(?s)<h[1-3]\b[^>]*>(.*?)</h[1-3]>" html))
                       (map second (re-seq #"(?s)<[a-z]+[^>]*class=\"[^\"]*\bchip\b[^\"]*\"[^>]*>(.*?)</" html)))]
@@ -155,7 +172,7 @@
 
 (def page-checks
   [check-primary check-external-loads check-links check-anchors check-template-gate
-   check-guests check-forbidden-words check-no-employer check-internal-links check-img-svg check-lang])
+   check-guests check-unannounced check-forbidden-words check-no-employer check-internal-links check-img-svg check-lang])
 
 ;; ---- Site-wide checks ------------------------------------------------------
 
@@ -196,7 +213,8 @@
         unconfirmed (for [day (:days d) g (get-in day [:day/session :guests])
                           :when (not (:confirmed? g))] (:name g))
         files (sort (map str (fs/glob out-dir "**.html")))
-        ctx   {:base base :out-dir out-dir :site site :unconfirmed unconfirmed}]
+        ctx   {:base base :out-dir out-dir :site site :unconfirmed unconfirmed
+               :unannounced (unannounced-titles d)}]
     {:pages (count files)
      :problems
      (concat
