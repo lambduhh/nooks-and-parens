@@ -92,6 +92,12 @@
            printed: document.getElementById('wb-printed').hidden ? null : document.getElementById('wb-printed-text').textContent,
            errhelp: !document.getElementById('wb-errhelp').hidden})"))
 
+(defn- one-line
+  "A pretty-printed result joined back onto one line: the Workbench's printer
+  only adds line breaks (and indentation after them) to pr-str's output."
+  [s]
+  (str/replace s #"\n *" " "))
+
 (def ^:private ^:dynamic *strs* nil)
 
 (defn- settled
@@ -140,7 +146,7 @@
             code (js s "document.getElementById('wb-code').value")]
         (check (str "recipe " k ": button loads its code") (= (:code r) code))
         (let [{:keys [kind value]} (craft! s code)]
-          (check (str "recipe " k ": result matches :expect") (= (:expect r) value) (str "got " value))
+          (check (str "recipe " k ": result matches :expect") (= (:expect r) (one-line value)) (str "got " value))
           (check (str "recipe " k ": kind label matches the offline label")
                  (= (wb/value-kind (:expect r)) kind) (str "got " kind)))))
     (let [r (craft! s "(println \"hello\" 1)\n(prn {:a 1})\n:done")]
@@ -152,6 +158,23 @@
     (let [r (craft! s "(range)")]
       (check "an infinite seq prints truncated instead of hanging"
              (and (= "seq" (:kind r)) (str/ends-with? (:value r) "...)")) (subs (:value r) 0 (min 40 (count (:value r))))))
+    (let [r (craft! s "[{:name \"alice\" :count 3} {:name \"bob\" :count 5} {:name \"cara\" :count 2}]")]
+      (check "a result too long for one line prints one item per line"
+             (= "[{:name \"alice\", :count 3}\n {:name \"bob\", :count 5}\n {:name \"cara\", :count 2}]" (:value r))
+             (pr-str (:value r))))
+    (let [r (craft! s "{:elves [{:name \"Ada\" :snacks [1000 2000 3000]} {:name \"Grace\" :snacks [4000]}] :total 10000}")]
+      (check "nested results indent under their parent, one map entry per line"
+             (= "{:elves [{:name \"Ada\", :snacks [1000 2000 3000]}\n         {:name \"Grace\", :snacks [4000]}],\n :total 10000}" (:value r))
+             (pr-str (:value r))))
+    (let [r (craft! s "(range 30)")]
+      (check "plain values pack onto lines"
+             (= "(0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19\n 20 21 22 23 24 25 26 27 28 29)" (:value r))
+             (pr-str (:value r))))
+    (let [code "(into (sorted-map) (for [y (range 4) x (range 4)] [[x y] (if (= x y) \"#\" \".\")]))"
+          r    (craft! s code)
+          flat (:value (craft! s (str "(pr-str " code ")")))]
+      (check "pretty output joined onto one line is exactly pr-str"
+             (= (pr-str (one-line (:value r))) flat) (str (pr-str (:value r)) " vs " flat)))
     (let [r (craft! s "(+ 1\n   (nope 2))")]
       (check "an error shows its kind, position and message, and the how-to link"
              (and (= (strs :workbench/error-kind) (:kind r))
