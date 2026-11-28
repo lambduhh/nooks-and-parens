@@ -107,6 +107,13 @@
   [s]
   (str/replace s #"\n *" " "))
 
+(defn- feedback [s]
+  (js s "({shown: !document.getElementById('wb-feedback').hidden,
+           verdict: document.getElementById('wb-verdict').hidden ? null : document.getElementById('wb-verdict').textContent,
+           hint: document.getElementById('wb-hint').hidden ? null : document.getElementById('wb-hint').textContent,
+           whyHidden: document.getElementById('wb-why-box').hidden,
+           why: document.getElementById('wb-why').textContent})"))
+
 (def ^:private ^:dynamic *strs* nil)
 
 (defn- settled
@@ -149,15 +156,30 @@
     (check "status says the evaluator is ready"
            (= (strs :workbench/status-ready) (js s "document.getElementById('wb-status').textContent")))
     (check "controls are shown" (false? (js s "document.getElementById('wb-controls').hidden")))
-    (doseq [[k r] recipes]
+    (doseq [{k :id :keys [kind title code expect solution why hint]} recipes]
       (js s (str "document.getElementById('" (name k) "').click()"))
-      (let [{:keys [kind value]} (result s)
-            code (js s "document.getElementById('wb-code').value")]
-        (check (str "recipe " k ": button loads its code") (= (:code r) code))
-        (let [{:keys [kind value]} (craft! s code)]
-          (check (str "recipe " k ": result matches :expect") (= (:expect r) (one-line value)) (str "got " value))
-          (check (str "recipe " k ": kind label matches the offline label")
-                 (= (wb/value-kind (:expect r)) kind) (str "got " kind)))))
+      (check (str "exercise " k ": button loads its code")
+             (= code (js s "document.getElementById('wb-code').value")))
+      (check (str "exercise " k ": the task panel shows it")
+             (= title (js s "document.getElementById('wb-ex-title').textContent")))
+      (if expect
+        (let [res (craft! s code) fb (feedback s)]
+          (check (str "exercise " k ": result matches :expect") (= expect (one-line (:value res))) (str "got " (:value res)))
+          (check (str "exercise " k ": kind label matches the offline label")
+                 (= (wb/value-kind expect) (:kind res)) (str "got " (:kind res)))
+          (if (= :predict kind)
+            (check (str "exercise " k ": running shows the why")
+                   (and (:shown fb) (not (:whyHidden fb)) (= why (:why fb))) (pr-str fb))
+            (check (str "exercise " k ": the starter isn't the goal yet; the hint shows")
+                   (and (= (strs :workbench/no-match) (:verdict fb)) (= hint (:hint fb)) (:whyHidden fb)) (pr-str fb))))
+        (let [res (craft! s code)]
+          (check (str "exercise " k ": blanks are caught before running")
+                 (= (strs :workbench/blanks) (:value res)) (pr-str res))))
+      (when solution
+        (let [res (craft! s (apply str/replace-first code solution)) fb (feedback s)]
+          (check (str "exercise " k ": the solution matches the goal and shows the why")
+                 (and (= (strs :workbench/match) (:verdict fb)) (not (:whyHidden fb)) (= why (:why fb)))
+                 (str (pr-str fb) " result " (:value res))))))
     (let [r (craft! s "(println \"hello\" 1)\n(prn {:a 1})\n:done")]
       (check "println/prn output is shown, value is the last form"
              (and (= ":done" (:value r)) (= "hello 1\n{:a 1}" (:printed r))) (pr-str r)))
@@ -236,7 +258,7 @@
       (check "Stop stops it at once" (= (*strs* :workbench/stopped-by-you) (:value r)) (pr-str r)))
     (check "and the evaluator works again" (= "6" (:value (craft! s "(* 2 3)"))))
 
-    (let [[k r] (last recipes)]
+    (let [r (last recipes) k (:id r)]
       (goto! s "about:blank")
       (goto! s (str url "#" (name k)))
       (check (str "/workbench/#" (name k) " opens that recipe")
@@ -277,7 +299,7 @@
     (settled s)
     (check "status says offline preview"
            (= (strs :workbench/status-offline) (js s "document.getElementById('wb-status').textContent")))
-    (let [[k r] (first recipes)]
+    (let [r (first recipes) k (:id r)]
       (js s (str "document.getElementById('" (name k) "').click()"))
       (let [res (craft! s (js s "document.getElementById('wb-code').value"))]
         (check (str "an unedited starter (" k ") shows its :expect") (= (:expect r) (:value res)) (pr-str res))))

@@ -1,6 +1,7 @@
 (ns nooks.workbench-test
   "The Workbench page's HTML. Behaviour in a browser is bb test:browser."
   (:require [babashka.fs :as fs]
+            [clojure.edn :as edn]
             [clojure.string :as str]
             [clojure.test :refer [deftest is testing]]
             [nooks.build :as build]
@@ -18,8 +19,11 @@
   (is (= "keyword" (wb/value-kind ":k")))
   (is (= "nil" (wb/value-kind "nil")))
   (testing "every recipe's :expect reads as EDN"
-    (doseq [[k r] (:recipes (data/load-all))]
-      (is (string? (wb/value-kind (:expect r))) (str k)))))
+    (doseq [{:keys [id expect]} (:recipes (data/load-all)) :when expect]
+      (is (string? (wb/value-kind expect)) (str id))))
+  (testing "every exercise's :goal reads as EDN"
+    (doseq [{:keys [id goal]} (:recipes (data/load-all)) :when goal]
+      (is (some? (edn/read-string goal)) (str id)))))
 
 (def out ".work/test-workbench")
 
@@ -43,8 +47,10 @@
           (is (re-find #"id=\"wb-clear\" type=\"button\">Clear code</button>" html))
           (is (re-find #"id=\"wb-stop\" type=\"button\">Stop running code</button>" html))
           (is (re-find #">Load a starter recipe \(replaces your code\)</h2>" html))
-          (doseq [[_ r] recipes]
-            (is (str/includes? html (str ">Load: " (:title r) "</button>")) (:title r))))
+          (doseq [r recipes]
+            (is (str/includes? html (str ">Load: " (:title r) "<span")) (:title r))))
+        (is (not (re-find #"(?i)&quot;solution&quot;|\"solution\"" html)) "solutions never reach the page")
+        (is (re-find #"id=\"wb-task\"" html) "the first exercise's task is on the page without JavaScript")
         (is (re-find #"data-worker=\"/[^\"]*/assets/js/workbench-worker\.js\"" html)
             "the evaluator runs in a self-hosted worker")
         (is (re-find #"data-time-limit=\"\d+\"" html) "runs have a time limit")
@@ -53,7 +59,7 @@
             "Scittle never runs on the page's main thread (an infinite loop would freeze the tab)")
         (is (re-find #"/learn/howto/errors/\"" html) "errors link the Reading an error how-to")
         (is (not (re-find #"(?i)squint" html)) "no squint, not even a link")
-        (doseq [[k _] recipes
+        (doseq [{k :id} recipes
                 :let [tag (re-find (re-pattern (str "<button\\b[^>]*\\sid=\"" (name k) "\"[^>]*>")) html)]]
           (is (boolean (and tag (str/includes? tag (str "data-recipe=\"" (name k) "\""))))
               (str "#" (name k) " anchors the starter recipe, for DIY recipe links")))))

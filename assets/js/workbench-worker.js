@@ -14,8 +14,8 @@
 //
 // Messages
 //   out:  {type: 'ready'} | {type: 'failed', message}
-//   in:   {id, code}
-//   out:  {id, ok: true, kind, value, printed}
+//   in:   {id, code, goal?}   goal: the exercise's goal as EDN text
+//   out:  {id, ok: true, kind, value, printed, match}   match: null without a goal
 //         {id, ok: false, message, line, column, printed}
 // Nothing here makes a network request beyond loading scittle.js, stores
 // anything, or reads cookies.
@@ -76,15 +76,16 @@ self.SCI_DISABLE_JIT = true;
     '            (pretty v))))\n' +
     ' (fn [e] (let [d (ex-data e)] (array (or (ex-message e) (str e)) (:line d) (:column d))))\n' +
     ' (fn [f] (set! *print-fn* (fn [& xs] (apply f xs)))\n' +
-    '         (set! *print-err-fn* (fn [& xs] (apply f xs))))))';
+    '         (set! *print-err-fn* (fn [& xs] (apply f xs))))\n' +
+    ' (fn [v g] (try (= v (read-string g)) (catch :default _ false)))))';
 
-  var evalString, show, err, lines = [];
+  var evalString, show, err, same, lines = [];
   try {
     // Relative to this file: /assets/js/ → /assets/vendor/.
     importScripts('../vendor/scittle.js');
     evalString = self.scittle.core.eval_string;
     var h = evalString(HELPERS);
-    show = h[0]; err = h[1];
+    show = h[0]; err = h[1]; same = h[3];
     h[2](function () { lines.push(Array.prototype.join.call(arguments, ' ')); });
     self.postMessage({ type: 'ready' });
   } catch (e) {
@@ -96,8 +97,11 @@ self.SCI_DISABLE_JIT = true;
     var id = m.data.id;
     lines = [];
     try {
-      var r = show(evalString(m.data.code));
-      self.postMessage({ id: id, ok: true, kind: r[0], value: r[1], printed: lines.join('\n') });
+      var v = evalString(m.data.code);
+      var r = show(v);
+      // An exercise's goal is compared by value, so set and map order don't matter.
+      var match = typeof m.data.goal === 'string' ? same(v, m.data.goal) : null;
+      self.postMessage({ id: id, ok: true, kind: r[0], value: r[1], printed: lines.join('\n'), match: match });
     } catch (e) {
       var info;
       try { info = err(e); } catch (_) { info = [String(e && e.message || e), null, null]; }
