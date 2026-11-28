@@ -46,6 +46,35 @@
               (list [:br]
                     (t lang :home/today-session (i18n/pad2 (get-in live [:day/session :n])))))))))
 
+(defn- battery
+  "Puzzles out so far as a cordless-tool battery (design-system power-tool
+  backlog; Jordan picked it in QA, 2026-11-28). The words carry the state;
+  the bars are decoration."
+  [lang as-of days]
+  (let [total (count days)
+        out   (count (filter #(state/unlocked? as-of %) days))]
+    [:div.battery
+     [:span.cells {:aria-hidden "true"}
+      (for [i (range total)]
+        [:span {:class (if (< i out) "cell on" "cell")}])]
+     [:span.battery-text (t lang :home/battery out total)]]))
+
+(defn- puzzle-card
+  "Today's puzzle as a link (never embedded: puzzles are linked, not copied),
+  and the day's DIY recipes, each opening in the Workbench."
+  [ctx day]
+  (let [lang    (:lang ctx)
+        recipes (get-in ctx [:data :recipes])]
+    [:div.puzzle-card
+     [:p [:a {:href (:day/puzzle-url day)}
+          (t lang :home/puzzle-link (i18n/pad2 (:day/n day)))]]
+     (when-let [ks (seq (filter recipes (:day/recipes day)))]
+       [:p (t lang :label/diy-recipes) ": "
+        (interpose ", "
+                   (for [k ks]
+                     [:a {:href (str (layout/route-href ctx :workbench) "#" (name k))}
+                      (get-in recipes [k :title])]))])]))
+
 (defn page [ctx]
   (let [{:keys [lang as-of]} ctx
         {:keys [site days]} (:data ctx)
@@ -57,8 +86,16 @@
      (list
       [:h1.sr-only (:site/name site)]
       [:div.dialog
-       [:span.who (:site/name site)]
-       [:p.line1 (:site/positioning site)]
+       [:p.line1 (:site/positioning site)
+        ;; Power-tool icons, decoration only: the line reads as its words.
+        (when-let [ids (seq (:site/positioning-icons site))]
+          (list " " [:span.ptools (for [id ids] (layout/icon (name id)))]))]
+       ;; What the site is, for someone who just landed (Jordan's QA, 2026-11-28).
+       [:p.intro (t lang :home/intro)
+        (when (:template/public? site)
+          (list " " [:a {:href (:template/url site)} (t lang :home/intro-template)]))]
+       (when-let [post (:site/intro-post site)]
+         [:p.intro [:a {:href (layout/href ctx post)} (t lang :home/intro-blog)]])
        [:span.more {:aria-hidden "true"} "▼"]]
 
       [:div.cols
@@ -83,6 +120,9 @@
        [:section.panel {:aria-labelledby "td"}
         [:h2#td (t lang :home/today (i18n/day-label (state/utc-date as-of)))]
         [:p (today-line ctx days)]
+        ;; Only while the event runs: after it, "All 12 days are out." says it.
+        (when (and today (not (state/archive? as-of days)))
+          (list (puzzle-card ctx today) (battery lang as-of days)))
         (c/readout (t-str lang :home/readout-label) "(today)" (today-value as-of days))]]
 
       [:section.panel {:aria-labelledby "sched"}

@@ -4,7 +4,7 @@ title: "Content model"
 description: "The EDN files every Power Tools & Parens page is built from, and how page state is derived from them."
 tags: [nooks-and-parens, data]
 created: 2026-11-24
-modified: 2026-11-27
+modified: 2026-11-28
 ai_assisted: "Claude via Claude Desktop (Claude Design); updated by Claude Code"
 session: unrecorded
 tools: unrecorded
@@ -24,10 +24,13 @@ Every page is built from the EDN files in `data/`. A daily update is a data edit
  :site/tagline       "It's dangerous to go alone! Take this."
  :site/tagline-emoji "📝🧚"     ; decorative, after the tagline, aria-hidden; nil for none
  :site/positioning   "Clojure. A power tool for evolving systems."
+ :site/positioning-icons [:drill :circular-saw]   ; sprite icons (nooks.layout/sprite) after the positioning line, aria-hidden; [] for none
+ :site/intro-post   "/blog/announcement.html"   ; linked from the landing dialog; nil for none
  :site/url           "https://lambduhh.github.io/powertools-and-parens"   ; GitHub Pages project site, no trailing slash
  :site/base-path     "/powertools-and-parens"                               ; prefixes every generated link
  :site/author        "Jordan Miller"                                   ; the blog feed author
  :site/languages     [:en :pt-BR]
+ :site/translated    #{:en}     ; languages with real translations; the switch shows the others faded, "em breve", unlinked
  :cta/slack          {:label "Join #adventofcode on Clojurians Slack" :url "https://clojurians.net"}
  :cta/slack-channel  nil        ; Jordan pastes the verified channel link here
  :cta/discord        {:url "https://discord.clojure.camp"}

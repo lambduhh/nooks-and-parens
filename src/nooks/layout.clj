@@ -71,6 +71,16 @@
                   "base-uri 'self'"
                   "form-action 'self'"]))
 
+(defn- saw-blade
+  "SVG path for a toothed blade: n teeth, tips on radius ro, gullets on ri."
+  [cx cy ro ri n]
+  (str "M"
+       (str/join "L" (for [i (range (* 2 n))
+                           :let [a (* i (/ Math/PI n))
+                                 r (if (even? i) ro ri)]]
+                       (format "%.1f %.1f" (+ cx (* r (Math/cos a))) (+ cy (* r (Math/sin a))))))
+       "z"))
+
 (def sprite
   "Icon symbols, referenced by <use>. Every <svg> on the site is decorative and
   carries aria-hidden; text always says the same thing."
@@ -80,7 +90,10 @@
    [:symbol {:id "t-wrench" :viewBox "0 0 48 48"} [:path {:d "M30 4a10 10 0 0 0-9 14L5 34l9 9 16-16A10 10 0 0 0 44 18l-7 2-5-5 2-7a10 10 0 0 0-4-4z"}]]
    [:symbol {:id "t-saw" :viewBox "0 0 48 48"} [:path {:d "M16 12h28v14L16 38z"}] [:path {:d "M3 10h13v18H3z"}]]
    [:symbol {:id "t-level" :viewBox "0 0 48 48"} [:rect {:x "3" :y "17" :width "42" :height "14" :rx "4"}] [:rect {:x "19" :y "20" :width "10" :height "8" :rx "4"}]]
-   [:symbol {:id "t-tape" :viewBox "0 0 48 48"} [:path {:d "M22 8a16 16 0 1 0 16 16V8z"}] [:rect {:x "34" :y "34" :width "12" :height "6"}] [:circle {:cx "22" :cy "24" :r "5"}]]
+   ;; Power tools (Jordan's QA, 2026-11-28: the emoji were hand tools).
+   [:symbol {:id "t-drill" :viewBox "0 0 48 48"} [:rect {:x "4" :y "9" :width "28" :height "13" :rx "5"}] [:rect {:x "32" :y "11" :width "6" :height "9" :rx "1"}] [:path {:d "M38 14.5h8v2h-8z"}] [:path {:d "M12 22h10l-2 13h-8z"}] [:rect {:x "7" :y "35" :width "18" :height "8" :rx "2"}]]
+   [:symbol {:id "t-circular-saw" :viewBox "0 0 48 48"} [:path {:d (saw-blade 22 29 16 13 18)}] [:path {:d "M5 27a17 17 0 0 1 34 0z"}] [:path {:d "M30 12l7-7h8v7l-9 5z"}] [:circle {:cx "22" :cy "29" :r "3"}]]
+   [:symbol {:id "t-tape":viewBox "0 0 48 48"} [:path {:d "M22 8a16 16 0 1 0 16 16V8z"}] [:rect {:x "34" :y "34" :width "12" :height "6"}] [:circle {:cx "22" :cy "24" :r "5"}]]
    [:symbol {:id "t-map" :viewBox "0 0 48 48"} [:path {:d "M4 10l13-5 14 5 13-5v33l-13 5-14-5-13 5z"}] [:path {:d "M17 5v33M31 10v33" :fill "none"}]]
    [:symbol {:id "t-cal" :viewBox "0 0 48 48"} [:rect {:x "5" :y "9" :width "38" :height "34" :rx "5"}] [:path {:d "M5 19h38M15 4v10M33 4v10" :fill "none"}]]
    [:symbol {:id "t-bench" :viewBox "0 0 48 48"} [:rect {:x "3" :y "14" :width "42" :height "8" :rx "2"}] [:path {:d "M8 22v20h5V22M35 22v20h5V22"}]]
@@ -136,9 +149,16 @@
                    ;; Pages at their own path (template guides): same path, other language.
                    (:path ctx) (href ctx (str (lang-prefix other) (:path ctx)))
                    :else (route-href ctx other (or route :home)))
+        translated (:site/translated site)
         lang-link (fn [l]
-                    (if (= l lang)
+                    (cond
+                      (= l lang)
                       [:a {:aria-current "true" :lang (name l)} (t lang (keyword "lang" (name l)))]
+                      ;; No translation yet: faded, said in words, and not a link.
+                      ;; muted on paper-2 is a checked pair (5.6:1).
+                      (not (contains? translated l))
+                      [:span.soon {:lang (name l)} (t lang (keyword "lang" (str (name l) "-soon")))]
+                      :else
                       [:a {:href twin :hreflang (name l) :lang (name l)} (t lang (keyword "lang" (name l)))]))]
     [:header.signpost
      [:div.ropes {:aria-hidden "true"} [:span] [:span]]

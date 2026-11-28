@@ -17,6 +17,7 @@
  ;; Chrome
  :lang/en               "EN"
  :lang/pt-BR            "PT-BR"
+ :lang/pt-BR-soon       "PT-BR · em breve"   ; shown, unlinked, while :pt-BR isn't in :site/translated
  :lang/switch           "Language"
  :skip-link             "Skip to content"
  :toolbelt/label        "Toolbelt"
@@ -41,6 +42,13 @@
  :route/not-found       "Page not found"
 
  ;; Landing
+ ;; The landing dialog's explainer, under the positioning line (Jordan's QA, 2026-11-28).
+ :home/intro            "Advent of Code is a small puzzle every day in December, and it's way more fun with friends. This is where we do it in Clojure: sessions to solve together, how-tos for the libraries people actually reach for, and a Workbench to try Clojure with nothing to install."
+ :home/intro-template   "Want your own setup? Grab the template."
+ :home/intro-blog       "Why I built this"
+ ;; Today panel in December: puzzle link card and battery meter (Jordan's QA, 2026-11-28).
+ :home/puzzle-link      "Read Day %s on adventofcode.com"
+ :home/battery          "%s of %s puzzles out"
  :home/menu             "Main menu"
  :home/menu-start       "zero to a running REPL"
  :home/menu-today-soon  "from %s"
