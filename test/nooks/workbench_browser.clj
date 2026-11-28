@@ -48,13 +48,22 @@
         ids     (atom 0)
         pending (atom {})
         events  (atom [])
+        ;; Chrome splits large CDP messages into WebSocket fragments; on-message
+        ;; gets each with last? false until the final one. Parse only whole
+        ;; messages: parsing a fragment threw, dropped the reply, and the call
+        ;; timed out ("CDP timeout: Runtime.evaluate", intermittent).
+        buf     (StringBuilder.)
         conn    (ws/websocket
                  {:uri (:webSocketDebuggerUrl tab)
-                  :on-message (fn [_ data _last]
-                                (let [m (json/parse-string (str data) true)]
+                  :on-message (fn [_ data last?]
+                                (.append buf (str data))
+                                (when last?
+                                 (let [text (str buf)
+                                       _    (.setLength buf 0)
+                                       m    (json/parse-string text true)]
                                   (if-let [pr (and (:id m) (get @pending (:id m)))]
                                     (deliver pr m)
-                                    (swap! events conj m))))})]
+                                    (swap! events conj m)))))})]
     {:events events
      :call (fn [method & [params]]
              (let [id (swap! ids inc), pr (promise)]
