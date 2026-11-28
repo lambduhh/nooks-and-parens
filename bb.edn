@@ -18,8 +18,8 @@
   test     {:doc "Unit tests: data shape, state logic at the date edges, i18n"
             :extra-paths ["test"]
             :requires ([clojure.test :as t]
-                       [nooks.data-test] [nooks.state-test] [nooks.i18n-test] [nooks.check-test] [nooks.template-test] [nooks.workbench-test])
-            :task (let [{:keys [fail error]} (t/run-tests 'nooks.data-test 'nooks.state-test 'nooks.i18n-test 'nooks.check-test 'nooks.template-test 'nooks.workbench-test)]
+                       [nooks.data-test] [nooks.state-test] [nooks.i18n-test] [nooks.check-test] [nooks.template-test] [nooks.workbench-test] [nooks.home-test])
+            :task (let [{:keys [fail error]} (t/run-tests 'nooks.data-test 'nooks.state-test 'nooks.i18n-test 'nooks.check-test 'nooks.template-test 'nooks.workbench-test 'nooks.home-test)]
                     (System/exit (if (zero? (+ fail error)) 0 1)))}
   test:browser {:doc "The Workbench in headless Chrome: every starter recipe, errors, keys, the infinite-loop failsafe, offline preview. Needs Chrome ($CHROME to override)"
                 :extra-paths ["test"]
