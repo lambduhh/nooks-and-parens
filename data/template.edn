@@ -11,7 +11,7 @@
 ;;   :diagram-first? moves the page's Mermaid diagram to just under its title.
 ;; Every src/howto/*.clj file also becomes a how-to page at /learn/howto/<name>/.
 ;; Any other file a guide links to opens on GitHub at the pinned commit.
-{:template/sha "3d7bd26828322a7154e6de3230a99f2e1b2d746a"
+{:template/sha "cabd6f374a04486f051df21345c5a612b38d1513"
  :template/pages
  [{:path "docs/setup-flowchart.md"         :hub "/start/"                   :kind :how-to :diagram-first? true}
   {:path "docs/tutorial.md"                :hub "/learn/tutorial/"          :kind :tutorial}
