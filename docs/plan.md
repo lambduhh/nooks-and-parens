@@ -50,7 +50,7 @@ Create `data/site.edn`, check `data/days.edn`, `data/recipes.edn`, `data/videos.
 
 ### 3. State logic — Claude Code
 `src/nooks/state.clj`: pure functions from `(as-of, day)` to state, exactly as in `docs/content-model.md` § Derived state. No `now` calls inside; `as-of` is passed in.
-**Done when:** `bb test` covers: before Dec 1; unlock morning (04:59 vs 05:00 UTC); gate edge (unlock + 4 days, 04:59 vs 05:00); session day ("Today"); day after session ("Replay ready" only if a video id exists); after Dec 22; mid-January.
+**Done when:** `bb test` covers: before Dec 1; unlock morning (04:59 vs 05:00 UTC); gate edge (unlock + 3 days, 04:59 vs 05:00); session day ("Today"); day after session ("Replay ready" only if a video id exists); after Dec 22; mid-January.
 
 ### 4. Styles — Claude Code
 Port the prototype's CSS into `assets/css/site.css` using the tokens in `docs/design-system.md`. Self-host Nunito and IBM Plex Mono (check their licences; both are OFL) or fall back to system fonts.
@@ -132,7 +132,7 @@ In this order on the page:
 
 ## Checks
 
-`bb check` builds for each date: `2026-11-30`, `2026-12-01T04:59Z`, `2026-12-01T05:00Z`, `2026-12-05T04:59Z`, `2026-12-05T05:00Z`, `2026-12-07`, `2026-12-11`, `2026-12-18`, `2026-12-23`, `2027-01-15`. For every HTML page it fails if:
+`bb check` builds for each date: `2026-11-30`, `2026-12-01T04:59Z`, `2026-12-01T05:00Z`, `2026-12-04T04:59Z`, `2026-12-04T05:00Z`, `2026-12-07`, `2026-12-11`, `2026-12-18`, `2026-12-23`, `2027-01-15`. For every HTML page it fails if:
 
 - [ ] there isn't exactly one element with the primary-button class;
 - [ ] a day page before its gate contains a replay embed, a solutions list, a tutorial link or ring links;

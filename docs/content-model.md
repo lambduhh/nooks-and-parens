@@ -44,7 +44,7 @@ A vector of 12 maps. See the file for all of them.
 ```clojure
 {:day/n             1
  :day/unlock        #inst "2026-12-01T05:00:00Z"   ; 00:00 EST
- :day/spoiler-until #inst "2026-12-05T05:00:00Z"   ; unlock + 4 days
+ :day/spoiler-until #inst "2026-12-04T05:00:00Z"   ; unlock + 3 days
  :day/puzzle-url    "https://adventofcode.com/2026/day/1"
  :day/tool          :hammer                        ; icon on the tool wall
  :day/session       {:n 1 :date #inst "2026-12-04" :format :live-coding

@@ -21,6 +21,7 @@ What's decided, what's open, and who decides. Decided items aren't reopened with
 
 | Date | Decision | Notes |
 |---|---|---|
+| 2026-11-27 | **Spoiler gate: unlock + 3 days** (was 4). Every session now falls on or after its puzzle's gate; Session 1 (Fri 4 Dec, Day 1) had fallen a day early. A test fails any session dated before its gate | Supersedes the 2026-11-24 four-day row. Meets the 2026-11-06 rule of at least 3 days |
 | 2026-11-27 | **Launch: draft markers removed.** Every remaining `{:draft …}` string accepted as final; the Formats page leaves out empty fields instead of showing "To be written" | New copy Jordan hasn't written still uses `{:draft …}` |
 | 2026-11-27 | **"Shop hours" heads the session schedule,** with "Session calendar" under it. Replaces "What're ya REPLin'?", which didn't say what the list was | A hardware-store riff that still reads as a schedule |
 | 2026-11-27 | **Session details stay hidden until announced.** A session's format, day covered, time and guests render only when `:announced? true` in `data/days.edn`; until then the row is decorative pixel bars, a screen-reader line, and the date. `bb check` fails a page that shows an unannounced session's title | Sessions' contents aren't settled. Mirrors guests' `:confirmed?` |

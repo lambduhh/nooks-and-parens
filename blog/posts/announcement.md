@@ -120,7 +120,7 @@ Some sessions will be recorded. Recordings go up on [ClojureTV](https://www.yout
 
 ## 7. Security Considerations
 
-<p class="body">The spoiler policy: anything here that gives away a solution waits until 4 days after its puzzle unlocks.</p>
+<p class="body">The spoiler policy: anything here that gives away a solution waits until 3 days after its puzzle unlocks.</p>
 
 ## 8. References
 

@@ -30,19 +30,27 @@
     (is (= 1 (:day/n (s/today-day (at "2026-12-01T05:00Z") days))))))
 
 (deftest gate-edge
-  (testing "solutions open at unlock + 4 days, 05:00 UTC"
-    (is (= :locked (s/status (at "2026-12-05T04:59Z") (day 1))))
-    (is (not (s/open? (at "2026-12-05T04:59Z") (day 1))))
-    (is (= :discord-session (s/primary-cta (at "2026-12-05T04:59Z") (day 1))))
-    (is (= :open (s/status (at "2026-12-05T05:00Z") (day 1))))
-    (is (= :slack-day (s/primary-cta (at "2026-12-05T05:00Z") (day 1))))
-    (is (= [1] (s/open-days (at "2026-12-05T05:00Z") days)))))
+  (testing "solutions open at unlock + 3 days, 05:00 UTC"
+    (is (= :locked (s/status (at "2026-12-04T04:59Z") (day 1))))
+    (is (not (s/open? (at "2026-12-04T04:59Z") (day 1))))
+    (is (= :discord-session (s/primary-cta (at "2026-12-04T04:59Z") (day 1))))
+    (is (= :open (s/status (at "2026-12-04T05:00Z") (day 1))))
+    (is (= :slack-day (s/primary-cta (at "2026-12-04T05:00Z") (day 1))))
+    (is (= [1] (s/open-days (at "2026-12-04T05:00Z") days)))))
 
-(deftest spoiler-dates-are-unlock-plus-four-days
+(deftest spoiler-dates-are-unlock-plus-three-days
   (doseq [d days]
-    (is (= (.plus (s/->instant (:day/unlock d)) (java.time.Duration/ofDays 4))
+    (is (= (.plus (s/->instant (:day/unlock d)) (java.time.Duration/ofDays 3))
            (s/->instant (:day/spoiler-until d)))
         (str "day " (:day/n d)))))
+
+(deftest no-session-before-its-gate
+  ;; A session discusses its puzzle, so it can't be on a UTC day before that
+  ;; day's spoiler gate (Jordan, 2026-11-27: session 1 once fell a day early).
+  (doseq [d days]
+    (is (not (.isBefore (s/utc-date (get-in d [:day/session :date]))
+                        (s/utc-date (:day/spoiler-until d))))
+        (str "session " (get-in d [:day/session :n]) " is before day " (:day/n d) "'s gate"))))
 
 (deftest session-day
   (let [t (at "2026-12-04")]

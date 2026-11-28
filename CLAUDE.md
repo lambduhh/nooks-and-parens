@@ -69,7 +69,7 @@ notes/       private (git-ignored)
 - The Workbench is a scratchpad, not a solver: no fetching puzzle inputs, no saved sessions, no squint (not even a link).
 
 ### Spoilers
-- A day's solutions, replay, tutorial and webring links appear only from **unlock + 4 days** (unlock is 00:00 EST = 05:00 UTC).
+- A day's solutions, replay, tutorial and webring links appear only from **unlock + 3 days** (unlock is 00:00 EST = 05:00 UTC).
 - The gate is a visible state with the date in words ("Solutions open Sat 5 Dec, 05:00 UTC"). Never blurred or hidden content revealed by a click.
 - DIY recipes are not solutions: they stay visible before the gate and never hint at an answer.
 

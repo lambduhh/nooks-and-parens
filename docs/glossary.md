@@ -75,7 +75,7 @@ The onboarding page at `/start/`: one curated path from official material, with 
 When a day's puzzle opens: 00:00 EST, which is 05:00 UTC (`:day/unlock`). A day is `unlocked?` once the [as-of](#as-of) instant reaches it. Source: [content model](content-model.md#derived-state).
 
 ### Spoiler date
-Unlock + 4 days (`:day/spoiler-until`). From this instant the day is `open?`, and its solutions, replay, tutorial and ring links can appear. Source: [content model](content-model.md#derived-state), [CLAUDE.md](../CLAUDE.md#spoilers).
+Unlock + 3 days (`:day/spoiler-until`). From this instant the day is `open?`, and its solutions, replay, tutorial and ring links can appear. Source: [content model](content-model.md#derived-state), [CLAUDE.md](../CLAUDE.md#spoilers).
 **Not the same as** the [spoiler gate](#spoiler-gate): the date is data, and the gate is what the page shows.
 
 ### Spoiler gate
