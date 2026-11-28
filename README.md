@@ -81,6 +81,7 @@ Open <http://localhost:1888/powertools-and-parens/blog/my-post.html> and edit `b
 
 - doesn't have exactly one primary button;
 - loads anything from another site, or has an inline script or style (the Content-Security-Policy would block it);
+- has a Content-Security-Policy that allows any other site than YouTube's no-cookie player and the GoatCounter site;
 - links to a page or in-page anchor that doesn't exist;
 - links the template repo before it's public, or names a guest who hasn't confirmed;
 - uses a feature word (immutable, functional, fast, …) in a heading or status chip;
@@ -92,9 +93,10 @@ Each rule has a test that feeds it a violation.
 
 ## Privacy and security
 
-- No cookies, no trackers, no analytics, no third-party requests on page load. Fonts are self-hosted.
+- No cookies, no trackers, and nothing loaded from another site when a page opens. Fonts and scripts are self-hosted.
+- The site counts page visits and a few clicks (the Slack and Discord buttons, the template link, Workbench runs) with [GoatCounter](https://www.goatcounter.com/), which doesn't use cookies. A visit sends the page's address, its title and the page you came from; a click sends its name and the page it was on. It never sends what you type in the Workbench, and nothing is sent if your browser has Do Not Track or Global Privacy Control turned on. Details: [docs/analytics.md](docs/analytics.md).
 - Session videos (from December) load from `youtube-nocookie.com`, and only when you click.
-- A Content-Security-Policy `<meta>` tag allows only same-origin scripts, styles, fonts and images.
+- A Content-Security-Policy `<meta>` tag allows only same-origin scripts, styles, fonts and images. The one other site it lets the page contact is GoatCounter, to send those counts.
 - The one thing stored in your browser is whether the toolbelt number-key shortcuts are on (`localStorage`, never sent anywhere).
 - `bb dev` listens on `127.0.0.1` only.
 - Posts may contain raw HTML, so a post PR is reviewed like a code PR.
