@@ -1,7 +1,6 @@
 Title: Clojure Template and Tooling Helpers for Advent of Code 2026
 Date: 2026-11-24
 Tags: announcement
-Preview: true
 Draft-Title: false
 Style: rfc
 Rfc-Number: 0001
@@ -41,8 +40,6 @@ Draft-Header: false
 -->
 
 ## Status of This Memo
-
-<p class="header"> Draft (not yet published, wip)</p>
 
 ## Abstract
 
