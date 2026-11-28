@@ -4,7 +4,8 @@
   (:require [babashka.fs :as fs]
             [clojure.test :refer [deftest is testing]]
             [nooks.check]
-            [nooks.denylist]))
+            [nooks.denylist]
+            [nooks.layout]))
 
 (defn run [chk html & [ctx]] (seq ((deref chk) (merge {:site {:template/public? false}} ctx) html)))
 
@@ -21,6 +22,24 @@
   (is (run #'nooks.check/check-external-loads "<script>alert(1)</script>") "inline script")
   (is (nil? (run #'nooks.check/check-external-loads
                  "<script src=\"/n/a.js\"></script><a href=\"https://clojurians.net\">x</a><link rel=\"alternate\" href=\"https://x.example/atom.xml\">"))))
+
+(deftest csp-origins
+  (let [page #(str "<meta http-equiv=\"Content-Security-Policy\" content=\"" % "\">")]
+    (is (run #'nooks.check/check-csp-origins "<p>no policy</p>"))
+    (is (run #'nooks.check/check-csp-origins "<meta content=\"img-src https://t.example\" http-equiv=\"Content-Security-Policy\">")
+        "content= before http-equiv=, as hiccup prints it")
+    (is (run #'nooks.check/check-csp-origins (page "connect-src 'self' https://tracker.example")))
+    (is (run #'nooks.check/check-csp-origins (page "connect-src 'self' https://pt.goatcounter.com"))
+        "a GoatCounter origin with analytics off")
+    (is (nil? (run #'nooks.check/check-csp-origins
+                   (page "connect-src 'self' https://pt.goatcounter.com; frame-src https://www.youtube-nocookie.com")
+                   {:site {:analytics/goatcounter "pt"}})))))
+
+(deftest analytics-code
+  (is (= "https://pt-x.goatcounter.com" (nooks.layout/analytics-origin {:analytics/goatcounter "pt-x"})))
+  (is (nil? (nooks.layout/analytics-origin {})))
+  (is (thrown? clojure.lang.ExceptionInfo
+               (nooks.layout/analytics-origin {:analytics/goatcounter "x.evil.example; script-src *"}))))
 
 (deftest template-gate
   (is (run #'nooks.check/check-template-gate "<a href=\"https://github.com/lambduhh/clojure-template-aoc\">t</a>"))

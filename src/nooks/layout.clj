@@ -56,20 +56,35 @@
 
 ;; ---- Pieces ----------------------------------------------------------------
 
-(def csp
+(defn analytics-origin
+  "The GoatCounter origin for :analytics/goatcounter in site.edn, or nil when
+  analytics is off. The code goes into the CSP, so anything but a plain site
+  code is a build error rather than a policy we didn't mean to write."
+  [site]
+  (when-let [code (:analytics/goatcounter site)]
+    (when-not (and (string? code) (re-matches #"[a-z0-9][a-z0-9-]*" code))
+      (throw (ex-info "`:analytics/goatcounter` must be a GoatCounter site code like \"powertools\""
+                      {:analytics/goatcounter code})))
+    (str "https://" code ".goatcounter.com")))
+
+(defn csp
   "GitHub Pages can't set response headers, so the policy ships as a <meta>
   tag (which can't carry frame-ancestors). Same-origin only; YouTube frames
-  only from the no-cookie domain."
-  (str/join "; " ["default-src 'self'"
-                  "script-src 'self'"
-                  "style-src 'self'"
-                  "font-src 'self'"
-                  "img-src 'self' data:"
-                  "connect-src 'self'"
-                  "frame-src https://www.youtube-nocookie.com"
-                  "object-src 'none'"
-                  "base-uri 'self'"
-                  "form-action 'self'"]))
+  only from the no-cookie domain. With analytics on, site.js may also send a
+  hit to the GoatCounter origin: sendBeacon needs connect-src, the image
+  fallback needs img-src. Nothing is loaded from it."
+  [site]
+  (let [a (some->> (analytics-origin site) (str " "))]
+    (str/join "; " ["default-src 'self'"
+                    "script-src 'self'"
+                    "style-src 'self'"
+                    "font-src 'self'"
+                    (str "img-src 'self' data:" a)
+                    (str "connect-src 'self'" a)
+                    "frame-src https://www.youtube-nocookie.com"
+                    "object-src 'none'"
+                    "base-uri 'self'"
+                    "form-action 'self'"])))
 
 (def sprite
   "Icon symbols, referenced by <use>. Every <svg> on the site is decorative and
@@ -111,14 +126,17 @@
   (icon (name tool)))
 
 (defn primary-button
-  "The page's one primary action. `bb check` fails a page with zero or two."
+  "The page's one primary action. `bb check` fails a page with zero or two.
+  data-count names the click for analytics (site.js); the page it was on is
+  sent along with it, so one name per kind is enough."
   ([ctx] (primary-button ctx :slack))
   ([ctx kind & [label]]
    (let [site (get-in ctx [:data :site])]
      (case kind
-       :slack   [:a.pill {:href (or (:cta/slack-channel site) (get-in site [:cta/slack :url]))}
+       :slack   [:a.pill {:href (or (:cta/slack-channel site) (get-in site [:cta/slack :url]))
+                  :data-count "cta-slack"}
                  (or label (get-in site [:cta/slack :label]))]
-       :discord [:a.pill {:href (get-in site [:cta/discord :url])} label]))))
+       :discord [:a.pill {:href (get-in site [:cta/discord :url]) :data-count "cta-discord"} label]))))
 
 (defn crumbs [ctx & items]
   [:nav.crumbs {:aria-label (t-str (:lang ctx) :crumbs/label)}
@@ -203,8 +221,12 @@
       [:html {:lang (name lang)}
        [:head
         [:meta {:charset "utf-8"}]
-        [:meta {:http-equiv "Content-Security-Policy" :content csp}]
+        [:meta {:http-equiv "Content-Security-Policy" :content (csp site)}]
         [:meta {:name "referrer" :content "strict-origin-when-cross-origin"}]
+        ;; Where site.js sends counts. Absent when analytics is off, so site.js
+        ;; sends nothing. A <meta>, because the CSP forbids inline scripts.
+        (when-let [o (analytics-origin site)]
+          [:meta {:name "np-count" :content (str o "/count")}])
         [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
         [:title title]
         (when description [:meta {:name "description" :content description}])

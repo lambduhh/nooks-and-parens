@@ -377,7 +377,7 @@
                [:section.panel
                 [:h1 (layout/emoji :learn) (t lang :route/learn)]
                 [:p (t lang :learn/intro)]
-                [:p [:a {:href (:template/url site)} (t lang :learn/get-template)]]
+                [:p [:a {:href (:template/url site) :data-count "template"} (t lang :learn/get-template)]]
                 (layout/primary-button ctx)]
                ;; Diátaxis compass as two columns: study (tutorials over
                ;; explanation) and work (how-to over reference), practical on

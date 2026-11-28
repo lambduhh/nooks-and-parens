@@ -12,5 +12,6 @@
  :cta/discord        {:url "https://discord.clojure.camp"}
  :template/public?   true       ; public with "Use this template" on (checked 2026-11-24, gh repo view: isTemplate true)
  :template/url       "https://github.com/lambduhh/clojure-template-aoc"
+ :analytics/goatcounter nil  ; GoatCounter site code, e.g. "powertools" for powertools.goatcounter.com; nil = no analytics (docs/analytics.md)
  :aoc/year           2026
  :aoc/days           12}

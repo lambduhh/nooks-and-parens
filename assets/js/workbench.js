@@ -121,6 +121,8 @@
       var src = code.value;
       if (state === 'running') return;
       if (!src.trim()) { render(S.emptyKind, S.empty, { error: true }); return; }
+      // A count only: the name, never the code (site.js; a no-op when off).
+      if (window.npCount) window.npCount('workbench-run');
       if (state === 'offline') { offline(src); return; }
       if (state === 'starting') { queued = src; render(S.busyKind, S.starting); return; }
       run(src);

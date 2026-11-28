@@ -104,9 +104,10 @@ notes/       private (git-ignored)
 - Every video has captions.
 
 ### Privacy
-- No cookies, no trackers, no third-party requests on page load. Fonts and Scittle are self-hosted.
+- No cookies, no trackers, nothing loaded from a third party. Fonts and Scittle are self-hosted.
+- One exception, off until `:analytics/goatcounter` is set: `site.js` sends cookieless visit and click counts to GoatCounter (Jordan, 2026-11-28). What's sent, and what never is, is in `docs/analytics.md`. No other analytics or tracker; `bb check` fails a CSP that names any other off-site origin.
 - YouTube loads only on click, from `youtube-nocookie.com`.
-- The Workbench sends nothing anywhere and never asks for an Advent of Code session cookie.
+- The Workbench never sends what's typed and never asks for an Advent of Code session cookie. With analytics on, it counts that a run happened (`workbench-run`), nothing more.
 
 ## Docs metadata (temper)
 

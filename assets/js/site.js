@@ -30,3 +30,62 @@
     }
   });
 })();
+
+// Visit and click counts, sent to GoatCounter (cookieless; docs/analytics.md).
+// Off unless the page carries <meta name="np-count">, which the build adds
+// only when :analytics/goatcounter is set in data/site.edn.
+//
+// Sends: the page path and title, the referrer, and for a click the name in
+// its data-count (with the page it was on as the title). Never sends what's
+// typed in the Workbench, screen size, or anything stored on the device.
+// Nothing is sent from a local build, a prerender, or when the visitor's
+// browser asks not to be tracked (Do Not Track or Global Privacy Control).
+//
+// Other scripts count with window.npCount('name'); it's a no-op when off.
+(function () {
+  window.npCount = function () {};
+  var meta = document.querySelector('meta[name="np-count"]');
+  var endpoint = meta && meta.content;
+  if (!endpoint) return;
+  if (navigator.doNotTrack === '1' || navigator.globalPrivacyControl === true) return;
+  if (/^(localhost|127\.|\[::1\])/.test(location.hostname)) return;
+
+  function send(params) {
+    var q = [];
+    for (var k in params) q.push(k + '=' + encodeURIComponent(params[k]));
+    // b=153: GoatCounter's flag for a WebDriver-driven browser, so it's
+    // filed as a bot instead of a visit.
+    if (navigator.webdriver) q.push('b=153');
+    q.push('rnd=' + Math.random().toString(36).slice(2));
+    var url = endpoint + '?' + q.join('&');
+    // sendBeacon survives the page unloading, which a click on an outbound
+    // link does. The image is the fallback GoatCounter documents.
+    if (navigator.sendBeacon && navigator.sendBeacon(url)) return;
+    new Image().src = url;
+  }
+
+  function pageview() {
+    send({ p: location.pathname, t: document.title, r: document.referrer });
+  }
+
+  window.npCount = function (name) {
+    send({ p: name, t: location.pathname, e: 'true' });
+  };
+
+  if (document.visibilityState === 'prerender') {
+    document.addEventListener('visibilitychange', function once() {
+      if (document.visibilityState !== 'visible') return;
+      document.removeEventListener('visibilitychange', once);
+      pageview();
+    });
+  } else {
+    pageview();
+  }
+
+  // One listener for every element with data-count. 'click' also fires for
+  // keyboard activation of links and buttons.
+  document.addEventListener('click', function (e) {
+    var el = e.target && e.target.closest && e.target.closest('[data-count]');
+    if (el) window.npCount(el.getAttribute('data-count'));
+  });
+})();
