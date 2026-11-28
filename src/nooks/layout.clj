@@ -136,9 +136,16 @@
                    ;; Pages at their own path (template guides): same path, other language.
                    (:path ctx) (href ctx (str (lang-prefix other) (:path ctx)))
                    :else (route-href ctx other (or route :home)))
+        translated (:site/translated site)
         lang-link (fn [l]
-                    (if (= l lang)
+                    (cond
+                      (= l lang)
                       [:a {:aria-current "true" :lang (name l)} (t lang (keyword "lang" (name l)))]
+                      ;; No translation yet: faded, said in words, and not a link.
+                      ;; muted on paper-2 is a checked pair (5.6:1).
+                      (not (contains? translated l))
+                      [:span.soon {:lang (name l)} (t lang (keyword "lang" (str (name l) "-soon")))]
+                      :else
                       [:a {:href twin :hreflang (name l) :lang (name l)} (t lang (keyword "lang" (name l)))]))]
     [:header.signpost
      [:div.ropes {:aria-hidden "true"} [:span] [:span]]

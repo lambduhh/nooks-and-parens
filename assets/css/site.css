@@ -43,6 +43,7 @@ code,kbd{font-family:var(--mono);font-size:.88em;background:var(--paper-2);borde
 .sign .tagline{display:block;font:700 15px/1.3 var(--round);color:var(--paper);margin-top:4px}
 .lang{text-align:center;margin:10px auto 0;font-size:14px;max-width:none}
 .lang [aria-current]{font-weight:900;text-decoration:none}
+.lang .soon{color:var(--muted);background:var(--paper-2);border-radius:999px;padding:1px 8px;font-style:italic}
 
 /* Panels */
 .panel{background:var(--paper);border:3px solid var(--tan);border-radius:22px;padding:18px 20px;box-shadow:0 6px 0 rgba(0,0,0,.12);margin:18px 0}
@@ -54,8 +55,8 @@ p{margin:6px 0;max-width:68ch}
 
 /* Dialog box */
 .dialog{position:relative;background:var(--paper);border-radius:28px;padding:26px 24px 22px;margin:22px 0 18px;box-shadow:0 6px 0 rgba(0,0,0,.12);border:3px solid var(--tan)}
-.dialog .who{position:absolute;top:-16px;left:22px;background:var(--blue);color:var(--black);font-weight:900;font-size:14px;padding:4px 14px;border-radius:999px;border:3px solid var(--paper)}
 .dialog .line1{font:900 22px/1.3 var(--round);margin:0}
+.dialog .intro{margin:10px 0 0}
 .dialog .more{position:absolute;right:20px;bottom:10px;font-size:14px;color:var(--wood)}
 
 /* Main menu */
@@ -75,6 +76,16 @@ p{margin:6px 0;max-width:68ch}
 /* Two columns */
 .cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
 @media(max-width:760px){.cols{grid-template-columns:minmax(0,1fr)}}
+
+/* Today panel: puzzle link card and battery meter (Jordan's QA, 2026-11-28).
+   Text is black on white/paper; cells are decoration, the text says the count. */
+.puzzle-card{background:var(--white);border:2px solid var(--tan);border-radius:16px;padding:8px 14px;margin:8px 0}
+.puzzle-card p{margin:4px 0}
+.battery{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:8px 0}
+.battery .cells{display:inline-flex;gap:3px;padding:3px;border:2px solid var(--black);border-radius:6px;background:var(--white)}
+.battery .cell{width:10px;height:16px;border-radius:2px;background:var(--paper-2)}
+.battery .cell.on{background:var(--green)}
+.battery-text{font-weight:700}
 
 /* Clipboard data readout */
 .clip{background:var(--black);color:#f4f4f4;border-radius:16px;padding:12px 14px;font:13px/1.55 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0}
