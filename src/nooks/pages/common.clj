@@ -17,28 +17,46 @@
                         (if url [:a {:href url} name] name)))
       (t lang :session/guest-tba))))
 
+(defn- veil
+  "An unannounced session: pixel bars where the details will go. The bars are
+  CSS shapes, not blurred text, so nothing about the session is in the HTML
+  (reader mode, print and a failed stylesheet show no fake words). Screen
+  readers get the same fact in words (Jordan, 2026-11-27)."
+  [lang n]
+  (list
+   [:span.veil.veil-icon {:aria-hidden "true"}]
+   [:div
+    [:span.sr-only (t lang :session/veiled (i18n/pad2 n))]
+    [:span.veil {:aria-hidden "true"}
+     [:span.bar.bar-title] [:span.bar.bar-meta]]]))
+
 (defn session-list
-  "The shop list under \"What're ya REPLin'?\": one row per session."
+  "The shop list under \"Shop hours\": one row per session. A session's format,
+  day, time and guests show only once its :announced? is true; until then the
+  row is a veil and the date."
   [ctx days]
   (let [{:keys [lang as-of]} ctx
         videos (get-in ctx [:data :videos])]
     [:ul.shop
      (for [d days
-           :let [{:keys [n date format time guests]} (:day/session d)
+           :let [{:keys [n date format time guests announced?]} (:day/session d)
                  sess (state/session-state as-of d)]]
        [:li
-        (layout/tool-icon (:day/tool d))
-        [:div
-         [:b (t lang :session/title (i18n/pad2 n) (i18n/t-str lang (keyword "format" (name format))))]
-         [:div.meta
-          (t lang :session/covers (i18n/pad2 (:day/n d)))
-          " · " (t lang :session/where)
-          " · " (or time (t lang :session/time-tba))
-          " · " (guest-line lang guests)]]
+        (if-not announced?
+          (veil lang n)
+          (list
+           (layout/tool-icon (:day/tool d))
+           [:div
+            [:b (t lang :session/title (i18n/pad2 n) (i18n/t-str lang (keyword "format" (name format))))]
+            [:div.meta
+             (t lang :session/covers (i18n/pad2 (:day/n d)))
+             " · " (t lang :session/where)
+             " · " (or time (t lang :session/time-tba))
+             " · " (guest-line lang guests)]]))
         [:div.price
          (cond
            (state/replay? as-of d videos) [:a {:href (layout/route-href ctx :videos)} (t lang :session/replay-ready)]
-           (= sess :today)                (chip lang :live)
+           (= sess :today)                (chip lang :today)
            :else                          (i18n/day-label (state/utc-date date)))]])]))
 
 ;; ---- REPL-as-data readout --------------------------------------------------

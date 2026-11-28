@@ -21,7 +21,9 @@
 
       :else
       {:day     (:day/n d)
-       :session (when live {:covers (:day/n live) :format (get-in live [:day/session :format])})
+       ;; Only the session's number: its format and day stay private until it's
+       ;; :announced? (see nooks.pages.common/session-list).
+       :session (when live (get-in live [:day/session :n]))
        :open    (state/open-days as-of days)})))
 
 (defn- today-line [ctx days]
@@ -42,9 +44,7 @@
             " " (c/chip lang (state/status as-of d))
             (when live
               (list [:br]
-                    (t lang :home/today-live (:day/n live)
-                       (t-str lang (keyword "format" (name (get-in live [:day/session :format]))))
-                       (i18n/pad2 (:day/n live)))))))))
+                    (t lang :home/today-session (i18n/pad2 (get-in live [:day/session :n])))))))))
 
 (defn page [ctx]
   (let [{:keys [lang as-of]} ctx
@@ -78,8 +78,7 @@
                  [:span.key {:aria-hidden "true"} (layout/toolbelt-key route)]
                  (t lang (keyword "route" (name route)))
                  [:small desc]]])]
-        (layout/primary-button ctx)
-        [:span.pill-note (t lang :home/cta-note)]]
+        (layout/primary-button ctx)]
 
        [:section.panel {:aria-labelledby "td"}
         [:h2#td (t lang :home/today (i18n/day-label (state/utc-date as-of)))]
@@ -87,7 +86,8 @@
         (c/readout (t-str lang :home/readout-label) "(today)" (today-value as-of days))]]
 
       [:section.panel {:aria-labelledby "sched"}
-       [:h2#sched.shopsign (t lang :label/replin)]
+       [:h2#sched.shopsign (t lang :label/shop-hours)]
+       [:p.sign-sub (t lang :label/shop-hours-sub)]
        (if (seq upcoming)
          (c/session-list ctx upcoming)
          [:p (t lang :home/sessions-done (count days))])

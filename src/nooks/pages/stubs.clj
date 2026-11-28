@@ -22,14 +22,14 @@
 (defn- format-anchor [id] (str "format-" (name id)))
 
 (defn- pool-facts
-  "Length, people, what to prepare for a pool format; drafts until written."
+  "Length, people, what to prepare for a pool format. Fields with no value are
+  left out rather than shown as \"to be written\" (Jordan, 2026-11-27)."
   [lang {:format/keys [length people prepare example-video]}]
-  (let [field (fn [label-k v] (list [:dt (t lang label-k)] [:dd (or v (t lang :formats/tbd))]))]
+  (let [fields (for [[label-k v] [[:formats/length length] [:formats/people people] [:formats/prepare prepare]]
+                     :when v]
+                 (list [:dt (t lang label-k)] [:dd v]))]
     (list
-     [:dl.facts
-      (field :formats/length length)
-      (field :formats/people people)
-      (field :formats/prepare prepare)]
+     (when (seq fields) [:dl.facts fields])
      (when example-video
        [:p [:a {:href example-video} (t lang :formats/example)]]))))
 
@@ -97,7 +97,6 @@
                          :when (= :extra source)]
                      [:li {:id (format-anchor id)}
                       [:h3 (t lang (keyword "format" (name id)))]
-                      [:p (t lang :formats/tbd)]
                       (pool-facts lang f)])]]
 
                  [:h2 (t lang :formats/managers-heading)]
@@ -108,7 +107,7 @@
                      (when caveat-url (list " (" [:a {:href caveat-url} (t lang :formats/caveat)] ")"))])])))
 
 (defn calendar
-  "Stub until the tool wall lands: the decided heading and the full schedule."
+  "Stub until the tool wall lands: the shop-hours sign and the full schedule."
   [ctx]
   (let [lang (:lang ctx)]
     {:route :calendar
@@ -116,7 +115,8 @@
      :main  (list
              (layout/crumbs ctx (t lang :route/calendar))
              [:section.panel
-              [:h1.shopsign (t lang :label/replin)]
+              [:h1.shopsign (t lang :label/shop-hours)]
+              [:p.sign-sub (t lang :label/shop-hours-sub)]
               [:p (t lang :stub/calendar)]
               (layout/primary-button ctx)]
              [:section.panel

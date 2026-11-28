@@ -16,7 +16,7 @@
 
 (deftest decided-labels-are-exact
   (let [en (:en strings)]
-    (is (= "What're ya REPLin'?" (:label/replin en)))
+    (is (= "Shop hours" (:label/shop-hours en)))
     (is (= "DIY recipes" (:label/diy-recipes en)))
     (is (= "Workbench" (:label/workbench en)))))
 

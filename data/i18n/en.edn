@@ -3,12 +3,14 @@
 ;; A value is either
 ;;   "a string"            final: a decided label, or copy Jordan has accepted
 ;;   {:draft "a string"}   a placeholder; renders as <span class="draft">, never as final copy
-;; Jordan accepted every placeholder as final for the alpha (2026-11-24); use
-;; {:draft …} again for new copy she hasn't written.
+;; Jordan accepted every placeholder as final for the alpha (2026-11-24) and again
+;; for launch (2026-11-27); use {:draft …} again for new copy she hasn't written.
 ;; %s marks a value filled in at build time (a date, a number). Jordan: to make a
 ;; string final, replace {:draft "…"} with "…".
 {;; Decided labels (CLAUDE.md § Copy). Don't edit.
- :label/replin          "What're ya REPLin'?"
+ ;; "Shop hours" replaced "What're ya REPLin'?" over the schedule (Jordan, 2026-11-27).
+ :label/shop-hours      "Shop hours"
+ :label/shop-hours-sub  "Session calendar"
  :label/diy-recipes     "DIY recipes"
  :label/workbench       "Workbench"
 
@@ -43,13 +45,12 @@
  :home/menu-start       "zero to a running REPL"
  :home/menu-today-soon  "from %s"
  :home/menu-today-day   "Day %s"
- :home/menu-calendar    "What're ya REPLin'?"
+ :home/menu-calendar    "session calendar"
  :home/menu-workbench   "try Clojure, no install"
- :home/cta-note         "One thread per puzzle, every day."
  :home/today            "Today · %s"
- :home/today-soon       "Puzzles start %s at 00:00 EST. First live session: %s."
+ :home/today-soon       "Puzzles start %s at 00:00 EST. First session: %s."
  :home/today-day        "Day %s is out."
- :home/today-live       "Live today: session %s, %s (covers Day %s)."
+ :home/today-session    "Session %s is today."
  :home/today-archive    "All %s days are out."
  :home/readout-label    "Today as data"
  :home/sessions-done    "All %s sessions are done."
@@ -61,16 +62,18 @@
  :session/where         "Clojure Camp Discord"
  :session/time-tba      "[time TBA]"
  :session/guest-tba     "To be announced"
+ ;; Screen-reader line for a session that isn't :announced? yet (the row shows pixel bars).
+ :session/veiled        "Session %s: details to be announced"
  :session/replay-ready  "Replay ready"
- :session/no-session    "No session Fri 11 Dec. Formats are drafts."
+ :session/no-session    "No session Fri 11 Dec."
 
  ;; Status chips: always words (docs/design-system.md § Components)
  :chip/open             "Solutions open"
  :chip/locked           "Solutions locked"
  :chip/soon             "Not out yet"
- :chip/live             "Live today"
+ :chip/today            "Today"
 
- ;; Session formats (data/days.edn :format). Formats are drafts.
+ ;; Session formats (data/days.edn :format). Shown only for :announced? sessions.
  :format/live-coding     "Live coding"
  :format/pairing-mob     "Pairing / mob"
  :format/demo            "Demo"
@@ -88,75 +91,74 @@
  :format/datomic         "Solving with Datomic"
 
  ;; Formats page (data/formats.edn). The guide's copy lives in formats.edn;
- ;; these are the page's own labels. Prose is draft until Jordan writes it.
- :formats/intro          {:draft "Each day's December session is picked from the favorites and this campaign's additions, by puzzle and by who can join."}
+ ;; these are the page's own labels.
+ :formats/intro          "December's sessions draw on these formats: the favorites and this campaign's additions, depending on the puzzle and who can join."
  ;; The guide marks favorites with a star; the site says it in words (no star motifs).
  :formats/favorite       "Favorite"
  :formats/col-format     "Format"
  :formats/col-good-for   "Good for"
- :formats/extras-heading {:draft "This December's additions"}
- :calendar/formats-link  {:draft "About the session formats"}
+ :formats/extras-heading "This December's additions"
+ :calendar/formats-link  "About the session formats"
  :formats/length         "Length"
  :formats/people         "People"
  :formats/prepare        "What to prepare"
- :formats/tbd            {:draft "To be written"}
  :formats/example        "Example recording"
- :formats/managers-heading {:draft "For managers"}
- :formats/managers       {:draft "A guide to leading technical conversations that keep humans in the loop, against cognitive debt and comprehension debt."}
+ :formats/managers-heading "For managers"
+ :formats/managers       "A guide to leading technical conversations that keep humans in the loop, against cognitive debt and comprehension debt."
  :formats/caveat         "a contested preprint; see the commentary"
 
  ;; Stub pages (MVP). Each is a placeholder until its phase.
  :stub/today-link       "Go to today"
- :stub/calendar         "Twelve puzzles, twelve live sessions."
- :stub/videos           "Session replays, one line each with format, day and length."
+ :stub/calendar         "Sessions run on weekdays in December. Details go up as each one is set."
+ :stub/videos          "Some sessions get a recording. When they do, it shows up here."
  :stub/not-found        "Nothing hangs on this hook."
  :formats/session       "Session %s"
 
  ;; Workbench (/workbench/). Button labels and the starter-recipe heading are
- ;; final (Jordan, 2026-11-24); the rest is placeholder copy, mostly from the
- ;; prototype.
+ ;; final (Jordan, 2026-11-24); the rest, mostly from the prototype, was accepted
+ ;; for launch (Jordan, 2026-11-27).
  ;; The *-kind strings label the result slot; Clojure kinds (map, vector, set,
  ;; seq…) come from the evaluator and aren't translated.
- :workbench/intro          {:draft "Try Clojure in your browser. No install, nothing saved."}
- :workbench/status-no-js   {:draft "Evaluator: needs JavaScript"}
- :workbench/status-starting {:draft "Evaluator starting…"}
- :workbench/starting       {:draft "The evaluator is still starting. Your code will run in a moment."}
- :workbench/busy-kind      {:draft "running"}
- :workbench/busy           {:draft "Crafting…"}
+ :workbench/intro          "Try Clojure in your browser. No install, nothing saved."
+ :workbench/status-no-js   "Evaluator: needs JavaScript"
+ :workbench/status-starting "Evaluator starting…"
+ :workbench/starting       "The evaluator is still starting. Your code will run in a moment."
+ :workbench/busy-kind      "running"
+ :workbench/busy           "Crafting…"
  :workbench/stop           "Stop running code"
- :workbench/stopped-kind   {:draft "stopped"}
- :workbench/stopped-timeout {:draft "Stopped after %s seconds: the code was still running. A loop that never ends, like (loop [] (recur)), is the usual cause. The evaluator has restarted, so earlier definitions are gone."}
- :workbench/stopped-by-you {:draft "Stopped. The evaluator has restarted, so earlier definitions are gone."}
- :workbench/know-time-limit {:draft "Code that runs longer than %s seconds is stopped, so a loop that never ends can't freeze your browser."}
- :workbench/status-ready   {:draft "Evaluator ready: Scittle, running in your browser"}
- :workbench/status-offline {:draft "Offline preview: only the starter recipes run"}
- :workbench/code-label     {:draft "Your code"}
- :workbench/code-help      {:draft "Tab moves to the next control. Ctrl+Enter (or Cmd+Enter) crafts."}
+ :workbench/stopped-kind   "stopped"
+ :workbench/stopped-timeout "Stopped after %s seconds: the code was still running. A loop that never ends, like (loop [] (recur)), is the usual cause. The evaluator has restarted, so earlier definitions are gone."
+ :workbench/stopped-by-you "Stopped. The evaluator has restarted, so earlier definitions are gone."
+ :workbench/know-time-limit "Code that runs longer than %s seconds is stopped, so a loop that never ends can't freeze your browser."
+ :workbench/status-ready   "Evaluator ready: Scittle, running in your browser"
+ :workbench/status-offline "Offline preview: only the starter recipes run"
+ :workbench/code-label     "Your code"
+ :workbench/code-help      "Tab moves to the next control. Ctrl+Enter (or Cmd+Enter) crafts."
  :workbench/craft          "Craft it: run code"
  :workbench/clear          "Clear code"
  :workbench/starters       "Load a starter recipe (replaces your code)"
  :workbench/load           "Load: %s"
- :workbench/result         {:draft "Result"}
- :workbench/printed        {:draft "Printed output"}
- :workbench/no-js-kind     {:draft "needs JavaScript"}
- :workbench/no-js          {:draft "The Workbench needs JavaScript to run code. For the full setup on your own computer, see Start here."}
- :workbench/waiting-kind   {:draft "waiting"}
- :workbench/waiting        {:draft "Press \"Craft it\" to evaluate."}
- :workbench/loaded         {:draft "Loaded \"%s\". Press \"Craft it\" to evaluate."}
- :workbench/empty-kind     {:draft "empty"}
- :workbench/empty          {:draft "Type some Clojure first, or pick a starter recipe."}
- :workbench/error-kind     {:draft "error"}
- :workbench/error-at       {:draft "Line %s, column %s"}
- :workbench/error-help     {:draft "How to read this:"}
- :workbench/error-link     {:draft "Reading an error"}
- :workbench/offline-kind   {:draft "offline preview"}
- :workbench/offline        {:draft "The evaluator didn't load, so only unedited starter recipes run. Reload the page to try again."}
- :workbench/know           {:draft "Good to know"}
- :workbench/know-data      {:draft "Results print as Clojure data: maps, vectors, sets."}
- :workbench/know-local     {:draft "Nothing you type leaves your browser, and nothing is saved. Don't paste your puzzle input or your Advent of Code session cookie anywhere; the Workbench never asks for them."}
- :workbench/know-no-ai     {:draft "No AI here. You build it."}
- :workbench/know-scratchpad {:draft "This is a place to try things. For the puzzles, set up a local REPL:"}
- :workbench/know-credit    {:draft "The evaluator is Scittle, by borkdude:"}
+ :workbench/result         "Result"
+ :workbench/printed        "Printed output"
+ :workbench/no-js-kind     "needs JavaScript"
+ :workbench/no-js          "The Workbench needs JavaScript to run code. For the full setup on your own computer, see Start here."
+ :workbench/waiting-kind   "waiting"
+ :workbench/waiting        "Press \"Craft it\" to evaluate."
+ :workbench/loaded         "Loaded \"%s\". Press \"Craft it\" to evaluate."
+ :workbench/empty-kind     "empty"
+ :workbench/empty          "Type some Clojure first, or pick a starter recipe."
+ :workbench/error-kind     "error"
+ :workbench/error-at       "Line %s, column %s"
+ :workbench/error-help     "How to read this:"
+ :workbench/error-link     "Reading an error"
+ :workbench/offline-kind   "offline preview"
+ :workbench/offline        "The evaluator didn't load, so only unedited starter recipes run. Reload the page to try again."
+ :workbench/know           "Good to know"
+ :workbench/know-data      "Results print as Clojure data: maps, vectors, sets."
+ :workbench/know-local     "Nothing you type leaves your browser, and nothing is saved. Don't paste your puzzle input or your Advent of Code session cookie anywhere; the Workbench never asks for them."
+ :workbench/know-no-ai     "No AI here. You build it."
+ :workbench/know-scratchpad "This is a place to try things. For the puzzles, set up a local REPL:"
+ :workbench/know-credit    "The evaluator is Scittle, by borkdude:"
 
  ;; Learn and the template guides (rendered from the template repo)
  :learn/intro           "Guides from the template repo: a tutorial, how-to guides and the reference."
