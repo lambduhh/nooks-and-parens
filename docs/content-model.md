@@ -51,7 +51,7 @@ A vector of 12 maps. See the file for all of them.
                      :time nil                      ; nil renders "[time TBA]"
                      :guests [{:name "…" :url "…" :confirmed? false}]
                      :announced? false}             ; false: the row shows pixel bars and the date only
- :day/recipes       [:parse :freq]                 ; keys into recipes.edn
+ :day/recipes       [:haystack :nest]              ; keys into recipes.edn
  :day/solutions     [{:author "…" :url "…" :ring? true}]
  :day/tutorial      nil                            ; path once written (days 1–3)
  :day/updated       #inst "2026-12-04"}
@@ -81,7 +81,7 @@ Format → kind defaults: workshop → tutorial; demo → how-to; everything els
 
 ## `data/recipes.edn`
 
-DIY recipes and Workbench starters. Made-up data only, never puzzle text or examples. Each has the code and the expected printed result (used by tests and by the offline fallback).
+DIY recipes and Workbench starters: teasers from *Clojure Brain Teasers* by Alex Miller and L. Jordan Miller (Pragmatic Bookshelf, 2025), never puzzle text or examples. Each has `:title` (the puzzle's name), `:source` (`:book`, `:puzzle` number, `:file` in the book's sample code), `:code` exactly as printed in the book, and `:expect`, the book's answer for the last form as `pr-str` (used by `bb test:browser` and by the offline fallback). Only teasers whose answer and reason are the same in ClojureScript and on the JVM belong here: the Workbench runs Scittle.
 
 ## `data/ring.edn`
 
