@@ -47,7 +47,7 @@
       (is (re-find #"<a href=\"https://adventofcode.com/2026/day/7\">" en))
       (is (not (re-find #"<iframe" en))))
     (testing "the day's DIY recipes open in the Workbench"
-      (is (re-find #"DIY recipes: <a href=\"/powertools-and-parens/workbench/#six-of-one\">" en)))
+      (is (re-find #"DIY recipes: <a href=\"/powertools-and-parens/workbench/#rome\">" en)))
     (testing "the battery says the count in words; the cells match it"
       (is (re-find #"7 of 12 puzzles out" en))
       (is (= 7 (count (re-seq #"class=\"cell on\"" en))))
